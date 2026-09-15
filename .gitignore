@@ -21,10 +21,12 @@ env/
 .DS_Store
 Thumbs.db
 
-# Data: ignore real IBA files, keep curated examples
+# Data: never commit real IBA data. examples/ holds local-only inputs.
 *.xnra
 *.txt
-!examples/**
+examples/*
+!examples/README.md
+tests/golden/reference.json
 !requirements.txt
 
 # Generated outputs
