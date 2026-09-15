@@ -1,13 +1,12 @@
 {
-  "roi_source": "placeholder",
-  "_comment": "placeholder, not the supervisor's ROIs",
+  "roi_source": "reference",
+  "_comment": "full simulated support of the element; chosen for reproducibility, not the supervisor's ROIs",
   "_note": [
     "Each ROI spans one element's full simulated support, computed from the",
-    "element-spectrum export. These are NOT the ROIs the supervisor used for",
-    "the xlsx; his ROIs are not yet known. Replace the channel ranges and set",
-    "roi_source to 'supervisor' once they are. The golden test is valid either",
-    "way -- it locks in current program behaviour -- but VALIDATION B will",
-    "show large deltas against the xlsx counts until the real ROIs are used.",
+    "element-spectrum export. The supervisor's ROIs are deliberately not used:",
+    "he counted MEASURED counts, while the program integrates SIMULATED partial",
+    "counts, so VALIDATION B compares two different methods and can never be an",
+    "equality test. Full support is the reproducible, self-documenting choice.",
     "Channel numbering: .xnra and the metadata export share one axis (channel",
     "N == channel N, export omits channel 0). Do not include channel 0; see",
     "docs/notes/known_issues.md item 1."

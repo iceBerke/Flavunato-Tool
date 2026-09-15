@@ -7,9 +7,10 @@ VALIDATION A -- formula check. CAN FAIL (exit 1), tolerance 1e-9.
     question entirely: same inputs in, same numbers expected out.
 
 VALIDATION B -- counts comparison. REPORT ONLY, never fails.
-    Program A_A for the rois.json ROIs beside the xlsx counts. While
-    rois.json holds placeholder ROIs these deltas are expected to be large;
-    that is the signal, not a failure.
+    Program A_A for the rois.json ROIs beside the xlsx counts. The supervisor
+    counted MEASURED counts; the program integrates SIMULATED partial counts.
+    These are different methods, so this can never be an equality test and
+    deltas are expected. It is a tracked diagnostic, not a pass/fail check.
 
 Layer mapping: xlsx L1-L5 == xnra layers 2-6 (the ZrOx film).
 H is excluded: it has no column in this RBS element spectrum.
@@ -118,7 +119,8 @@ def validation_a(data, xlsx):
 def validation_b(data, spectrum, cfg, xlsx):
     print()
     print("=" * 100)
-    print("VALIDATION B -- program A_A vs xlsx counts (REPORT ONLY, never fails)")
+    print("VALIDATION B -- measured (xlsx) vs simulated (program) counts")
+    print("               different methods, deltas expected (REPORT ONLY, never fails)")
     print(f"roi_source = {cfg.get('roi_source')} -- {cfg.get('_comment', '')}")
     print("=" * 100)
     print(
@@ -147,7 +149,8 @@ def validation_b(data, spectrum, cfg, xlsx):
     print("-" * 100)
     print("A_A = integrated SIMULATED counts in the ROI")
     print("     (xnra_element_spectra_v1.py:404; experimental sum is diagnostic only).")
-    print("Deltas are expected while rois.json holds placeholder ROIs.")
+    print("The xlsx counts are MEASURED. Comparing the two methods is a diagnostic,")
+    print("not an equality test -- deltas are expected and do not indicate a fault.")
 
 
 def main():

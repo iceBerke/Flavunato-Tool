@@ -46,12 +46,12 @@ def require(*paths):
 
 
 def load_rois():
-    """Load rois.json and warn loudly while the ROIs are still placeholders."""
+    """Load rois.json, warning if the ROI basis is not the expected one."""
     import json
 
     with open(ROIS_JSON, encoding="utf-8") as fh:
         cfg = json.load(fh)
-    if cfg.get("roi_source") != "supervisor":
+    if cfg.get("roi_source") != "reference":
         print(f"!! ROI source is '{cfg.get('roi_source')}' -- {cfg.get('_comment', '')}")
     return cfg
 

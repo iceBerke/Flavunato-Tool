@@ -53,7 +53,7 @@ none affects numerical output.
 | Window title and header say "v15" / "Version 15" in a file named `xnra_gui_v18.py` | `xnra_gui_v18.py:1,3,77` |
 | `calculate_uncertainty_for_element` defined, called from nowhere | `xnra_uncertainty_v12.py:1077` |
 
-## 4. The A_A definition, and the unknown supervisor ROIs
+## 4. The A_A definition, and the choice of reference ROIs
 **status: resolved (documentation)**
 
 `A_A = round(sum(sim_A[ROI]))` -- the integrated **simulated** counts in the
@@ -61,10 +61,14 @@ ROI (`xnra_element_spectra_v1.py:404`). Comments at
 `xnra_element_spectra_v1.py:395,403` show it replaced an earlier
 experiment-anchored definition before version control. The repo version is
 confirmed as the thesis version. This explains part of the VALIDATION B
-deltas, together with the unknown supervisor ROIs.
+deltas.
 
-`tests/golden/rois.json` holds **placeholder** ROIs (each element's full
-simulated support), not the supervisor's. His ROIs are not yet known.
+The supervisor's ROIs are **not needed**. He counted MEASURED counts; the
+program integrates SIMULATED partial counts. VALIDATION B therefore compares
+two different methods and can never be an equality test -- its deltas are a
+tracked diagnostic, not a defect. `tests/golden/rois.json` accordingly uses
+each element's full simulated support (`roi_source: "reference"`), chosen for
+reproducibility.
 
 Note that Zr's xlsx count (1 150 000) exceeds the element's entire simulated
 integral (1 128 896.2, +1.84%), so it is unreachable at any ROI under the

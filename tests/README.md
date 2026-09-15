@@ -7,7 +7,7 @@ the same functions the GUI calls -- `xnra_gui_v18.py` does no maths of its own.
 |---|---|---|
 | `golden/generate_golden.py` | Writes `golden/reference.json` from current program output | no |
 | `golden/check_golden.py` | Reruns and compares against `reference.json`, tolerance 1e-12 | **yes**, exit 1 on drift |
-| `validation/compare_manual.py` | A: formula vs the supervisor's xlsx, tolerance 1e-9. B: program A_A vs xlsx counts | A **yes**; B report-only |
+| `validation/compare_manual.py` | A: formula vs the supervisor's xlsx, tolerance 1e-9. B: measured (xlsx) vs simulated (program) counts — different methods, deltas expected | A **yes**; B report-only |
 
 Run from the repo root:
 
@@ -52,10 +52,15 @@ Q·Ω and σ. The GUI cannot express per-element Q·Ω or σ (single widgets at
 `xnra_gui_v18.py:857,883`, read once at `:1525-1526`), so the scripts supply
 each element's own pair; everything else matches the GUI.
 
-The ROIs are currently **placeholders** (each element's full simulated
-support), not the supervisor's. Every run prints a `roi_source=placeholder`
-warning, and `check_golden.py` fails if that field changes. Replace the ranges
-and set `roi_source` to `supervisor` once the real ROIs are known, then
-regenerate the baseline.
+Each ROI spans the element's **full simulated support** (`roi_source:
+"reference"`), chosen for reproducibility — deliberately not the supervisor's
+ROIs. `check_golden.py` fails if `roi_source` changes, so the basis cannot be
+swapped silently.
+
+The supervisor's ROIs are not needed: he counted **measured** counts, while
+the program integrates **simulated** partial counts
+(`xnra_element_spectra_v1.py:404`). Validation B therefore compares two
+different methods and can never be an equality test — its deltas are a
+tracked diagnostic, not a defect.
 
 See `docs/notes/known_issues.md` for open issues.
