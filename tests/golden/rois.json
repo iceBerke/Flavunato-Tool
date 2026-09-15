@@ -1,0 +1,52 @@
+{
+  "roi_source": "placeholder",
+  "_comment": "placeholder, not the supervisor's ROIs",
+  "_note": [
+    "Each ROI spans one element's full simulated support, computed from the",
+    "element-spectrum export. These are NOT the ROIs the supervisor used for",
+    "the xlsx; his ROIs are not yet known. Replace the channel ranges and set",
+    "roi_source to 'supervisor' once they are. The golden test is valid either",
+    "way -- it locks in current program behaviour -- but VALIDATION B will",
+    "show large deltas against the xlsx counts until the real ROIs are used.",
+    "Channel numbering: .xnra and the metadata export share one axis (channel",
+    "N == channel N, export omits channel 0). Do not include channel 0; see",
+    "docs/notes/known_issues.md item 1."
+  ],
+  "isotope_mode": false,
+  "adjustment_method": "none",
+  "layers": [2, 3, 4, 5, 6],
+  "_layers_note": "xnra layers 2-6 are the ZrOx film = xlsx L1-L5. xnra L1 (C cap), L7 (SiO2), L8 (Si substrate) have no xlsx counterpart.",
+  "elements": [
+    {
+      "element": "C",
+      "roi_name": "C",
+      "channels": [195, 349],
+      "qomega_percent": 3.0,
+      "xsec_percent": 3.0
+    },
+    {
+      "element": "O",
+      "roi_name": "O",
+      "channels": [322, 504],
+      "qomega_percent": 3.0,
+      "xsec_percent": 5.0
+    },
+    {
+      "element": "Zr",
+      "roi_name": "Zr",
+      "channels": [900, 1053],
+      "qomega_percent": 3.0,
+      "xsec_percent": 0.0
+    },
+    {
+      "element": "Hf",
+      "roi_name": "Hf",
+      "channels": [992, 1137],
+      "qomega_percent": 1.0,
+      "xsec_percent": 0.0
+    }
+  ],
+  "_excluded": {
+    "H": "present in the xlsx but has no column in this RBS element spectrum"
+  }
+}
