@@ -108,7 +108,7 @@ from typing import Dict, List, Tuple, Optional, Union
 import re
 
 # Import element spectrum functions from dedicated module
-from xnra_element_spectra_v1 import (
+from .element_spectra import (
     parse_element_spectrum,
     get_available_elements,
     get_available_isotopes,

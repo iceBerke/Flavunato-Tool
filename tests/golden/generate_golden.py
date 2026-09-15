@@ -1,12 +1,12 @@
 """Generate the golden reference file.
 
 Reproduces the GUI's uncertainty path headlessly (no Tkinter). The loop below
-mirrors xnra_gui_v18.py:1537-1602, which itself only orchestrates calls into
-xnra_uncertainty_v12 / xnra_element_spectra_v1 -- the GUI does no maths of its
-own, so calling those functions directly is faithful.
+mirrors flavunato/gui.py:1537-1602, which itself only orchestrates calls into
+flavunato/uncertainty.py / flavunato/element_spectra.py -- the GUI does no
+maths of its own, so calling those functions directly is faithful.
 
 One deliberate difference: the GUI holds a SINGLE Q.Omega and a SINGLE sigma
-for every element (xnra_gui_v18.py:857,883 read once at :1525-1526), so it
+for every element (flavunato/gui.py:857,883 read once at :1525-1526), so it
 cannot express the per-element table this sample needs. We therefore supply
 each element's own pair from rois.json. Everything else matches the GUI.
 
@@ -22,11 +22,11 @@ import _paths  # noqa: E402
 
 _paths.add_repo_to_path()
 
-from xnra_element_spectra_v1 import (  # noqa: E402
+from flavunato.element_spectra import (  # noqa: E402
     calculate_element_counts_from_spectrum,
     parse_element_spectrum,
 )
-from xnra_uncertainty_v12 import (  # noqa: E402
+from flavunato.uncertainty import (  # noqa: E402
     calculate_chi_squared_for_roi,
     calculate_uncertainty_v9,
     interpret_chi2,

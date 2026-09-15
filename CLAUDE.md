@@ -3,14 +3,21 @@ Python/Tkinter GUI for SIMNRA .xnra IBA spectra and concentration uncertainties.
 Thesis version is tagged v1.0-thesis. It is the reference; never alter its behaviour.
 
 ## Modules
-- `xnra_gui_v18.py` — Tkinter GUI. **Entry point**: `python xnra_gui_v18.py`.
-- `xnra_main_v6.py` — .xnra XML parsing and spectrum plotting. Library only.
-- `xnra_uncertainty_v12.py` — uncertainties, chi-squared, depth profiles. Also a CLI.
-- `xnra_element_spectra_v1.py` — SIMNRA element-spectrum .txt parsing/plotting. Also a CLI.
+The code is the `flavunato` package. **Entry point**: `python -m flavunato`
+or `python run_flavunato.py`.
 
-Imports: GUI → the other three; uncertainty → element_spectra. The `xnra_`
-prefix is load-bearing — imports reference these module names, and the GUI
-swallows ImportError, so a rename silently disables features instead of failing.
+- `flavunato/gui.py` — Tkinter GUI. Holds `main()`.
+- `flavunato/plotting.py` — .xnra XML parsing and spectrum plotting. Library only.
+- `flavunato/uncertainty.py` — uncertainties, chi-squared, depth profiles. Also a CLI
+  (`python -m flavunato.uncertainty`).
+- `flavunato/element_spectra.py` — SIMNRA element-spectrum .txt parsing/plotting.
+  Also a CLI (`python -m flavunato.element_spectra`).
+
+Imports are relative: GUI → the other three; uncertainty → element_spectra.
+The GUI swallows ImportError on all three, so a broken import silently
+disables features instead of failing — check the `*_AVAILABLE` flags.
+
+Dependencies in `requirements.txt`. On Linux tkinter needs `python3-tk`.
 
 ## Hard rules
 1. VERIFY BEFORE ACTING. Statements in prompts may be wrong. Check every

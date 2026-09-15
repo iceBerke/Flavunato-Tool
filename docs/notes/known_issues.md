@@ -20,16 +20,16 @@ match the `.xnra` spectra at shift 0 (100% exact, maxdiff 0) and not at +-1
 (~56% / ~22%). Both ROI selections in
 `calculate_element_counts_from_spectrum` therefore cover the same physical
 channels, despite one masking by channel number
-(`xnra_element_spectra_v1.py:359`) and the other slicing by array index
-(`xnra_element_spectra_v1.py:398-401`). There is no off-by-one.
+(`flavunato/element_spectra.py:359`) and the other slicing by array index
+(`flavunato/element_spectra.py:398-401`). There is no off-by-one.
 
 ## 2. raw_counts / simulated_counts length mismatch
 **status: open, not investigated**
 
 `parse_xnra_full` returns `raw_counts` with 4099 points but
-`simulated_counts` with only 1139 (`xnra_uncertainty_v12.py:287,299`). Both
+`simulated_counts` with only 1139 (`flavunato/uncertainty.py:287,299`). Both
 are passed to `calculate_chi_squared_for_roi`
-(`xnra_uncertainty_v12.py:306`, called from `xnra_gui_v18.py:1543`).
+(`flavunato/uncertainty.py:306`, called from `flavunato/gui.py:1543`).
 
 All ROIs currently in `rois.json` fall inside 0..1138, so the shorter array
 covers them. The behaviour for an ROI extending beyond channel 1138 has not
@@ -45,20 +45,20 @@ none affects numerical output.
 
 | Item | Location |
 |---|---|
-| Warning string says `xnra_element_spectra`, import is `xnra_element_spectra_v1` | `xnra_gui_v18.py:44` |
-| Warning string says `xnra_uncertainty_v9`, import is `xnra_uncertainty_v12` | `xnra_gui_v18.py:71` |
-| `ELEMENT_SPECTRUM_AVAILABLE = False` set inside the *uncertainty* except block, clobbering the flag set at `:40` | `xnra_gui_v18.py:70` |
-| `COLOR_NAMES` imported, never used | `xnra_uncertainty_v12.py:119` |
-| `json` imported, never used | `xnra_gui_v18.py:17` |
-| Window title and header say "v15" / "Version 15" in a file named `xnra_gui_v18.py` | `xnra_gui_v18.py:1,3,77` |
-| `calculate_uncertainty_for_element` defined, called from nowhere | `xnra_uncertainty_v12.py:1077` |
+| Warning string says `xnra_element_spectra`, import is `.element_spectra` | `flavunato/gui.py:44` |
+| Warning string says `xnra_uncertainty_v9`, import is `.uncertainty` | `flavunato/gui.py:71` |
+| `ELEMENT_SPECTRUM_AVAILABLE = False` set inside the *uncertainty* except block, clobbering the flag set at `:40` | `flavunato/gui.py:70` |
+| `COLOR_NAMES` imported, never used | `flavunato/uncertainty.py:119` |
+| `json` imported, never used | `flavunato/gui.py:17` |
+| Window title and header say "v15" / "Version 15" in a file named `flavunato/gui.py` | `flavunato/gui.py:1,3,77` |
+| `calculate_uncertainty_for_element` defined, called from nowhere | `flavunato/uncertainty.py:1077` |
 
 ## 4. The A_A definition, and the choice of reference ROIs
 **status: resolved (documentation)**
 
 `A_A = round(sum(sim_A[ROI]))` -- the integrated **simulated** counts in the
-ROI (`xnra_element_spectra_v1.py:404`). Comments at
-`xnra_element_spectra_v1.py:395,403` show it replaced an earlier
+ROI (`flavunato/element_spectra.py:404`). Comments at
+`flavunato/element_spectra.py:395,403` show it replaced an earlier
 experiment-anchored definition before version control. The repo version is
 confirmed as the thesis version. This explains part of the VALIDATION B
 deltas.
@@ -73,3 +73,13 @@ reproducibility.
 Note that Zr's xlsx count (1 150 000) exceeds the element's entire simulated
 integral (1 128 896.2, +1.84%), so it is unreachable at any ROI under the
 current definition.
+
+## 5. CLI help crashes on Windows cp1252 consoles
+**status: open**
+
+`python -m flavunato.uncertainty --help` fails with `UnicodeEncodeError` on
+Windows cp1252 consoles (`Ω` in the argparse help). Pre-existing (reproduced
+on v1.0-thesis code).
+
+Workaround: set `PYTHONIOENCODING=utf-8` (cmd) or
+`$env:PYTHONIOENCODING='utf-8'` (PowerShell).

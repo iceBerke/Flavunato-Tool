@@ -24,11 +24,11 @@ import _paths  # noqa: E402
 
 _paths.add_repo_to_path()
 
-from xnra_element_spectra_v1 import (  # noqa: E402
+from flavunato.element_spectra import (  # noqa: E402
     calculate_element_counts_from_spectrum,
     parse_element_spectrum,
 )
-from xnra_uncertainty_v12 import calculate_uncertainty_v9, parse_xnra_full  # noqa: E402
+from flavunato.uncertainty import calculate_uncertainty_v9, parse_xnra_full  # noqa: E402
 
 TOL = 1e-9
 
@@ -148,7 +148,7 @@ def validation_b(data, spectrum, cfg, xlsx):
 
     print("-" * 100)
     print("A_A = integrated SIMULATED counts in the ROI")
-    print("     (xnra_element_spectra_v1.py:404; experimental sum is diagnostic only).")
+    print("     (flavunato/element_spectra.py:404; experimental sum is diagnostic only).")
     print("The xlsx counts are MEASURED. Comparing the two methods is a diagnostic,")
     print("not an equality test -- deltas are expected and do not indicate a fault.")
 

@@ -20,7 +20,7 @@ import re
 
 # Import plotting function
 try:
-    from xnra_main_v6 import plot_xnra_spectrum
+    from .plotting import plot_xnra_spectrum
     PLOTTING_AVAILABLE = True
 except ImportError:
     PLOTTING_AVAILABLE = False
@@ -28,7 +28,7 @@ except ImportError:
 
 # Import element spectrum functions (dedicated module)
 try:
-    from xnra_element_spectra_v1 import (
+    from .element_spectra import (
         parse_element_spectrum,
         get_element_spectrum_summary,
         get_available_elements,
@@ -45,7 +45,7 @@ except ImportError:
 
 # Import uncertainty calculation (v9 with isotope support)
 try:
-    from xnra_uncertainty_v12 import (
+    from .uncertainty import (
         parse_xnra_full,
         calculate_chi_squared_for_roi,
         calculate_uncertainty_v9,

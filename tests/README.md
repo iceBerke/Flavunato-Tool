@@ -1,7 +1,7 @@
 # Tests
 
 Headless (no Tkinter). They reproduce the GUI's uncertainty path by calling
-the same functions the GUI calls -- `xnra_gui_v18.py` does no maths of its own.
+the same functions the GUI calls -- `flavunato/gui.py` does no maths of its own.
 
 | Script | Purpose | Can fail? |
 |---|---|---|
@@ -49,7 +49,7 @@ git status --porcelain -uall
 
 `golden/rois.json` is committed and holds the ROI ranges plus each element's
 Q·Ω and σ. The GUI cannot express per-element Q·Ω or σ (single widgets at
-`xnra_gui_v18.py:857,883`, read once at `:1525-1526`), so the scripts supply
+`flavunato/gui.py:857,883`, read once at `:1525-1526`), so the scripts supply
 each element's own pair; everything else matches the GUI.
 
 Each ROI spans the element's **full simulated support** (`roi_source:
@@ -59,7 +59,7 @@ swapped silently.
 
 The supervisor's ROIs are not needed: he counted **measured** counts, while
 the program integrates **simulated** partial counts
-(`xnra_element_spectra_v1.py:404`). Validation B therefore compares two
+(`flavunato/element_spectra.py:404`). Validation B therefore compares two
 different methods and can never be an equality test — its deltas are a
 tracked diagnostic, not a defect.
 

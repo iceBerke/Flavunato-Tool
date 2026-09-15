@@ -1,0 +1,10 @@
+numpy>=1.24
+matplotlib>=3.7
+pandas>=1.5
+openpyxl>=3.1
+# Optional: interactive hover tooltips on plots
+# mplcursors>=0.7
+#
+# Tested with: Python 3.14.2, numpy 2.4.1, matplotlib 3.10.8,
+# pandas 3.0.0, openpyxl 3.1.5
+# Linux: tkinter requires the python3-tk system package.
