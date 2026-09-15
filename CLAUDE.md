@@ -25,4 +25,6 @@ swallows ImportError, so a rename silently disables features instead of failing.
 7. Keep comments concise.
 8. Commit messages follow the 50/72 rule: subject line max 50 chars,
    imperative mood, no trailing period; blank line; body wrapped at 72
-   chars explaining what and why.
+   chars explaining what and why. Every commit ends with the default
+   Co-Authored-By trailer, separated from the body by a blank line.
+   Trailers are exempt from the 72-char wrap and must never be wrapped.
