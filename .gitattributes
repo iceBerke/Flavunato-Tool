@@ -1,0 +1,8 @@
+# Normalise text files to LF inside the repository, whatever the platform.
+# Working-tree endings are still left to core.autocrlf, so Windows checkouts
+# keep CRLF. This only stops the repo content itself from flipping.
+* text=auto
+
+# Binary: never normalise, never diff as text.
+*.xlsx binary
+*.pdf binary
