@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Secrets (never commit the PAT)
+.env
+*.token
+.git-credentials
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Data: ignore real IBA files, keep curated examples
+*.xnra
+*.txt
+!examples/**
+!requirements.txt
+
+# Generated outputs
+*.pdf
+!docs/**/*.pdf
