@@ -183,3 +183,69 @@ Candidate for v1.1.
 Fix direction (v1.1): make chi2 use the inclusive ROI end, matching A_A (the
 validated uncertainty convention). Expected impact: only chi2 fields change;
 golden reference must then be regenerated deliberately.
+
+## 8. The 'approximate' A_A fallback is weakly signalled
+**status: open**
+
+When no element-spectrum metadata file is loaded, A_A falls back to
+
+    A_A = int(roi_counts * concentration)
+
+(`flavunato/gui.py:1591`, same logic at `flavunato/uncertainty.py:755-764`),
+where `roi_counts` is the *experimental* ROI total. This assumes counts
+partition in proportion to atomic concentration and ignores cross-section and
+stopping differences between elements, so it can be wrong by orders of
+magnitude for a heavy element in a light matrix. It also makes A_A vary per
+layer, whereas the `'spectrum'` method gives one A_A per ROI.
+
+It triggers whenever `self.element_spectrum_data is None` or
+`raw_counts is None` (`flavunato/gui.py:1580`).
+
+The warning is weak: an amber panel label (`:1308`) that disappears once any
+file is loaded, and a status-bar glyph after calculation (`:1705,1707`).
+Crucially the test is `if 'spectrum' in aa_methods_used` (`:1704`), so a
+**mixed run is reported as `spectrum` if even one row used the spectrum
+method** — the warning is suppressed exactly when it matters most. No dialog,
+no log line, nothing in the results table. The `aa_method` column in the
+export (`:1686`) is the only reliable record.
+
+Methodology will state: always load the metadata file.
+Candidate for v1.1: a clear warning, or block the calculation outright.
+
+## 9. Element name mismatch gives A_A = 0 silently
+**status: open**
+
+If the requested element or isotope name is not found in the element-spectrum
+export — after the exact and case-insensitive fallbacks — the function returns
+`0, 0.0, 0` (`flavunato/element_spectra.py:381`) with no exception and no
+message.
+
+`A_A = 0` then makes `sigma_stat_rel` NaN (`flavunato/uncertainty.py:496-499`)
+and the `else` branch at `:532-533` **drops the statistical term from the
+quadrature sum**, so the reported total is just the constant terms. The
+uncertainty is underestimated without warning.
+
+Demonstrated with the example pair (spectrum holds C, Hf, O, Si, Zr), asking
+for a missing name at concentration 0.19, Q.Omega 3%, sigma 0%:
+
+| | mismatched name | valid element (Zr) |
+|---|---|---|
+| `A_A` | 0 | 1128896 |
+| `sigma_stat_rel` | NaN | 9.41e-4 |
+| `sigma_total_rel` | **0.03** | 0.0300148 |
+
+The bad row reports a *smaller, cleaner* uncertainty than the good one, which
+is what makes it hard to spot. The row is still tagged `aa_method='spectrum'`
+(`flavunato/gui.py:1589`), since the call returned normally. In the export the
+NaN statistical fields are written as `None` (`:1664,1669,1674`), i.e. blank
+cells indistinguishable from any other missing value, and the tree shows
+`"N/A"` (`:1618-1628`).
+
+Only tell: `element_counts = 0` in the export (`:1684`).
+
+Rows whose concentration is 0 are dropped earlier (`:1574-1575`), so this
+bites specifically when the layer model and the spectrum export disagree on
+naming (e.g. `Zr` versus `90Zr`). UNVERIFIED whether SIMNRA produces such a
+divergence in practice; the example pair is internally consistent.
+
+Candidate for v1.1: warn and mark the row.

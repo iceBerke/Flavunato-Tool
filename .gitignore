@@ -32,3 +32,8 @@ tests/golden/reference.json
 # Generated outputs
 *.pdf
 !docs/**/*.pdf
+
+# Reference documents: local until their authors approve publication.
+# Must come after !docs/**/*.pdf above -- last matching rule wins.
+docs/references/*
+!docs/references/README.md
