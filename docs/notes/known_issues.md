@@ -75,11 +75,18 @@ integral (1 128 896.2, +1.84%), so it is unreachable at any ROI under the
 current definition.
 
 ## 5. CLI help crashes on Windows cp1252 consoles
-**status: open**
+**status: resolved**
 
-`python -m flavunato.uncertainty --help` fails with `UnicodeEncodeError` on
+`python -m flavunato.uncertainty --help` failed with `UnicodeEncodeError` on
 Windows cp1252 consoles (`Ω` in the argparse help). Pre-existing (reproduced
 on v1.0-thesis code).
 
-Workaround: set `PYTHONIOENCODING=utf-8` (cmd) or
+Fixed: both CLI `main()` functions now reconfigure stdout to UTF-8 with
+`errors="replace"` at start (`flavunato/uncertainty.py:1104`,
+`flavunato/element_spectra.py:600`). Both CLIs print non-ASCII —
+`uncertainty` at 18 call sites, `element_spectra` via `plot_element_spectra`
+(`:588,590`). The GUI is untouched.
+
+Workaround, still valid for older Python without `sys.stdout.reconfigure`
+or for other tools: set `PYTHONIOENCODING=utf-8` (cmd) or
 `$env:PYTHONIOENCODING='utf-8'` (PowerShell).

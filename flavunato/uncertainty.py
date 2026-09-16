@@ -1102,7 +1102,12 @@ DEFAULT_SYSTEMATIC_UNCERTAINTIES = {
 def main():
     """Command-line interface."""
     import argparse
-    
+    import sys
+
+    # Windows consoles (cp1252) cannot print symbols like Ω
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+
     parser = argparse.ArgumentParser(
         description='Calculate IBA uncertainties (v9 - Isotope Support)'
     )

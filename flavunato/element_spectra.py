@@ -598,7 +598,12 @@ def plot_element_spectra(element_spectrum_data: Dict,
 def main():
     """Simple CLI for testing."""
     import argparse
-    
+    import sys
+
+    # Windows consoles (cp1252) cannot print symbols like Ω
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+
     parser = argparse.ArgumentParser(description='Plot SIMNRA element spectra')
     parser.add_argument('input', help='Element spectrum .txt file')
     parser.add_argument('-e', '--elements', help='Comma-separated elements to plot')
