@@ -116,7 +116,6 @@ from .element_spectra import (
     calculate_element_counts_from_spectrum,
     plot_element_spectra,
     ELEMENT_COLORS,
-    COLOR_NAMES,
 )
 
 
@@ -621,10 +620,6 @@ def calculate_uncertainty_v9(concentration: float,
     }
 
 
-# Alias for backward compatibility
-calculate_uncertainty_v6 = calculate_uncertainty_v9
-
-
 def get_cross_section_uncertainty(reaction: str) -> float:
     """
     Get the cross-section uncertainty for a given reaction.
@@ -834,10 +829,6 @@ def process_single_file_v9(filepath: str,
     return results
 
 
-# Alias for backward compatibility
-process_single_file_v6 = process_single_file_v9
-
-
 def process_batch_v9(filepaths: List[str],
                       regions_of_interest: List[Dict],
                       qomega_uncertainty: float,
@@ -931,10 +922,6 @@ def process_batch_v9(filepaths: List[str],
         print(f"✓ Saved Excel: {output_excel}")
     
     return df
-
-
-# Aliases for backward compatibility
-process_batch_v6 = process_batch_v9
 
 
 def create_depth_profile(df: pd.DataFrame,
@@ -1072,31 +1059,6 @@ def list_isotope_defaults() -> None:
     for isotope, (unc, reaction) in ISOTOPE_CROSS_SECTION_DEFAULTS.items():
         print(f"  {isotope:<6} {unc*100:>5.1f}%  ({reaction})")
     print()
-
-
-def calculate_uncertainty_for_element(concentration: float,
-                                       roi_counts: int,
-                                       technique: str = 'RBS',
-                                       systematic_uncertainty: float = None) -> Dict[str, float]:
-    """Backward-compatible function matching v5 API."""
-    xsec_unc = get_cross_section_uncertainty(technique)
-    qomega_unc = systematic_uncertainty if systematic_uncertainty else 0.03
-    element_counts = int(roi_counts * concentration) if roi_counts > 0 else 0
-    
-    v9_result = calculate_uncertainty_v9(concentration, element_counts, qomega_unc, xsec_unc)
-    
-    return {
-        'sigma_stat': v9_result['sigma_stat'],
-        'sigma_sys': np.sqrt(v9_result['sigma_qomega']**2 + v9_result['sigma_xsec']**2),
-        'sigma_total': v9_result['sigma_total'],
-    }
-
-
-DEFAULT_SYSTEMATIC_UNCERTAINTIES = {
-    'RBS': 0.03,
-    'ERDA': 0.05,
-    'NRA': 0.05,
-}
 
 
 def main():

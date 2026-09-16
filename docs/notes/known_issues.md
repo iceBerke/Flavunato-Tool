@@ -49,9 +49,11 @@ none affects numerical output.
 | Header and window title said "Version 15" / "v15" | `flavunato/gui.py:1,3,79` | fixed (R2a) — title now `Flavunato v{__version__}` |
 | Docstring example and notes named old module files | `flavunato/element_spectra.py:14,27`, `flavunato/uncertainty.py:412` | fixed (R2a) |
 | `ELEMENT_SPECTRUM_AVAILABLE = False` set inside the *uncertainty* except block, clobbering the flag set at `:42` | `flavunato/gui.py:72` | fixed (R2b) — line deleted. The flag is never read, so there was no user-visible change; see item 6 |
-| `COLOR_NAMES` imported, never used | `flavunato/uncertainty.py:119` | open |
-| `json` imported, never used | `flavunato/gui.py:17` | open |
-| `calculate_uncertainty_for_element` defined, called from nowhere | `flavunato/uncertainty.py:1077` | open |
+| `COLOR_NAMES` imported, never used | `flavunato/uncertainty.py:119` | fixed (R2c) — import dropped; still defined and used in `element_spectra.py:73,577` |
+| `json` imported, never used | `flavunato/gui.py:17` | fixed (R2c) |
+| `calculate_uncertainty_for_element` defined, called from nowhere | `flavunato/uncertainty.py:1077` | fixed (R2c) |
+| `calculate_uncertainty_v6`, `process_single_file_v6`, `process_batch_v6` aliases, zero references | `flavunato/uncertainty.py:625,838,937` | fixed (R2c) |
+| `DEFAULT_SYSTEMATIC_UNCERTAINTIES` defined, zero references | `flavunato/uncertainty.py:1095` | fixed (R2c) |
 
 **The `_v9` / `_v6` naming is intentional, not stale.** It denotes the
 algorithm revision (the French expert's formula generation), not a file

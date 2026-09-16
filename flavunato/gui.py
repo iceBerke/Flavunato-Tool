@@ -14,7 +14,6 @@
 
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox, colorchooser
-import json
 from pathlib import Path
 import re
 
