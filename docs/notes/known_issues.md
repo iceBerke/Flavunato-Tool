@@ -48,7 +48,7 @@ none affects numerical output.
 | Warning strings and messageboxes named old module files | `flavunato/gui.py:27,44,71,1505,1963` | fixed (R2a) |
 | Header and window title said "Version 15" / "v15" | `flavunato/gui.py:1,3,79` | fixed (R2a) — title now `Flavunato v{__version__}` |
 | Docstring example and notes named old module files | `flavunato/element_spectra.py:14,27`, `flavunato/uncertainty.py:412` | fixed (R2a) |
-| `ELEMENT_SPECTRUM_AVAILABLE = False` set inside the *uncertainty* except block, clobbering the flag set at `:42` | `flavunato/gui.py:72` | open |
+| `ELEMENT_SPECTRUM_AVAILABLE = False` set inside the *uncertainty* except block, clobbering the flag set at `:42` | `flavunato/gui.py:72` | fixed (R2b) — line deleted. The flag is never read, so there was no user-visible change; see item 6 |
 | `COLOR_NAMES` imported, never used | `flavunato/uncertainty.py:119` | open |
 | `json` imported, never used | `flavunato/gui.py:17` | open |
 | `calculate_uncertainty_for_element` defined, called from nowhere | `flavunato/uncertainty.py:1077` | open |
@@ -98,3 +98,28 @@ Fixed: both CLI `main()` functions now reconfigure stdout to UTF-8 with
 Workaround, still valid for older Python without `sys.stdout.reconfigure`
 or for other tools: set `PYTHONIOENCODING=utf-8` (cmd) or
 `$env:PYTHONIOENCODING='utf-8'` (PowerShell).
+
+## 6. Element spectrum code paths are unguarded
+**status: open**
+
+`ELEMENT_SPECTRUM_AVAILABLE` (`flavunato/gui.py:42,44`) is assigned but
+**never read**. `PLOTTING_AVAILABLE` and `UNCERTAINTY_AVAILABLE` each gate
+their feature (`:1965`, `:1504`); the element spectrum flag gates nothing.
+
+Verified by blocking `flavunato.element_spectra` via `sys.modules`: the
+except block at `:43-46` defines only `ELEMENT_SPECTRUM_AVAILABLE` and
+`ELEMENT_COLORS`, so all six imported functions are left **undefined** —
+`parse_element_spectrum`, `get_element_spectrum_summary`,
+`get_available_elements`, `get_available_isotopes`,
+`calculate_element_counts_from_spectrum`, `plot_element_spectra`.
+
+Calling them raises `NameError` at `flavunato/gui.py:1246, 1253, 1400, 1439,
+1481, 1582`. Every one of those sites sits inside an `except Exception`
+(at `:1245, 1399, 1438, 1480, 1522`), and `NameError` is an `Exception`, so
+the app does not crash: the user gets a dialog such as
+`Failed to load element spectrum: name 'parse_element_spectrum' is not
+defined` (`:1284, 1417, 1456, 1498, 1720`) instead of a clear
+"feature unavailable" message.
+
+Candidate: add an `ELEMENT_SPECTRUM_AVAILABLE` guard like the
+plotting/uncertainty ones. Not done — it is new behaviour, not a cleanup.

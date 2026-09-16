@@ -69,7 +69,6 @@ except ImportError:
     }
     ISOTOPE_CROSS_SECTION_DEFAULTS = {}
     UNCERTAINTY_AVAILABLE = False
-    ELEMENT_SPECTRUM_AVAILABLE = False
     print("Warning: flavunato.uncertainty could not be imported. Uncertainty calculations disabled.")
 
 
