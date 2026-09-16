@@ -13,7 +13,7 @@ recommendations of the cited note.
 
 ---
 
-## 1. Overview
+## Overview
 
 Flavunato reads a SIMNRA `.xnra` file together with the corresponding
 element-spectrum export (a tab-separated `.txt` file), and reports, for each
@@ -45,7 +45,7 @@ uncertainties onto it.
 
 ---
 
-## 2. Areal density and detected counts
+## Areal density and detected counts
 
 The number of counts detected for element $A$ is [@diallo2025iba, Eq. 1]
 
@@ -70,16 +70,18 @@ thicknesses are read directly from the converged SIMNRA layer model. Equations
 1–2 are reproduced here because they establish *why* $A_A$, $Q\Omega$ and
 $\sigma_A$ are the three quantities that carry uncertainty into $C_A$: they
 are the terms through which the measurement enters the concentration. The
-uncertainty budget of Section 4 propagates precisely these three terms.
+*Uncertainty budget* below propagates precisely these three terms.
 
 ---
 
-## 3. Detected counts $A_A$
+## Detected counts $A_A$
 
 $A_A$ is the count of element $A$ at its reference peak, integrated over the
 ROI. Flavunato offers two estimators.
 
-### 3.1 Spectrum method (used for all results reported in this work)
+### Spectrum method
+
+All results reported in this work use this method.
 
 **Program choice.** $A_A$ is the integrated *simulated partial spectrum* of
 element $A$ over the ROI:
@@ -93,12 +95,12 @@ channel $i$, taken from the element-spectrum export. The ROI is **inclusive at
 both ends**: channels $i$ with $i_\mathrm{start} \le i \le i_\mathrm{end}$.
 
 No experimental normalisation is applied. The statistical uncertainty derived
-from this quantity (Section 4.3) therefore reflects the *predicted* counting
-statistics of the fitted model, not the measured ones. This is a deliberate
-consequence of the estimator: it is reproducible from the fit alone and
-separates element $A$ from the overlapping contributions of other elements in
-the ROI, but it will underestimate scatter if the fit itself is poor. Fit
-quality is assessed separately (Section 5).
+from this quantity (see *Counting statistics*) therefore reflects the
+*predicted* counting statistics of the fitted model, not the measured ones.
+This is a deliberate consequence of the estimator: it is reproducible from the
+fit alone and separates element $A$ from the overlapping contributions of other
+elements in the ROI, but it will underestimate scatter if the fit itself is
+poor. This is assessed separately (see *Fit quality*).
 
 In isotope mode the same integral is taken over the isotope-resolved partial
 spectrum instead of the element total.
@@ -108,7 +110,7 @@ uncertainty: the element fraction
 $f_A = \sum_{\text{ROI}} y^{\mathrm{sim},A} / \sum_{\text{ROI}} y^{\mathrm{sim,total}}$,
 and the experimental ROI sum $\sum_{\text{ROI}} y^{\mathrm{exp}}$.
 
-### 3.2 Approximate fallback — not recommended
+### Approximate fallback — not recommended
 
 **Program choice.** If no element-spectrum export has been loaded, the program
 falls back to $A_A = \lfloor R \cdot C_A \rfloor$, where $R$ is the
@@ -123,9 +125,9 @@ used in its `aa_method` field; rows must read `spectrum`.
 
 ---
 
-## 4. Uncertainty budget
+## Uncertainty budget
 
-### 4.1 Combination
+### Combination
 
 The uncertainty on the concentration $C_A$ combines three independent
 contributions [@diallo2025iba, Eq. 3]:
@@ -147,7 +149,7 @@ concentration itself (percentage points of atomic fraction); the relative form
 is the one to quote when comparing elements. Exported column names carry the
 suffix `_rel_percent` or `_percent` respectively.
 
-### 4.2 Charge and solid angle, $\Delta_{Q\Omega}$
+### Charge and solid angle, $\Delta_{Q\Omega}$
 
 $\Delta_{Q\Omega}$ covers the combined uncertainty on the analysis charge and
 the detector solid angle. Following [@diallo2025iba], it is estimated as the
@@ -167,7 +169,7 @@ displays their product as Particle$\cdot$sr, which is the quantity entering the
 ratios; but this value is used for display only and never feeds the
 uncertainty calculation.
 
-### 4.3 Counting statistics, $\Delta_{A_A}$
+### Counting statistics, $\Delta_{A_A}$
 
 The statistical contribution is Poissonian [@diallo2025iba, Eq. 4]:
 
@@ -177,9 +179,10 @@ $$
 
 **Program choice.** When $A_A = 0$ the term is undefined and is set to
 "not a number"; the combination of Eq. 3 then proceeds over the two remaining
-terms only. See Section 8 for why this case requires attention.
+terms only. See *Assumptions and limitations* for why this case requires
+attention.
 
-### 4.4 Cross sections, $\Delta_{\sigma_A}$
+### Cross sections, $\Delta_{\sigma_A}$
 
 $\Delta_{\sigma_A}$ depends on the nuclear reaction, not on the element as
 such. The note gives four values [@diallo2025iba]:
@@ -213,9 +216,9 @@ the values other than the four above are not attributable to the cited note.
 
 ---
 
-## 5. Fit quality
+## Fit quality
 
-### 5.1 Reduced chi-squared
+### Reduced chi-squared
 
 Agreement between simulated and experimental spectra is quantified by
 [@diallo2025iba, Eq. 5]
@@ -236,7 +239,7 @@ and $p$ the number of fitted parameters.
   rather than letting them dominate; it has no effect in channels with at
   least 4 counts.
 
-### 5.2 Interpretation
+### Interpretation
 
 **Program choice.** The following thresholds are used to label fit quality in
 the interface and in exported results. They are a reporting convenience of the
@@ -253,7 +256,7 @@ program and carry no statistical authority.
 A value below 0.90 is flagged because it generally indicates overestimated
 uncertainties or an over-parameterised fit, not a better result.
 
-### 5.3 AUC ratio
+### AUC ratio
 
 **Program addition.** Alongside $\chi^2_\nu$ the program computes a
 normalisation check, the ratio of integrated areas over the ROI:
@@ -268,7 +271,7 @@ not appear in the cited note.
 
 ---
 
-## 6. Adjusted uncertainty
+## Adjusted uncertainty
 
 When $\chi^2_\nu > 1$, the fit residuals exceed what counting statistics alone
 predict, which may indicate underestimated uncertainties or unmodelled
@@ -295,7 +298,8 @@ suffixed `_chi2_adjusted_percent`, so that both can be compared without
 recomputation.
 
 The program does not decide what counts as "significantly exceeds unity"; that
-judgement remains with the analyst, informed by the thresholds of Section 5.2.
+judgement remains with the analyst, informed by the thresholds in
+*Interpretation*.
 
 **Program addition — AUC adjustment.** A third option rescales the statistical
 term by $\max\left(\mathrm{AUC},\, 1/\mathrm{AUC}\right)$ instead. This
@@ -304,7 +308,7 @@ program and has no basis in the cited note; it is reported for comparison only.
 
 ---
 
-## 7. Depth profiles
+## Depth profiles
 
 A depth profile tabulates, layer by layer, the concentration of each element
 and its uncertainty.
@@ -323,7 +327,7 @@ reported profile even under the default setting.
 
 ---
 
-## 8. Assumptions and limitations
+## Assumptions and limitations
 
 The following constrain the interpretation of the results and should be stated
 alongside any quoted uncertainty.
@@ -339,8 +343,8 @@ must be processed in more than one run, or through the isotope-resolved path.
 integrated over the ROI across the whole depth sampled by that ROI. The same
 $A_A$, and hence the same $\Delta_{A_A}$, is therefore applied to every layer
 in which the element appears. The layer-to-layer variation in the reported
-absolute uncertainty comes only from the concentration scaling of
-Section 4.1, not from layer-resolved counting statistics. Depth-resolved
+absolute uncertainty comes only from the concentration scaling described in
+*Combination*, not from layer-resolved counting statistics. Depth-resolved
 counting uncertainties are outside the scope of this formalism.
 
 **Background and peak overlap are not included.** Equation 3 combines charge,
@@ -377,7 +381,7 @@ range.
 
 ---
 
-## 9. Validation
+## Validation
 
 Two independent checks are maintained.
 
@@ -393,8 +397,8 @@ independently of how $A_A$ is obtained.
 
 The counts themselves are *not* expected to agree: the manual calculation used
 measured counts, whereas the program integrates the simulated partial spectrum
-(Section 3.1). The two are different estimators of $A_A$, so that comparison is
-reported as a diagnostic and never as a pass/fail criterion.
+(see *Spectrum method*). The two are different estimators of $A_A$, so that
+comparison is reported as a diagnostic and never as a pass/fail criterion.
 
 **Regression against the thesis version.** A regression test compares the
 current program output with the tagged thesis version (`v1.0-thesis`) at an
@@ -406,7 +410,7 @@ source; without it the test reports a skip rather than a pass.
 
 ---
 
-## 10. References
+## References
 
 - `diallo2025iba` — the uncertainty formalism, Eqs. 1–6.
 - `mayer1999simnra` — the simulation program producing the fitted models.
