@@ -11,7 +11,7 @@ This module handles:
 
 Usage:
 ------
-    from xnra_element_spectra import (
+    from flavunato.element_spectra import (
         parse_element_spectrum,
         plot_element_spectra,
         get_element_spectrum_summary,
@@ -24,7 +24,7 @@ Usage:
     plot_element_spectra(data, elements_to_plot=['Si', 'O', 'Ca'])
 
 Authors: Berke Santos & Giuseppe Legrottaglie
-Version: 1.0 (extracted from xnra_uncertainty_v9)
+Version: 1.0 (extracted from the uncertainty module)
 """
 
 import numpy as np

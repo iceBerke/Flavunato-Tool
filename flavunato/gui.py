@@ -1,13 +1,13 @@
-### XNRA Spectrum Viewer GUI - Version 15 ###
+### Flavunato - XNRA Spectrum Viewer GUI ###
 # Tkinter-based graphical interface for XNRA spectrum visualization
-# VERSION 15: 
+# Features:
 #   - Fixed Q·Ω and σ display: now shows CONSTANT relative values (not scaled by concentration)
 #   - Added isotope-specific uncertainty calculations
 #   - Per-isotope cross-section selection
 #   - NEW: Element/Iso Data tab for viewing/plotting element & isotope spectra
 #   - Calibration extracted from .xnra file (no manual entry needed)
 #   - Single file upload location (Element/Iso Data tab serves both visualization and uncertainty)
-#   - Compatible with xnra_main_v6 and xnra_uncertainty_v9
+#   - Part of the flavunato package; run with: python -m flavunato
 
 # Script developed by Berke Santos & Giuseppe Legrottaglie
 # Last updated: 2025
@@ -18,13 +18,15 @@ import json
 from pathlib import Path
 import re
 
+from . import __version__
+
 # Import plotting function
 try:
     from .plotting import plot_xnra_spectrum
     PLOTTING_AVAILABLE = True
 except ImportError:
     PLOTTING_AVAILABLE = False
-    print("Warning: xnra_main_v6 not found. Plotting disabled.")
+    print("Warning: flavunato.plotting could not be imported. Plotting disabled.")
 
 # Import element spectrum functions (dedicated module)
 try:
@@ -41,7 +43,7 @@ try:
 except ImportError:
     ELEMENT_SPECTRUM_AVAILABLE = False
     ELEMENT_COLORS = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd']
-    print("Warning: xnra_element_spectra not found. Element spectrum features disabled.")
+    print("Warning: flavunato.element_spectra could not be imported. Element spectrum features disabled.")
 
 # Import uncertainty calculation (v9 with isotope support)
 try:
@@ -68,13 +70,13 @@ except ImportError:
     ISOTOPE_CROSS_SECTION_DEFAULTS = {}
     UNCERTAINTY_AVAILABLE = False
     ELEMENT_SPECTRUM_AVAILABLE = False
-    print("Warning: xnra_uncertainty_v9 not found. Uncertainty calculations disabled.")
+    print("Warning: flavunato.uncertainty could not be imported. Uncertainty calculations disabled.")
 
 
 class XNRAViewerGUI:
     def __init__(self, root):
         self.root = root
-        self.root.title("XNRA Spectrum Viewer - v15")
+        self.root.title(f"Flavunato v{__version__}")
         self.root.geometry("1400x900")
         
         # Store current filepath
@@ -1501,7 +1503,8 @@ class XNRAViewerGUI:
         if not UNCERTAINTY_AVAILABLE:
             messagebox.showerror("Error", 
                 "Uncertainty calculation module not available.\n\n"
-                "Make sure xnra_uncertainty_v9.py is in the same directory.")
+                "flavunato.uncertainty failed to import. Check that the\n"
+                "dependencies in requirements.txt are installed.")
             return
         
         if not self.current_file.get():
@@ -1959,7 +1962,7 @@ class XNRAViewerGUI:
     def generate_plot(self):
         """Generate plot with current settings"""
         if not PLOTTING_AVAILABLE:
-            messagebox.showerror("Error", "Plotting module not available.\n\nMake sure xnra_main_v6.py is in the same directory.")
+            messagebox.showerror("Error", "Plotting module not available.\n\nflavunato.plotting failed to import. Check that the\ndependencies in requirements.txt are installed.")
             return
         
         if not self.current_file.get():

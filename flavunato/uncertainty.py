@@ -409,7 +409,7 @@ def interpret_chi2(chi2_reduced: float) -> Tuple[str, str]:
         return "?", "Unknown"
 
 
-# NOTE: Element spectrum functions moved to xnra_element_spectra.py
+# NOTE: Element spectrum functions live in flavunato/element_spectra.py
 # Import: parse_element_spectrum, get_element_spectrum_summary, 
 #         plot_element_spectra, calculate_element_counts_from_spectrum, etc.
 

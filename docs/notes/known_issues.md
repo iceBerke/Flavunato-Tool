@@ -43,15 +43,23 @@ influence present results.
 Found during the initial verification pass; all are cosmetic or dead code, and
 none affects numerical output.
 
-| Item | Location |
-|---|---|
-| Warning string says `xnra_element_spectra`, import is `.element_spectra` | `flavunato/gui.py:44` |
-| Warning string says `xnra_uncertainty_v9`, import is `.uncertainty` | `flavunato/gui.py:71` |
-| `ELEMENT_SPECTRUM_AVAILABLE = False` set inside the *uncertainty* except block, clobbering the flag set at `:40` | `flavunato/gui.py:70` |
-| `COLOR_NAMES` imported, never used | `flavunato/uncertainty.py:119` |
-| `json` imported, never used | `flavunato/gui.py:17` |
-| Window title and header say "v15" / "Version 15" in a file named `flavunato/gui.py` | `flavunato/gui.py:1,3,77` |
-| `calculate_uncertainty_for_element` defined, called from nowhere | `flavunato/uncertainty.py:1077` |
+| Item | Location | Status |
+|---|---|---|
+| Warning strings and messageboxes named old module files | `flavunato/gui.py:27,44,71,1505,1963` | fixed (R2a) |
+| Header and window title said "Version 15" / "v15" | `flavunato/gui.py:1,3,79` | fixed (R2a) — title now `Flavunato v{__version__}` |
+| Docstring example and notes named old module files | `flavunato/element_spectra.py:14,27`, `flavunato/uncertainty.py:412` | fixed (R2a) |
+| `ELEMENT_SPECTRUM_AVAILABLE = False` set inside the *uncertainty* except block, clobbering the flag set at `:42` | `flavunato/gui.py:72` | open |
+| `COLOR_NAMES` imported, never used | `flavunato/uncertainty.py:119` | open |
+| `json` imported, never used | `flavunato/gui.py:17` | open |
+| `calculate_uncertainty_for_element` defined, called from nowhere | `flavunato/uncertainty.py:1077` | open |
+
+**The `_v9` / `_v6` naming is intentional, not stale.** It denotes the
+algorithm revision (the French expert's formula generation), not a file
+version: `calculate_uncertainty_v9`, `process_batch_v9` and the `_v6` aliases
+are API names, and the matching text at `flavunato/gui.py:46,807` and
+`flavunato/uncertainty.py:304,461,871,1112` describes them correctly. The
+Excel sheet name `Uncertainties_v9` (`flavunato/gui.py:1746`) must also stay:
+the thesis exports use it.
 
 ## 4. The A_A definition, and the choice of reference ROIs
 **status: resolved (documentation)**
