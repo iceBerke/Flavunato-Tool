@@ -249,3 +249,33 @@ naming (e.g. `Zr` versus `90Zr`). UNVERIFIED whether SIMNRA produces such a
 divergence in practice; the example pair is internally consistent.
 
 Candidate for v1.1: warn and mark the row.
+
+## 10. Mouse-wheel scrolling likely does not work on Linux
+**status: open**
+
+The scrollable panels bind `<MouseWheel>` (`flavunato/gui.py:175`, `:832`),
+which is the Windows and macOS event name. X11 reports wheel movement as
+`<Button-4>` and `<Button-5>`, and neither is bound anywhere, so the wheel is
+expected to do nothing on Linux. The scrollbars themselves still work, so the
+panels remain usable by dragging.
+
+UNVERIFIED: inferred from the bindings; not tested on a Linux machine.
+
+## 11. All-NaN chi-squared makes the depth profile raise
+**status: open**
+
+`create_depth_profile` selects the reported row per element with
+`el_df['chi2_reduced'].idxmin()` (`flavunato/uncertainty.py:982`). If every row
+for an element in a layer has `chi2_reduced = NaN` — which happens when the
+`.xnra` carries no simulated spectrum, so `calculate_chi_squared_for_roi`
+returns NaN for every ROI — pandas raises
+`ValueError: Encountered all NA values`.
+
+In the GUI this surfaces as the generic dialog
+`Export failed: ...` from the catch-all handler (`flavunato/gui.py:1824`),
+which does not say that chi-squared was the cause. On the command line the
+`--profiles` step raises instead.
+
+Results themselves are unaffected: the uncertainty calculation tolerates a NaN
+chi-squared (`chi2_factor` falls back to 1.0). Only the depth-profile export
+fails.
