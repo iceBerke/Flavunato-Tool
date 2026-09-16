@@ -24,18 +24,47 @@ channels, despite one masking by channel number
 (`flavunato/element_spectra.py:398-401`). There is no off-by-one.
 
 ## 2. raw_counts / simulated_counts length mismatch
-**status: open, not investigated**
+**status: open**
 
 `parse_xnra_full` returns `raw_counts` with 4099 points but
 `simulated_counts` with only 1139 (`flavunato/uncertainty.py:287,299`). Both
 are passed to `calculate_chi_squared_for_roi`
-(`flavunato/uncertainty.py:306`, called from `flavunato/gui.py:1543`).
+(`flavunato/uncertainty.py:305`, called from `flavunato/gui.py:1544` and
+`flavunato/uncertainty.py:713`).
 
-All ROIs currently in `rois.json` fall inside 0..1138, so the shorter array
-covers them. The behaviour for an ROI extending beyond channel 1138 has not
-been investigated. With `adjustment_method = "none"` the chi-squared result
-does not affect any uncertainty (`chi2_factor` stays 1.0), so this does not
-influence present results.
+**Alignment is correct.** The function slices both arrays by array index
+(`:353-354`), and both axes start at channel 0 and are contiguous, so index
+== channel number for both. `[a:b]` selects the same physical channels on
+each array. The length mismatch shortens the valid range; it does not
+misalign anything.
+
+**ROIs beyond channel 1138 are handled silently.** `:347` clamps `roi_end`
+to `min(roi_end, len(raw), len(sim))`:
+
+| ROI requested | result | what happened |
+|---|---|---|
+| 1100-1300 | chi2/nu 8.0224, dof 38 | truncated to 1100-1138, 39 of 201 channels |
+| 1139-1400 | nan, dof 0 | `roi_start >= roi_end`, all-nan |
+
+Neither case warns. A truncated ROI reports a chi-squared computed over part
+of the window as if it were the whole, and `roi_counts` is likewise partial.
+Practical risk is low: the simulation covers only 0..1138, so there is no
+simulated signal beyond it and no reason to place an ROI there. All ROIs in
+`tests/golden/rois.json` fall inside the valid range.
+
+**Chi-squared is not display-only.** It feeds:
+
+1. `*_chi2_adjusted` columns — always. `chi2_factor = sqrt(max(chi2/nu, 1))`
+   is computed unconditionally (`:506-509`) and populates
+   `sigma_stat_chi2_adjusted*` / `sigma_total_chi2_adjusted*` (`:519`),
+   which are exported to Excel.
+2. `sigma_total` — only when chi-squared adjustment is selected
+   (`:567-572`). The GUI default is `'none'` (`flavunato/gui.py:914`), so it
+   is inert unless the user changes the radio button.
+3. Depth-profile row selection — always. `create_depth_profile` picks the
+   reported row per element with `el_df['chi2_reduced'].idxmin()` (`:982`),
+   so chi-squared decides which ROI's concentration and uncertainty appear
+   in the profile regardless of adjustment method.
 
 ## 3. Audit items from the read-only review
 **status: open**
@@ -125,3 +154,32 @@ defined` (`:1284, 1417, 1456, 1498, 1720`) instead of a clear
 
 Candidate: add an `ELEMENT_SPECTRUM_AVAILABLE` guard like the
 plotting/uncertainty ones. Not done — it is new behaviour, not a cleanup.
+
+## 7. chi-squared and A_A disagree on the ROI end channel
+**status: open**
+
+`roi_end` is documented as *exclusive* in `calculate_chi_squared_for_roi`
+(`flavunato/uncertainty.py:334`) and sliced exclusively (`:353-354`), so
+chi-squared covers channels `roi_start .. roi_end - 1`. Every other ROI
+consumer treats `roi_end` as *inclusive*: `calculate_element_counts_from_spectrum`
+masks with `channels <= roi_end` (`flavunato/element_spectra.py:359`).
+
+So the two quantities in the same results row describe windows that differ
+by one channel: A_A includes `roi_end`, chi-squared does not.
+
+Measured effect on the reference ROIs, roughly 0.1-1% on chi2/nu:
+
+| El | ROI | chi2/nu as computed | chi2/nu including `roi_end` |
+|---|---|---|---|
+| C | 195-349 | 3.2634 (dof 153) | 3.2610 (dof 154) |
+| O | 322-504 | 2.0910 (dof 181) | 2.0886 (dof 182) |
+| Zr | 900-1053 | 20.5838 (dof 152) | 20.4497 (dof 153) |
+| Hf | 992-1137 | 4.9524 (dof 144) | 5.0148 (dof 145) |
+
+Kept as-is for thesis consistency: the thesis numbers were produced with
+this behaviour, and `tests/golden/reference.json` pins it at 1e-12.
+Candidate for v1.1.
+
+Fix direction (v1.1): make chi2 use the inclusive ROI end, matching A_A (the
+validated uncertainty convention). Expected impact: only chi2 fields change;
+golden reference must then be regenerated deliberately.

@@ -38,6 +38,10 @@ The three input files are real IBA data and are **never committed**; see
 gitignored too. Every script exits 0 with a `SKIP:` message when data is
 absent, so a clone without it still passes.
 
+The golden and validation tests need the local example data (see
+`examples/README.md`); without it they skip, so a fresh clone or CI cannot
+detect regressions.
+
 Before committing, confirm nothing from `examples/` except `README.md`, and no
 `reference.json`, is staged:
 
