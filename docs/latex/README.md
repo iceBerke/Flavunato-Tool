@@ -22,6 +22,10 @@ Headings carry no manual numbers, so LaTeX numbers them according to the
 thesis's own sectioning. Cross-references within the text name the target
 section in italics rather than by number.
 
+Content between `<!-- repo-only:start -->` and `<!-- repo-only:end -->` in
+`methodology.md` is excluded from the LaTeX export. It stays visible when the
+Markdown is read on GitHub, but never reaches the thesis.
+
 ## Use in Overleaf
 
 1. Upload `methodology.tex` and `flavunato.bib` to the project.
@@ -55,7 +59,8 @@ rather than `--natbib`, and the citations become `\autocite{...}`.
 The fragment uses these; they must be in the thesis preamble:
 
 ```latex
-\usepackage{amsmath}    % \sqrt, \frac, \text, \operatorname
+\usepackage[T1]{fontenc} % accents (Orleans) and copy-pasteable underscores
+\usepackage{amsmath}    % \sqrt, \frac, \text, \operatorname, \tag
 \usepackage{booktabs}   % \toprule, \midrule, \bottomrule
 \usepackage{longtable}  % the three tables
 \usepackage{array}      % \arraybackslash in the column specifications
@@ -79,31 +84,20 @@ in the thesis preamble:
 
 `\real` comes from `calc`, so loading that package is enough.
 
-### Uncaptioned tables
+### Tables
 
-For tables without a caption, pandoc emits
+The tables have no captions. Load the `caption` package (listed above);
+without it LaTeX reports harmless "No counter none defined" errors.
 
-```latex
-{\def\LTcaptype{none} % do not increment counter
-\begin{longtable}...
-```
+### Tested
 
-`longtable` alone then raises `LaTeX Error: No counter 'none' defined` (three
-times, once per table). LaTeX recovers and still produces output, but the
-errors are noisy. Loading the `caption` package is the intended remedy —
-pandoc's own standalone template loads it for exactly this purpose.
+Compiled successfully on Overleaf with the preamble above (report class,
+pdfLaTeX).
 
-Verified locally: the fragment compiles and produces a PDF with `amsmath`,
-`booktabs`, `longtable`, `array`, `calc` and `natbib`, with all citations
-resolved. Not verified locally: the `caption` and `hyperref` lines above, since
-`caption.sty` and hyperref's dependency `infwarerr.sty` are absent from the
-local TeX installation. Both are standard in TeX Live and on Overleaf.
+### Heading levels
 
-## Heading levels
-
-The fragment starts at `\section` — one `\section` (Methodology), 10
-`\subsection`, 9 `\subsubsection`. If the thesis needs it to be a `\chapter`,
-regenerate with:
+By default Methodology is a `\section` (for use inside an existing chapter).
+To make it a standalone `\chapter`, regenerate with:
 
 ```
 pandoc docs/methodology.md -f markdown -t latex --natbib --lua-filter=docs/latex/thesis.lua --shift-heading-level-by=-1 -o docs/latex/methodology.tex

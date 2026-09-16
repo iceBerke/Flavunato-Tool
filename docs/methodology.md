@@ -4,7 +4,7 @@ How Flavunato computes concentration uncertainties from SIMNRA ion beam
 analysis (IBA) data.
 
 The uncertainty formalism follows the internal technical note of
-Diallo [@diallo2025iba], whose Eqs. 1–6 are reproduced below. Everything that
+Diallo [@diallo2025iba], whose Eqs. (D1)–(D6) are reproduced below. Everything that
 is not taken from that note — numerical conventions, the estimator for the
 detected counts, additional cross-section values, fit-quality thresholds and
 the optional AUC rescaling — is a **program choice** and is labelled as such
@@ -50,7 +50,7 @@ uncertainties onto it.
 The number of counts detected for element $A$ is [@diallo2025iba, Eq. 1]
 
 $$
-A_A = \frac{Q \cdot \Omega \cdot \int_0^{x_A^0} f \cdot N_A^{A_m B_n}(x) \cdot \sigma_A(x)\, dx}{\cos \alpha}
+A_A = \frac{Q \cdot \Omega \cdot \int_0^{x_A^0} f \cdot N_A^{A_m B_n}(x) \cdot \sigma_A(x)\, dx}{\cos \alpha} \tag{D1}
 $$
 
 where $Q$ is the collected charge, $\Omega$ the detector solid angle, $f$ a
@@ -62,12 +62,12 @@ Inverting this relation gives the areal atomic density
 [@diallo2025iba, Eq. 2]
 
 $$
-N_A = N_A^{A_m B_n} \cdot x = \frac{\cos \alpha \cdot A_A}{Q \cdot \Omega \cdot \sigma_A}
+N_A = N_A^{A_m B_n} \cdot x = \frac{\cos \alpha \cdot A_A}{Q \cdot \Omega \cdot \sigma_A} \tag{D2}
 $$
 
-**Scope note.** Flavunato does not evaluate Eqs. 1–2. Concentrations and layer
-thicknesses are read directly from the converged SIMNRA layer model. Equations
-1–2 are reproduced here because they establish *why* $A_A$, $Q\Omega$ and
+**Scope note.** Flavunato does not evaluate Eqs. (D1)–(D2). Concentrations and layer
+thicknesses are read directly from the converged SIMNRA layer model.
+Eqs. (D1)–(D2) are reproduced here because they establish *why* $A_A$, $Q\Omega$ and
 $\sigma_A$ are the three quantities that carry uncertainty into $C_A$: they
 are the terms through which the measurement enters the concentration. The
 *Uncertainty budget* below propagates precisely these three terms.
@@ -133,7 +133,7 @@ The uncertainty on the concentration $C_A$ combines three independent
 contributions [@diallo2025iba, Eq. 3]:
 
 $$
-\Delta C_A = \sqrt{(\Delta_{Q\Omega})^2 + (\Delta_{\sigma_A})^2 + (\Delta_{A_A})^2}
+\Delta C_A = \sqrt{(\Delta_{Q\Omega})^2 + (\Delta_{\sigma_A})^2 + (\Delta_{A_A})^2} \tag{D3}
 $$
 
 All three terms are **relative** uncertainties (dimensionless fractions).
@@ -174,11 +174,11 @@ uncertainty calculation.
 The statistical contribution is Poissonian [@diallo2025iba, Eq. 4]:
 
 $$
-\Delta_{A_A} = \frac{\sqrt{A_A}}{A_A} = \frac{1}{\sqrt{A_A}}
+\Delta_{A_A} = \frac{\sqrt{A_A}}{A_A} = \frac{1}{\sqrt{A_A}} \tag{D4}
 $$
 
 **Program choice.** When $A_A = 0$ the term is undefined and is set to
-"not a number"; the combination of Eq. 3 then proceeds over the two remaining
+"not a number"; the combination of Eq. (D3) then proceeds over the two remaining
 terms only. See *Assumptions and limitations* for why this case requires
 attention.
 
@@ -224,7 +224,7 @@ Agreement between simulated and experimental spectra is quantified by
 [@diallo2025iba, Eq. 5]
 
 $$
-\chi^2_\nu = \frac{1}{\nu} \sum_{i=1}^{N} \frac{\left(y_i^{\exp} - y_i^{\mathrm{sim}}\right)^2}{\sigma_i^2}
+\chi^2_\nu = \frac{1}{\nu} \sum_{i=1}^{N} \frac{\left(y_i^{\exp} - y_i^{\mathrm{sim}}\right)^2}{\sigma_i^2} \tag{D5}
 $$
 
 with $\nu = N - p$ degrees of freedom, $N$ the number of channels in the ROI
@@ -279,20 +279,20 @@ systematic effects. In that case the statistical term may be rescaled by
 $\sqrt{\chi^2_\nu}$, giving [@diallo2025iba, Eq. 6]
 
 $$
-\Delta C_A^{\mathrm{adj}} = \sqrt{(\Delta_{Q\Omega})^2 + (\Delta_{\sigma_A})^2 + \left(\sqrt{\chi^2_\nu}\, \Delta_{A_A}\right)^2}
+\Delta C_A^{\mathrm{adj}} = \sqrt{(\Delta_{Q\Omega})^2 + (\Delta_{\sigma_A})^2 + \left(\sqrt{\chi^2_\nu}\, \Delta_{A_A}\right)^2} \tag{D6}
 $$
 
 The note is explicit that the reduced chi-squared is *not* an independent
 contribution to the uncertainty budget — it is a goodness-of-fit indicator,
 not a physical source of uncertainty — and that the correction applies only
 when $\chi^2_\nu$ significantly exceeds unity. Otherwise the standard
-expression of Eq. 3 is used.
+expression of Eq. (D3) is used.
 
 **Program implementation.** The rescaling factor is computed as
 $\sqrt{\max\left(\chi^2_\nu,\, 1\right)}$, clamped at unity so that a fit with
 $\chi^2_\nu < 1$ can never *reduce* the reported uncertainty. The adjustment is
 applied only when the analyst selects it; **the default is no adjustment**, so
-that quoted uncertainties follow Eq. 3 unless stated otherwise. The program
+that quoted uncertainties follow Eq. (D3) unless stated otherwise. The program
 also computes and exports the adjusted values unconditionally, in columns
 suffixed `_chi2_adjusted_percent`, so that both can be compared without
 recomputation.
@@ -347,7 +347,7 @@ absolute uncertainty comes only from the concentration scaling described in
 *Combination*, not from layer-resolved counting statistics. Depth-resolved
 counting uncertainties are outside the scope of this formalism.
 
-**Background and peak overlap are not included.** Equation 3 combines charge,
+**Background and peak overlap are not included.** Eq. (D3) combines charge,
 cross-section and counting terms only. No variance is attributed to background
 subtraction, to overlap between the partial spectra of different elements
 within an ROI, or to the layer model itself (number of layers, thickness
@@ -367,7 +367,7 @@ candidate for correction in a future version.
 named in an ROI is absent from the element-spectrum export — for example
 through a naming difference between the layer model and the export — the
 lookup returns zero counts silently. The statistical term then becomes
-undefined and is dropped from Eq. 3, so the reported uncertainty collapses to
+undefined and is dropped from Eq. (D3), so the reported uncertainty collapses to
 $\sqrt{(\Delta_{Q\Omega})^2 + (\Delta_{\sigma_A})^2}$. Because this is
 *smaller* and visually cleaner than a correct value, the failure is easy to
 miss. The diagnostic is the exported `element_counts` column, which reads 0 for
@@ -386,7 +386,7 @@ range.
 Two independent checks are maintained.
 
 **Agreement with the manual calculation.** The program's implementation of
-Eq. 3 is compared against an independent manual spreadsheet calculation,
+Eq. (D3) is compared against an independent manual spreadsheet calculation,
 following the method of [@diallo2025iba]. Supplied
 with the same detected counts and the same $\Delta_{Q\Omega}$ and
 $\Delta_{\sigma_A}$ per element, the program reproduces the manual relative and
@@ -405,6 +405,8 @@ current program output with the tagged thesis version (`v1.0-thesis`) at an
 absolute tolerance of $10^{-12}$ on every numeric field; all later code changes
 reproduce it exactly.
 
+<!-- repo-only:start -->
+
 The test requires the measurement data, which is not distributed with the
 source; without it the test reports a skip rather than a pass.
 
@@ -412,7 +414,9 @@ source; without it the test reports a skip rather than a pass.
 
 ## References
 
-- `diallo2025iba` — the uncertainty formalism, Eqs. 1–6.
+- `diallo2025iba` — the uncertainty formalism, Eqs. (D1)–(D6).
 - `mayer1999simnra` — the simulation program producing the fitted models.
 
 Entries are defined in `docs/latex/flavunato.bib`.
+
+<!-- repo-only:end -->
