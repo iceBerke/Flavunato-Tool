@@ -422,8 +422,8 @@ range.
 Two independent checks are maintained.
 
 **Agreement with the manual calculation.** The program's implementation of
-Eq. (D3) is compared against an independent manual spreadsheet calculation,
-following the method of [@diallo2025iba]. Supplied
+Eq. (D3) is compared against a manual spreadsheet calculation by the author
+of the method, independent of the code [@diallo2025iba]. Supplied
 with the same detected counts and the same $\Delta_{Q\Omega}$ and
 $\Delta_{\sigma_A}$ per element, the program reproduces the manual relative and
 absolute uncertainties for every layer and element to within $10^{-9}$; the

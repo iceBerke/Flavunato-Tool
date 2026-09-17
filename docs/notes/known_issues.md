@@ -27,18 +27,18 @@ channels, despite one masking by channel number
 **status: open**
 
 `parse_xnra_full` returns `raw_counts` with 4099 points but
-`simulated_counts` with only 1139 (`flavunato/uncertainty.py:287,299`). Both
+`simulated_counts` with only 1139 (`flavunato/uncertainty.py:285,296`). Both
 are passed to `calculate_chi_squared_for_roi`
-(`flavunato/uncertainty.py:305`, called from `flavunato/gui.py:1544` and
-`flavunato/uncertainty.py:713`).
+(`flavunato/uncertainty.py:303`, called from `flavunato/gui.py:1544` and
+`flavunato/uncertainty.py:704`).
 
 **Alignment is correct.** The function slices both arrays by array index
-(`:353-354`), and both axes start at channel 0 and are contiguous, so index
+(`:351-352`), and both axes start at channel 0 and are contiguous, so index
 == channel number for both. `[a:b]` selects the same physical channels on
 each array. The length mismatch shortens the valid range; it does not
 misalign anything.
 
-**ROIs beyond channel 1138 are handled silently.** `:347` clamps `roi_end`
+**ROIs beyond channel 1138 are handled silently.** `:345` clamps `roi_end`
 to `min(roi_end, len(raw), len(sim))`:
 
 | ROI requested | result | what happened |
@@ -55,19 +55,19 @@ simulated signal beyond it and no reason to place an ROI there. All ROIs in
 **Chi-squared is not display-only.** It feeds:
 
 1. `*_chi2_adjusted` columns — always. `chi2_factor = sqrt(max(chi2/nu, 1))`
-   is computed unconditionally (`:506-509`) and populates
-   `sigma_stat_chi2_adjusted*` / `sigma_total_chi2_adjusted*` (`:519`),
+   is computed unconditionally (`:504-507`) and populates
+   `sigma_stat_chi2_adjusted*` / `sigma_total_chi2_adjusted*` (`:517`),
    which are exported to Excel.
 2. `sigma_total` — only when chi-squared adjustment is selected
-   (`:567-572`). The GUI default is `'none'` (`flavunato/gui.py:914`), so it
+   (`:565-570`). The GUI default is `'none'` (`flavunato/gui.py:914`), so it
    is inert unless the user changes the radio button.
 3. Depth-profile row selection — always. `create_depth_profile` picks the
-   reported row per element with `el_df['chi2_reduced'].idxmin()` (`:982`),
+   reported row per element with `el_df['chi2_reduced'].idxmin()` (`:704`),
    so chi-squared decides which ROI's concentration and uncertainty appear
    in the profile regardless of adjustment method.
 
 ## 3. Audit items from the read-only review
-**status: open**
+**status: resolved**
 
 Found during the initial verification pass; all are cosmetic or dead code, and
 none affects numerical output.
@@ -77,8 +77,8 @@ none affects numerical output.
 | Warning strings and messageboxes named old module files | `flavunato/gui.py:27,44,71,1505,1963` | fixed (R2a) |
 | Header and window title said "Version 15" / "v15" | `flavunato/gui.py:1,3,79` | fixed (R2a) — title now `Flavunato v{__version__}` |
 | Docstring example and notes named old module files | `flavunato/element_spectra.py:14,27`, `flavunato/uncertainty.py:412` | fixed (R2a) |
-| `ELEMENT_SPECTRUM_AVAILABLE = False` set inside the *uncertainty* except block, clobbering the flag set at `:42` | `flavunato/gui.py:72` | fixed (R2b) — line deleted. The flag is never read, so there was no user-visible change; see item 6 |
-| `COLOR_NAMES` imported, never used | `flavunato/uncertainty.py:119` | fixed (R2c) — import dropped; still defined and used in `element_spectra.py:73,577` |
+| `ELEMENT_SPECTRUM_AVAILABLE = False` set inside the *uncertainty* except block, clobbering the flag set at `:41` | `flavunato/gui.py:72` | fixed (R2b) — line deleted. The flag is never read, so there was no user-visible change; see item 6 |
+| `COLOR_NAMES` imported, never used | `flavunato/uncertainty.py:119` | fixed (R2c) — import dropped; still defined and used in `flavunato/element_spectra.py:73,577` |
 | `json` imported, never used | `flavunato/gui.py:17` | fixed (R2c) |
 | `calculate_uncertainty_for_element` defined, called from nowhere | `flavunato/uncertainty.py:1077` | fixed (R2c) |
 | `calculate_uncertainty_v6`, `process_single_file_v6`, `process_batch_v6` aliases, zero references | `flavunato/uncertainty.py:625,838,937` | fixed (R2c) |
@@ -103,8 +103,8 @@ experiment-anchored definition before version control. The repo version is
 confirmed as the thesis version. This explains part of the VALIDATION B
 deltas.
 
-The supervisor's ROIs are **not needed**. He counted MEASURED counts; the
-program integrates SIMULATED partial counts. VALIDATION B therefore compares
+The ROIs behind the reference spreadsheet are **not needed**. Its author
+counted MEASURED counts; the program integrates SIMULATED partial counts. VALIDATION B therefore compares
 two different methods and can never be an equality test -- its deltas are a
 tracked diagnostic, not a defect. `tests/golden/rois.json` accordingly uses
 each element's full simulated support (`roi_source: "reference"`), chosen for
@@ -128,23 +128,23 @@ See item 14 for the equivalent limitation in the graphical interface.
 ## 6. Element spectrum code paths are unguarded
 **status: open**
 
-`ELEMENT_SPECTRUM_AVAILABLE` (`flavunato/gui.py:42,44`) is assigned but
+`ELEMENT_SPECTRUM_AVAILABLE` (`flavunato/gui.py:41,43`) is assigned but
 **never read**. `PLOTTING_AVAILABLE` and `UNCERTAINTY_AVAILABLE` each gate
-their feature (`:1965`, `:1504`); the element spectrum flag gates nothing.
+their feature (`:1962`, `:1501`); the element spectrum flag gates nothing.
 
 Verified by blocking `flavunato.element_spectra` via `sys.modules`: the
-except block at `:43-46` defines only `ELEMENT_SPECTRUM_AVAILABLE` and
+except block at `:42-45` defines only `ELEMENT_SPECTRUM_AVAILABLE` and
 `ELEMENT_COLORS`, so all six imported functions are left **undefined** —
 `parse_element_spectrum`, `get_element_spectrum_summary`,
 `get_available_elements`, `get_available_isotopes`,
 `calculate_element_counts_from_spectrum`, `plot_element_spectra`.
 
-Calling them raises `NameError` at `flavunato/gui.py:1246, 1253, 1400, 1439,
-1481, 1582`. Every one of those sites sits inside an `except Exception`
-(at `:1245, 1399, 1438, 1480, 1522`), and `NameError` is an `Exception`, so
+Calling them raises `NameError` at `flavunato/gui.py:1245, 1252, 1399, 1438,
+1480, 1581`. Every one of those sites sits inside an `except Exception`
+(at `:1244, 1398, 1437, 1479, 1521`), and `NameError` is an `Exception`, so
 the app does not crash: the user gets a dialog such as
 `Failed to load element spectrum: name 'parse_element_spectrum' is not
-defined` (`:1284, 1417, 1456, 1498, 1720`) instead of a clear
+defined` (`:1283, 1416, 1455, 1497, 1719`) instead of a clear
 "feature unavailable" message.
 
 Candidate: add an `ELEMENT_SPECTRUM_AVAILABLE` guard like the
@@ -154,7 +154,7 @@ plotting/uncertainty ones. Not done — it is new behaviour, not a cleanup.
 **status: open**
 
 `roi_end` is documented as *exclusive* in `calculate_chi_squared_for_roi`
-(`flavunato/uncertainty.py:334`) and sliced exclusively (`:353-354`), so
+(`flavunato/uncertainty.py:331`) and sliced exclusively (`:351-352`), so
 chi-squared covers channels `roi_start .. roi_end - 1`. Every other ROI
 consumer treats `roi_end` as *inclusive*: `calculate_element_counts_from_spectrum`
 masks with `channels <= roi_end` (`flavunato/element_spectra.py:359`).
@@ -186,7 +186,7 @@ When no element-spectrum metadata file is loaded, A_A falls back to
 
     A_A = int(roi_counts * concentration)
 
-(`flavunato/gui.py:1591`, same logic at `flavunato/uncertainty.py:755-764`),
+(`flavunato/gui.py:1591`),
 where `roi_counts` is the *experimental* ROI total. This assumes counts
 partition in proportion to atomic concentration and ignores cross-section and
 stopping differences between elements, so it can be wrong by orders of
@@ -215,8 +215,8 @@ export — after the exact and case-insensitive fallbacks — the function retur
 `0, 0.0, 0` (`flavunato/element_spectra.py:381`) with no exception and no
 message.
 
-`A_A = 0` then makes `sigma_stat_rel` NaN (`flavunato/uncertainty.py:496-499`)
-and the `else` branch at `:532-533` **drops the statistical term from the
+`A_A = 0` then makes `sigma_stat_rel` NaN (`flavunato/uncertainty.py:495-497`)
+and the `else` branch at `:531` **drops the statistical term from the
 quadrature sum**, so the reported total is just the constant terms. The
 uncertainty is underestimated without warning.
 
@@ -238,7 +238,7 @@ cells indistinguishable from any other missing value, and the tree shows
 
 Only tell: `element_counts = 0` in the export (`:1684`).
 
-Rows whose concentration is 0 are dropped earlier (`:1574-1575`), so this
+Rows whose concentration is 0 are dropped earlier (`:1575-1576`), so this
 bites specifically when the layer model and the spectrum export disagree on
 naming (e.g. `Zr` versus `90Zr`). UNVERIFIED whether SIMNRA produces such a
 divergence in practice; the example pair is internally consistent.
@@ -260,7 +260,7 @@ UNVERIFIED: inferred from the bindings; not tested on a Linux machine.
 **status: open**
 
 `create_depth_profile` selects the reported row per element with
-`el_df['chi2_reduced'].idxmin()` (`flavunato/uncertainty.py:982`). If every row
+`el_df['chi2_reduced'].idxmin()` (`flavunato/uncertainty.py:704`). If every row
 for an element in a layer has `chi2_reduced = NaN` — which happens when the
 `.xnra` carries no simulated spectrum, so `calculate_chi_squared_for_roi`
 returns NaN for every ROI — pandas raises
@@ -282,7 +282,7 @@ In isotope mode, an ROI entry beginning with a mass number takes the
 obtains the cross-section uncertainty from
 `get_isotope_cross_section_uncertainty(entry, overrides)`. That function takes
 only the species name and the override dictionary
-(`flavunato/uncertainty.py:416-449`) — **the global "Cross-section σ (%)" field
+(`flavunato/uncertainty.py:414-447`) — **the global "Cross-section σ (%)" field
 is never passed to it and cannot affect the result.** The field is used only in
 the `else` branch (`flavunato/gui.py:1572`), i.e. for element-mode entries.
 
@@ -290,18 +290,18 @@ The lookup has four exits, all verified by running it:
 
 | Entry | Result | Exit |
 |---|---|---|
-| `12C` with an override | the override | custom override (`:434`) |
-| `12C` | 5 % | exact isotope key (`:438`) |
-| `13C`, `17O`, `18O` | value of the main isotope | exact isotope key (`:438`), unverified value |
+| `12C` with an override | the override | custom override (`:433`) |
+| `12C` | 5 % | exact isotope key (`:437`) |
+| `13C`, `17O`, `18O` | value of the main isotope | exact isotope key (`:437`), unverified value |
 | `14C`, `3H`, `15O`, `13N` | the **element** value (5 %, 2 %, 2 %, 3 %) | element key after stripping the mass number (`:443`) |
-| `28Si`, `90Zr`, `180Hf` | 0 % | Rutherford fallback (`:448`) — correct when scattering is Rutherford |
-| `7Li` | **0 %** | Rutherford fallback (`:448`) — **wrong when it is not** |
+| `28Si`, `90Zr`, `180Hf` | 0 % | Rutherford fallback (`:447`) — correct when scattering is Rutherford |
+| `7Li` | **0 %** | Rutherford fallback (`:447`) — **wrong when it is not** |
 
 Two exits deserve attention.
 
 All stable isotopes of H, C, N and O are listed explicitly as exact keys
 (`1H`, `2H`, `12C`, `13C`, `14N`, `15N`, `16O`, `17O`, `18O` —
-`flavunato/uncertainty.py:137-162`), so the element-key step is reached only by
+`flavunato/uncertainty.py:135-160`), so the element-key step is reached only by
 a non-stable entry such as `3H` or `14C`, or by a mistyped name. Such an entry
 silently takes the element's value **and its reaction label**: `3H` is reported
 as 2 % with `ERDA: 1H(4He,1H)4He`, and `14C` as 5 % with `NRA: 12C(d,p0)13C`.

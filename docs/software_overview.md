@@ -6,7 +6,7 @@ Flavunato is a desktop application that turns a converged SIMNRA fit into
 concentration uncertainties. For each element assigned to a region of interest,
 in each selected layer, it reports a concentration with the combined
 uncertainty from the charge–solid-angle product, the reaction cross section and
-the counting statistics. It does **not** fit spectra: the layer model and the
+the counting statistics. It does **not** fit spectra: the layer model and
 simulated spectrum are taken as given from SIMNRA [@mayer1999simnra], and
 Flavunato propagates uncertainties onto the fitted concentrations.
 
@@ -70,15 +70,15 @@ Python 3.14; Linux and macOS are untested.
 
 Two checks are maintained. The first compares the standard combined
 uncertainty, without chi-squared rescaling, with a manual spreadsheet
-calculation by the author of the method, using the spreadsheet's own counts;
-absolute differences stay below $10^{-9}$. The second reproduces every recorded
-result of version 1.0.0 (git tag `v1.0-thesis`), including the chi-squared
-quantities, with absolute differences below $10^{-12}$, showing that later
-changes do not alter the results for the reference dataset.
+calculation by the author of the method, independent of the code, using its own
+counts; absolute differences stay below $10^{-9}$. The second reproduces every
+recorded result of version 1.0.0 (git tag `v1.0-thesis`), including the
+chi-squared quantities, with absolute differences below $10^{-12}$, showing
+that later changes do not alter the results for the reference data.
 
 Flavunato was developed by Berke Santos and Giuseppe Legrottaglie. Development
 was assisted by Claude (Anthropic), an AI assistant, used for code drafting,
-review and documentation. The authors verified the implementation against an
-independent manual calculation and a regression test.
+review and documentation. The authors verified the implementation against a
+manual calculation by the author of the method and a regression test.
 
 The software is available from the authors on request.

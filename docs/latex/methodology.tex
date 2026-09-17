@@ -510,15 +510,15 @@ simulation carries no signal beyond its own range.
 Two independent checks are maintained.
 
 \textbf{Agreement with the manual calculation.} The program's
-implementation of Eq. (D3) is compared against an independent manual
-spreadsheet calculation, following the method of \citep{diallo2025iba}.
-Supplied with the same detected counts and the same \(\Delta_{Q\Omega}\)
-and \(\Delta_{\sigma_A}\) per element, the program reproduces the manual
-relative and absolute uncertainties for every layer and element to
-within \(10^{-9}\); the largest observed deviation is at the level of
-floating-point rounding (\(\sim 10^{-18}\)). This validates the
-uncertainty formula and its combination, independently of how \(A_A\) is
-obtained.
+implementation of Eq. (D3) is compared against a manual spreadsheet
+calculation by the author of the method, independent of the code
+\citep{diallo2025iba}. Supplied with the same detected counts and the
+same \(\Delta_{Q\Omega}\) and \(\Delta_{\sigma_A}\) per element, the
+program reproduces the manual relative and absolute uncertainties for
+every layer and element to within \(10^{-9}\); the largest observed
+deviation is at the level of floating-point rounding
+(\(\sim 10^{-18}\)). This validates the uncertainty formula and its
+combination, independently of how \(A_A\) is obtained.
 
 The counts themselves are \emph{not} expected to agree: the manual
 calculation used measured counts, whereas the program integrates the
