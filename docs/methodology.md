@@ -16,9 +16,9 @@ recommendations of the cited note.
 ## Overview
 
 Flavunato reads a SIMNRA `.xnra` file together with the corresponding
-element-spectrum export (a tab-separated `.txt` file), and reports, for each
-element in each layer of the fitted model, a concentration and its
-uncertainty.
+element-spectrum export (a tab-separated `.txt` file, saved in this project
+as `...-metadata.txt`), and reports, for each element assigned to a region of
+interest, in each selected layer, a concentration and its uncertainty.
 
 **From the `.xnra` file** (XML, IDF schema with SIMNRA extensions) the program
 takes the fitted layer model — layer thicknesses in $10^{15}\ \text{atoms/cm}^2$
@@ -119,9 +119,9 @@ partition in proportion to atomic concentration, which ignores the
 cross-section and stopping differences between elements; for a heavy element
 in a light matrix it can be wrong by orders of magnitude.
 
-**Always load the metadata file.** Results obtained with the fallback are not
-suitable for quantification. Every exported row records which estimator was
-used in its `aa_method` field; rows must read `spectrum`.
+**Always load the element-spectrum export.** Results obtained with the fallback
+are not suitable for quantification. Every exported row records which estimator
+was used in its `aa_method` field; rows must read `spectrum`.
 
 ---
 
@@ -156,8 +156,9 @@ the detector solid angle. Following [@diallo2025iba], it is estimated as the
 standard deviation of the set of ratios between the simulated
 Particle$\cdot$sr values and the corresponding raw (measured) Particle$\cdot$sr
 values obtained during normalisation. The estimate is valid for samples
-originating from the same analysis session, and is a property of the
-experimental setup rather than of any element.
+originating from the same analysis session (the note writes "analysis
+section"; read here as session, pending confirmation by its author), and is a
+property of the experimental setup rather than of any element.
 
 **Program choice.** $\Delta_{Q\Omega}$ is a user input, expressed in percent
 (default 3 %). It is *not* derived from the `.xnra` file: the program does not

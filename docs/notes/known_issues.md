@@ -1,7 +1,10 @@
 # Known issues
 
-Documentation only. No behaviour has been changed; per CLAUDE.md rule 3 these
-are recorded, not fixed.
+Behaviours worth knowing about, recorded for reference. Calculation behaviour
+is unchanged throughout: the golden regression still reproduces the thesis
+results. Items marked **open** are live in the current code. Items marked
+**resolved** say how — by a documented decision, or by a code change with the
+commit that made it.
 
 ## 1. Experimental channel 0 holds a non-physical value
 **status: open (documentation only)**
@@ -104,10 +107,11 @@ confirmed as the thesis version. This explains part of the VALIDATION B
 deltas.
 
 The ROIs behind the reference spreadsheet are **not needed**. Its author
-counted MEASURED counts; the program integrates SIMULATED partial counts. VALIDATION B therefore compares
-two different methods and can never be an equality test -- its deltas are a
-tracked diagnostic, not a defect. `tests/golden/rois.json` accordingly uses
-each element's full simulated support (`roi_source: "reference"`), chosen for
+counted MEASURED counts; the program integrates SIMULATED partial counts.
+VALIDATION B therefore compares two different methods and can never be an
+equality test -- its deltas are a tracked diagnostic, not a defect.
+`tests/golden/rois.json` accordingly uses each element's full simulated support
+(`roi_source: "reference"`), chosen for
 reproducibility.
 
 Note that Zr's xlsx count (1 150 000) exceeds the element's entire simulated
@@ -182,7 +186,7 @@ golden reference must then be regenerated deliberately.
 ## 8. The 'approximate' A_A fallback is weakly signalled
 **status: open**
 
-When no element-spectrum metadata file is loaded, A_A falls back to
+When no element-spectrum export is loaded, A_A falls back to
 
     A_A = int(roi_counts * concentration)
 
@@ -204,7 +208,7 @@ method** — the warning is suppressed exactly when it matters most. No dialog,
 no log line, nothing in the results table. The `aa_method` column in the
 export (`:1686`) is the only reliable record.
 
-Methodology will state: always load the metadata file.
+Methodology states: always load the element-spectrum export.
 Candidate for v1.1: a clear warning, or block the calculation outright.
 
 ## 9. Element name mismatch gives A_A = 0 silently

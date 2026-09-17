@@ -2,10 +2,10 @@
 
 A Python/Tkinter desktop tool for ion beam analysis (IBA). Flavunato reads
 SIMNRA `.xnra` files together with their element-spectrum exports and reports,
-for every element in every layer of the fitted model, a concentration and its
-uncertainty — combining the charge–solid-angle, cross-section and counting
-contributions, with optional χ² or AUC rescaling. It also plots spectra and
-exports results and depth profiles to Excel or CSV.
+for each element assigned to a region of interest, in each selected layer, a
+concentration and its uncertainty — combining the charge–solid-angle,
+cross-section and counting contributions, with optional χ² or AUC rescaling. It
+also plots spectra and exports results and depth profiles to Excel or CSV.
 
 ## Quick start
 
@@ -21,6 +21,7 @@ A virtual environment is recommended — see [Installation](docs/installation.md
 ## Documentation
 
 - [Installation](docs/installation.md) — Python version, virtual environment, dependencies, launch commands.
+- [Software overview](docs/software_overview.md) — a short prose summary of what the program does, for reports and papers.
 - [User guide](docs/user_guide.md) — the GUI tab by tab, and a checklist to run before using results.
 - [Methodology](docs/methodology.md) — the equations, the uncertainty budget, assumptions and limitations.
 - [Tests](tests/README.md) — golden regression and validation against a manual calculation.

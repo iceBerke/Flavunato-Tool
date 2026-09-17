@@ -38,11 +38,8 @@ The three input files are real IBA data and are **never committed**; see
 `examples/README.md`. `golden/reference.json` is generated locally by
 `generate_golden.py` and is gitignored too, so neither the data nor anything
 derived from it enters the repository. Every script exits 0 with a `SKIP:`
-message when data is absent, so a clone without it still passes.
-
-The golden and validation tests need the local example data (see
-`examples/README.md`); without it they skip, so a fresh clone or CI cannot
-detect regressions.
+message when the data is absent, so a fresh clone or CI passes without
+running the checks and cannot detect regressions.
 
 Before committing, confirm nothing from `examples/` except `README.md`, and no
 `reference.json`, is staged:
@@ -63,7 +60,7 @@ Each ROI spans the element's **full simulated support** (`roi_source:
 the reference spreadsheet. `check_golden.py` fails if `roi_source` changes,
 so the basis cannot be swapped silently.
 
-Those ROIs are not needed: the spreadsheet counted **measured** counts, while
+The spreadsheet's ROIs are not needed: it counted **measured** counts, while
 the program integrates **simulated** partial counts
 (`flavunato/element_spectra.py:404`). Validation B therefore compares two
 different methods and can never be an equality test — its deltas are a

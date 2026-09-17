@@ -51,7 +51,8 @@ Markdown is read on GitHub, but never reaches the thesis.
 The thesis copy may be edited freely in Overleaf; the repo `.tex` is
 regenerated from the Markdown.
 
-Citations are emitted as `\citep{...}` (11 occurrences), which requires
+Citations are emitted as `\citep{...}` — 11 occurrences in
+`methodology.tex`, 2 in `software_overview.tex` — which requires
 natbib. If the thesis uses biblatex instead, regenerate with `--biblatex`
 rather than `--natbib`, and the citations become `\autocite{...}`.
 
@@ -63,7 +64,7 @@ The fragment uses these; they must be in the thesis preamble:
 \usepackage[T1]{fontenc} % accents (Orleans) and copy-pasteable underscores
 \usepackage{amsmath}    % \sqrt, \frac, \text, \operatorname, \tag
 \usepackage{booktabs}   % \toprule, \midrule, \bottomrule
-\usepackage{longtable}  % the three tables
+\usepackage{longtable}  % the four tables in methodology.tex
 \usepackage{array}      % \arraybackslash in the column specifications
 \usepackage{calc}       % \real{...} in the longtable column widths
 \usepackage{caption}    % see "uncaptioned tables" below
@@ -92,8 +93,8 @@ without it LaTeX reports harmless "No counter none defined" errors.
 
 ### Tested
 
-Compiled successfully on Overleaf with the preamble above (report class,
-pdfLaTeX).
+`methodology.tex` compiled successfully on Overleaf with the preamble above
+(report class, pdfLaTeX).
 
 ### Heading levels
 
