@@ -189,7 +189,7 @@ such. The note gives four values [@diallo2025iba]:
 
 | Reaction | $\Delta_{\sigma_A}$ | Source |
 |---|---|---|
-| $\mathrm{M}x(\alpha,\alpha)\mathrm{M}x$ (Rutherford) | 0 % | Diallo 2025 |
+| $\mathrm{M}x(\alpha,\alpha)\mathrm{M}x$ | 0 % | Diallo 2025; reading it as Rutherford is this program's |
 | $^{16}\mathrm{O}(d,\alpha_0)^{14}\mathrm{N}$ | 2 % | Diallo 2025 |
 | $^{1}\mathrm{H}(^{4}\mathrm{He},{}^{1}\mathrm{H})^{4}\mathrm{He}$ | 2 % | Diallo 2025 |
 | $^{12}\mathrm{C}(d,p_0)^{13}\mathrm{C}$ | 5 % | Diallo 2025 |
@@ -217,7 +217,7 @@ above:
 | O, $^{16}$O | 2 % | Diallo 2025 |
 | $^{17}$O, $^{18}$O | 2 % | program addition, unverified |
 | other isotopes of H, C, N, O | element value | via element key |
-| any other element | 0 % (Rutherford) | Diallo 2025 for heavy elements (RBS); not justified for light elements |
+| any other element | 0 % (Rutherford) | Diallo 2025 for $\mathrm{M}x(\alpha,\alpha)\mathrm{M}x$; limiting it to Rutherford (typically heavy) targets is this program's reading |
 
 $^{13}$C, $^{17}$O and $^{18}$O reuse the value of the main isotope, although
 they are usually measured through different reactions; these values have no
@@ -236,9 +236,13 @@ $\sigma = 2\,\%$ and the reaction $^{1}$H($^{4}$He,$^{1}$H)$^{4}$He, $^{14}$C
 with $\sigma = 5\,\%$ and $^{12}$C(d,p$_0$)$^{13}$C.
 
 The 0 % fallback is reached only when the base element is absent from the table
-altogether. That is the intended behaviour for heavy elements measured by RBS,
-but it does not distinguish them from light ones: $^{7}$Li, for example,
-silently receives a 0 % cross-section uncertainty.
+altogether. The cited note gives 0 % for the reaction
+$\mathrm{M}x(\alpha,\alpha)\mathrm{M}x$; treating absence from the table as
+equivalent to "measured by Rutherford scattering" is this program's reading,
+not a statement of the note. The fallback therefore applies to any unlisted
+species regardless of how it was actually measured: $^{7}$Li, for example,
+silently receives a 0 % cross-section uncertainty even when its cross section
+is not Rutherford.
 
 **The global cross-section input is not consulted in isotope mode.** For an ROI
 entry carrying a mass number, the value comes only from the table above or from

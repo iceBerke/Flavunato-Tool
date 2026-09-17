@@ -74,13 +74,15 @@ Each override row takes an isotope name and a σ in percent; `×` removes the
 row. An isotope with no override falls back to the built-in default for that
 isotope, then to the element default, and finally to 0 %.
 
-> **Only `H`/`1H`, `C`/`12C`, `O`/`16O` and the 0 % heavy-element fallback come
-> from the cited method.** Every other entry in the built-in table — `2H`,
-> `13C`, `N`, `14N`, `15N`, `17O`, `18O` — is an unverified addition of this
-> program.
+> **Only `H`/`1H`, `C`/`12C`, `O`/`16O` and the 0 % elastic-α value come from
+> the cited method.** Every other entry in the built-in table — `2H`, `13C`,
+> `N`, `14N`, `15N`, `17O`, `18O` — is an unverified addition of this program.
 >
 > **Any element not in the table receives 0 %**, including light ones such as
-> `7Li` — the fallback is only correct for heavy elements measured by RBS.
+> `7Li`. The cited method gives 0 % for elastic α scattering, `Mx(α,α)Mx`;
+> reading this as Rutherford and applying it to every unlisted species is this
+> program's interpretation, so the value is only right when that species' cross
+> section really is Rutherford.
 >
 > All stable isotopes of H, C, N and O are listed, so a non-stable or mistyped
 > entry such as `3H` or `14C` silently takes the element's σ and its reaction

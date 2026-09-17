@@ -300,8 +300,8 @@ The lookup has four exits, all verified by running it:
 | `12C` | 5 % | exact isotope key (`:438`) |
 | `13C`, `17O`, `18O` | value of the main isotope | exact isotope key (`:438`), unverified value |
 | `14C`, `3H`, `15O`, `13N` | the **element** value (5 %, 2 %, 2 %, 3 %) | element key after stripping the mass number (`:443`) |
-| `28Si`, `90Zr`, `180Hf` | 0 % | Rutherford fallback (`:448`) — correct for heavy elements measured by RBS |
-| `7Li` | **0 %** | Rutherford fallback (`:448`) — **wrong for a light isotope** |
+| `28Si`, `90Zr`, `180Hf` | 0 % | Rutherford fallback (`:448`) — correct when scattering is Rutherford |
+| `7Li` | **0 %** | Rutherford fallback (`:448`) — **wrong when it is not** |
 
 Two exits deserve attention.
 
@@ -312,11 +312,14 @@ a non-stable entry such as `3H` or `14C`, or by a mistyped name. Such an entry
 silently takes the element's value **and its reaction label**: `3H` is reported
 as 2 % with `ERDA: 1H(4He,1H)4He`, and `14C` as 5 % with `NRA: 12C(d,p0)13C`.
 
-The 0 % fallback, reached only when the base element is absent from the table,
-does not distinguish a heavy element measured by RBS (where 0 % is right) from
-a light isotope measured by NRA or ERDA (where it is not). Raising the global
-field corrects neither exit.
+The 0 % fallback is reached whenever the base element is absent from the table.
+The cited note gives 0 % for the reaction `Mx(a,a)Mx`; equating "absent from
+the table" with "measured by Rutherford scattering" is this program's reading.
+The fallback therefore fires regardless of the reaction actually used, so it is
+right for a species whose cross section really is Rutherford and wrong for one
+whose is not. Raising the global field corrects neither exit.
 
 Workaround: in isotope mode, set an explicit per-isotope override for every
-light isotope that is not `1H`, `12C` or `16O`. See the provenance table in
-`docs/methodology.md` under *Cross sections*.
+species that is not `1H`, `12C` or `16O` and is not measured by Rutherford
+scattering. See the provenance table in `docs/methodology.md` under
+*Cross sections*.
