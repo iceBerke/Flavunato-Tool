@@ -1,4 +1,5 @@
-"""Compare the program against the supervisor's manual xlsx reference.
+"""Compare the program against the manual xlsx reference by the author of the
+method.
 
 VALIDATION A -- formula check. CAN FAIL (exit 1), tolerance 1e-9.
     Feeds the xlsx's OWN counts and per-element Q.Omega/sigma into
@@ -7,8 +8,9 @@ VALIDATION A -- formula check. CAN FAIL (exit 1), tolerance 1e-9.
     question entirely: same inputs in, same numbers expected out.
 
 VALIDATION B -- counts comparison. REPORT ONLY, never fails.
-    Program A_A for the rois.json ROIs beside the xlsx counts. The supervisor
-    counted MEASURED counts; the program integrates SIMULATED partial counts.
+    Program A_A for the rois.json ROIs beside the xlsx counts. The author
+    of the method counted MEASURED counts; the program integrates SIMULATED
+    partial counts.
     These are different methods, so this can never be an equality test and
     deltas are expected. It is a tracked diagnostic, not a pass/fail check.
 
