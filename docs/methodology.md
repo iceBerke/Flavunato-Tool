@@ -204,15 +204,47 @@ the source; they must be justified independently before being relied upon.
 | $^{2}\mathrm{H}(^{4}\mathrm{He},{}^{2}\mathrm{H})^{4}\mathrm{He}$ | 3 % | program addition, provenance unverified |
 
 **Program addition — isotope defaults.** For isotope-resolved work the program
-carries a per-isotope default table (H, $^{1}$H 2 %; $^{2}$H 3 %; C, $^{12}$C,
-$^{13}$C 5 %; N, $^{14}$N, $^{15}$N 3 %; O, $^{16}$O, $^{17}$O, $^{18}$O 2 %),
-each mapped to the corresponding reaction above. Lookup proceeds from a
-user-supplied override, to the exact isotope key, to the element key obtained
-by stripping the mass number, and finally defaults to 0 % (Rutherford) for any
-species not listed — which is the intended behaviour for heavy elements
-measured by RBS, but means an unlisted light element silently receives a 0 %
-cross-section uncertainty. This table is a convenience default of the program;
-the values other than the four above are not attributable to the cited note.
+carries a per-isotope default table, each entry mapped to one of the reactions
+above:
+
+| Species | Default $\Delta_{\sigma_A}$ | Basis |
+|---|---|---|
+| H, $^{1}$H | 2 % | Diallo 2025 |
+| $^{2}$H | 3 % | program addition, unverified |
+| C, $^{12}$C | 5 % | Diallo 2025 |
+| $^{13}$C | 5 % | program addition, unverified |
+| N, $^{14}$N, $^{15}$N | 3 % | program addition, unverified |
+| O, $^{16}$O | 2 % | Diallo 2025 |
+| $^{17}$O, $^{18}$O | 2 % | program addition, unverified |
+| other isotopes of H, C, N, O | element value | via element key |
+| any other element | 0 % (Rutherford) | Diallo 2025 for heavy elements (RBS); not justified for light elements |
+
+$^{13}$C, $^{17}$O and $^{18}$O reuse the value of the main isotope, although
+they are usually measured through different reactions; these values have no
+basis in the cited note.
+
+Lookup proceeds from a user-supplied override, to the exact isotope key, to the
+element key obtained by stripping the mass number, and finally to the 0 %
+Rutherford fallback.
+
+All stable isotopes of H, C, N and O — $^{1}$H, $^{2}$H, $^{12}$C,
+$^{13}$C, $^{14}$N, $^{15}$N, $^{16}$O, $^{17}$O, $^{18}$O — are listed
+explicitly, so the element-key step is reached only by a non-stable entry such
+as $^{3}$H or $^{14}$C, or by a mistyped name. Such an entry silently takes the
+element's value **and its reaction label**: $^{3}$H is reported with
+$\sigma = 2\,\%$ and the reaction $^{1}$H($^{4}$He,$^{1}$H)$^{4}$He, $^{14}$C
+with $\sigma = 5\,\%$ and $^{12}$C(d,p$_0$)$^{13}$C.
+
+The 0 % fallback is reached only when the base element is absent from the table
+altogether. That is the intended behaviour for heavy elements measured by RBS,
+but it does not distinguish them from light ones: $^{7}$Li, for example,
+silently receives a 0 % cross-section uncertainty.
+
+**The global cross-section input is not consulted in isotope mode.** For an ROI
+entry carrying a mass number, the value comes only from the table above or from
+an explicit per-isotope override; the single cross-section field that applies
+to element-mode entries is ignored. This is a known limitation of the current
+version.
 
 ---
 

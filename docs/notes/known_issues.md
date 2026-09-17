@@ -279,3 +279,44 @@ which does not say that chi-squared was the cause. On the command line the
 Results themselves are unaffected: the uncertainty calculation tolerates a NaN
 chi-squared (`chi2_factor` falls back to 1.0). Only the depth-profile export
 fails.
+
+## 12. Global cross-section input ignored for isotope entries
+**status: open**
+
+In isotope mode, an ROI entry beginning with a mass number takes the
+`if isotope_mode and is_isotope` branch (`flavunato/gui.py:1563-1568`), which
+obtains the cross-section uncertainty from
+`get_isotope_cross_section_uncertainty(entry, overrides)`. That function takes
+only the species name and the override dictionary
+(`flavunato/uncertainty.py:416-449`) — **the global "Cross-section σ (%)" field
+is never passed to it and cannot affect the result.** The field is used only in
+the `else` branch (`flavunato/gui.py:1572`), i.e. for element-mode entries.
+
+The lookup has four exits, all verified by running it:
+
+| Entry | Result | Exit |
+|---|---|---|
+| `12C` with an override | the override | custom override (`:434`) |
+| `12C` | 5 % | exact isotope key (`:438`) |
+| `13C`, `17O`, `18O` | value of the main isotope | exact isotope key (`:438`), unverified value |
+| `14C`, `3H`, `15O`, `13N` | the **element** value (5 %, 2 %, 2 %, 3 %) | element key after stripping the mass number (`:443`) |
+| `28Si`, `90Zr`, `180Hf` | 0 % | Rutherford fallback (`:448`) — correct for heavy elements measured by RBS |
+| `7Li` | **0 %** | Rutherford fallback (`:448`) — **wrong for a light isotope** |
+
+Two exits deserve attention.
+
+All stable isotopes of H, C, N and O are listed explicitly as exact keys
+(`1H`, `2H`, `12C`, `13C`, `14N`, `15N`, `16O`, `17O`, `18O` —
+`flavunato/uncertainty.py:137-162`), so the element-key step is reached only by
+a non-stable entry such as `3H` or `14C`, or by a mistyped name. Such an entry
+silently takes the element's value **and its reaction label**: `3H` is reported
+as 2 % with `ERDA: 1H(4He,1H)4He`, and `14C` as 5 % with `NRA: 12C(d,p0)13C`.
+
+The 0 % fallback, reached only when the base element is absent from the table,
+does not distinguish a heavy element measured by RBS (where 0 % is right) from
+a light isotope measured by NRA or ERDA (where it is not). Raising the global
+field corrects neither exit.
+
+Workaround: in isotope mode, set an explicit per-isotope override for every
+light isotope that is not `1H`, `12C` or `16O`. See the provenance table in
+`docs/methodology.md` under *Cross sections*.

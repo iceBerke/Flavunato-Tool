@@ -72,9 +72,29 @@ entirely.
 
 Each override row takes an isotope name and a σ in percent; `×` removes the
 row. An isotope with no override falls back to the built-in default for that
-isotope, then to the element default, and finally to 0 % — so an unlisted light
-element silently receives 0 %. Check that any isotope you care about is
-covered.
+isotope, then to the element default, and finally to 0 %.
+
+> **Only `H`/`1H`, `C`/`12C`, `O`/`16O` and the 0 % heavy-element fallback come
+> from the cited method.** Every other entry in the built-in table — `2H`,
+> `13C`, `N`, `14N`, `15N`, `17O`, `18O` — is an unverified addition of this
+> program.
+>
+> **Any element not in the table receives 0 %**, including light ones such as
+> `7Li` — the fallback is only correct for heavy elements measured by RBS.
+>
+> All stable isotopes of H, C, N and O are listed, so a non-stable or mistyped
+> entry such as `3H` or `14C` silently takes the element's σ and its reaction
+> label instead.
+>
+> For any light isotope outside the trusted set, set an explicit override from
+> a documented source rather than relying on the default. The full table with
+> its provenance is in
+> [methodology](methodology.md#uncertainty-budget), under *Cross sections*.
+
+Note also that in isotope mode the global **Cross-section σ (%)** field is
+**ignored** for entries carrying a mass number — an entry written `28Si` takes
+the table value or an override, never the field. See
+[known issue 12](notes/known_issues.md).
 
 ### Adjustment method
 
@@ -244,12 +264,12 @@ python -m flavunato.uncertainty sample01.xnra \
 
 **Several samples** — loop, pairing each file with its own export.
 
-Both loops below assume SIMNRA's default export naming: the element spectrum
-for `NAME.xnra` is `NAME-metadata.txt`, in the same folder. That is the naming
-used in `examples/`. If your exports are named differently, change the line
-that builds the export path — and keep the missing-file check, so a sample
-whose export is absent is skipped with a message instead of being processed
-against the wrong data.
+Both loops below assume the naming used in `examples/`
+(`NAME.xnra` → `NAME-metadata.txt`, in the same folder). SIMNRA lets you save
+the export under any name; this convention is only what the loops below assume.
+If your exports are named differently, change the line that builds the export
+path — and keep the missing-file check, so a sample whose export is absent is
+skipped with a message instead of being processed against the wrong data.
 
 bash:
 
