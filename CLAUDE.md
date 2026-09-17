@@ -3,15 +3,14 @@ Python/Tkinter GUI for SIMNRA .xnra IBA spectra and concentration uncertainties.
 Thesis version is tagged v1.0-thesis. It is the reference; never alter its behaviour.
 
 ## Modules
-The code is the `flavunato` package. **Entry point**: `python -m flavunato`
-or `python run_flavunato.py`.
+The code is the `flavunato` package. The GUI is the only interface.
+**Entry point**: `python -m flavunato` or `python run_flavunato.py`.
 
 - `flavunato/gui.py` — Tkinter GUI. Holds `main()`.
 - `flavunato/plotting.py` — .xnra XML parsing and spectrum plotting. Library only.
-- `flavunato/uncertainty.py` — uncertainties, chi-squared, depth profiles. Also a CLI
-  (`python -m flavunato.uncertainty`).
+- `flavunato/uncertainty.py` — uncertainties, chi-squared, depth profiles. Library only.
 - `flavunato/element_spectra.py` — SIMNRA element-spectrum .txt parsing/plotting.
-  Also a CLI (`python -m flavunato.element_spectra`).
+  Library only.
 
 Imports are relative: GUI → the other three; uncertainty → element_spectra.
 The GUI swallows ImportError on all three, so a broken import silently

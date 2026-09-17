@@ -21,7 +21,7 @@ A virtual environment is recommended — see [Installation](docs/installation.md
 ## Documentation
 
 - [Installation](docs/installation.md) — Python version, virtual environment, dependencies, launch commands.
-- [User guide](docs/user_guide.md) — the GUI tab by tab, the command line, and a checklist to run before using results.
+- [User guide](docs/user_guide.md) — the GUI tab by tab, and a checklist to run before using results.
 - [Methodology](docs/methodology.md) — the equations, the uncertainty budget, assumptions and limitations.
 - [Tests](tests/README.md) — golden regression and validation against a manual calculation.
 - [Known issues](docs/notes/known_issues.md) — open behaviours and their workarounds.

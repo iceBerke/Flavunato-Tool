@@ -3,17 +3,14 @@
 How to use Flavunato. For the equations behind the numbers, see
 [methodology](methodology.md).
 
-> **Percent or fraction?** The GUI takes **percent** — type `3` for 3 %. The
-> command line takes **fractions** — pass `-q 0.03` for 3 %. Mixing the two up
-> is the easiest way to get an uncertainty wrong by a factor of 100.
-
 ## The file bar
 
 At the top of the window, above the tabs. Click **Browse…** and select the
 `.xnra` file. This selection is shared by every tab.
 
-The GUI handles **one file at a time**. For several files, use the command
-line (see below).
+The GUI handles **one file at a time**. Several samples means one analysis per
+sample: load each `.xnra` with its own element-spectrum export, calculate, and
+export the results before moving to the next.
 
 ## Loading the element spectrum — "Element/Iso Data" tab
 
@@ -38,15 +35,16 @@ list. **Clear** unloads the file.
 ### Uncertainty components
 
 **Q·Ω Uncertainty (%)** — default 3. **This field is in percent: type `3` for
-3 %.** (The command-line equivalent, `-q`, takes a fraction instead.) It is
-the combined uncertainty on the analysis charge and the detector solid angle,
-a property of the setup, identical for every element in the measurement.
+3 %.** It is the combined uncertainty on the analysis charge and the detector
+solid angle, a property of the setup, identical for every element in the
+measurement.
 
 *How to estimate it.* Following Diallo (2025): take the ratios of the
 simulated Particle·sr values to the corresponding measured Particle·sr values
-recorded during normalisation, across the samples of one analysis session, and
-use the standard deviation of that set. The estimate is valid for samples from
-the same session. Flavunato does not compute this for you — form the ratios
+recorded during normalisation, across the samples of one analysis session (the
+cited note says "analysis section"; read here as session, pending confirmation
+by the author), and use the standard deviation of that set. The estimate is
+valid for samples from the same session. Flavunato does not compute this for you — form the ratios
 yourself and type the result in.
 
 **Default Reaction** — selects the cross-section uncertainty for the reaction
@@ -216,117 +214,6 @@ name with its colour name, then the x value with its unit (`Ch` or `keV`,
 following the selected axis mode) and the counts.
 
 There are no keyboard shortcuts and no menu bar.
-
-## Command line
-
-> **The command line takes fractions, not percent.** `-q 0.03` means 3 %, and
-> `--xsec 0.05` means 5 %. The GUI fields for the same two quantities are in
-> percent.
-
-### Uncertainties
-
-```
-python -m flavunato.uncertainty INPUT [INPUT ...] [options]
-```
-
-`INPUT` may be `.xnra` files or directories; directories are searched for
-`.xnra` files.
-
-| Option | Default | Meaning |
-|---|---|---|
-| `-r, --roi START END ELEMENTS` | — | one ROI; repeat for more |
-| `-q, --qomega` | `0.03` | Q·Ω uncertainty **as a fraction** |
-| `--reaction` | `RBS: Mx(α,α)Mx` | reaction for the cross-section lookup |
-| `--xsec` | — | override the cross-section uncertainty, **as a fraction** |
-| `--adjustment {none,chi2,auc}` | `none` | adjustment method |
-| `--isotope-mode` | off | treat isotopes separately |
-| `--element-spectrum` | — | the export file; **supply this** |
-| `-o, --output` | — | results file, CSV or Excel by extension |
-| `--profiles` | — | depth-profile Excel file |
-| `--list-reactions` | — | list reactions and exit |
-| `--list-isotopes` | — | list isotope defaults and exit |
-
-#### One element spectrum per sample
-
-`--element-spectrum` takes a single file, and that file describes one
-measurement. **Never point one export at several `.xnra` files** — the counts
-would be taken from the wrong sample, and nothing would warn you. Run the tool
-once per sample, each `.xnra` paired with its own export.
-
-**Single sample**
-
-```bash
-python -m flavunato.uncertainty sample01.xnra \
-  --element-spectrum sample01-metadata.txt \
-  -r 900 1053 "Zr" \
-  -r 322 504 "O" \
-  -q 0.03 --adjustment none \
-  -o sample01-results.xlsx --profiles sample01-profiles.xlsx
-```
-
-**Several samples** — loop, pairing each file with its own export.
-
-Both loops below assume the naming used in `examples/`
-(`NAME.xnra` → `NAME-metadata.txt`, in the same folder). SIMNRA lets you save
-the export under any name; this convention is only what the loops below assume.
-If your exports are named differently, change the line that builds the export
-path — and keep the missing-file check, so a sample whose export is absent is
-skipped with a message instead of being processed against the wrong data.
-
-bash:
-
-```bash
-for f in *.xnra; do
-  base="${f%.xnra}"
-  spectrum="${base}-metadata.txt"
-  if [ ! -f "$spectrum" ]; then
-    echo "SKIP: no element spectrum for '$f' (expected '$spectrum')" >&2
-    continue
-  fi
-  python -m flavunato.uncertainty "$f" \
-    --element-spectrum "$spectrum" \
-    -r 900 1053 "Zr" -r 322 504 "O" \
-    -q 0.03 -o "${base}-results.xlsx"
-done
-```
-
-PowerShell:
-
-```powershell
-Get-ChildItem *.xnra | ForEach-Object {
-  $base = $_.BaseName
-  $spectrum = Join-Path $_.DirectoryName "$base-metadata.txt"
-  if (-not (Test-Path -LiteralPath $spectrum)) {
-    Write-Warning "SKIP: no element spectrum for '$($_.Name)' (expected '$spectrum')"
-    return
-  }
-  python -m flavunato.uncertainty $_.FullName `
-    --element-spectrum $spectrum `
-    -r 900 1053 "Zr" -r 322 504 "O" `
-    -q 0.03 -o "$base-results.xlsx"
-}
-```
-
-Adjust the ROI channels to your own spectra — the values above are only an
-illustration.
-
-### Element spectra
-
-```
-python -m flavunato.element_spectra INPUT [options]
-```
-
-| Option | Default | Meaning |
-|---|---|---|
-| `-e, --elements` | — | comma-separated elements to plot |
-| `-i, --isotopes` | — | comma-separated isotopes to plot |
-| `--show-simulated` | off | overlay the Simulated column |
-| `--show-raw` | off | overlay the Experimental column |
-| `--show-smoothed` | off | overlay the Smoothed column |
-| `--energy` | off | energy x-axis instead of channels |
-| `--offset` | `0` | calibration offset for the energy axis |
-| `--gain` | `1` | calibration gain for the energy axis |
-| `-t, --title` | — | plot title |
 
 ## Before using results — checklist
 

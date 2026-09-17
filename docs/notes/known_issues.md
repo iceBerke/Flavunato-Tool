@@ -86,9 +86,10 @@ none affects numerical output.
 
 **The `_v9` / `_v6` naming is intentional, not stale.** It denotes the
 algorithm revision (the French expert's formula generation), not a file
-version: `calculate_uncertainty_v9`, `process_batch_v9` and the `_v6` aliases
-are API names, and the matching text at `flavunato/gui.py:46,807` and
-`flavunato/uncertainty.py:304,461,871,1112` describes them correctly. The
+version: `calculate_uncertainty_v9` and the `_v6` aliases were API names
+(`process_batch_v9` has since been removed with the command-line entry points,
+c0f5d0d), and the matching text at `flavunato/gui.py:47,799,807,1500` and
+`flavunato/uncertainty.py:2,301,458` describes them correctly. The
 Excel sheet name `Uncertainties_v9` (`flavunato/gui.py:1746`) must also stay:
 the thesis exports use it.
 
@@ -114,21 +115,15 @@ integral (1 128 896.2, +1.84%), so it is unreachable at any ROI under the
 current definition.
 
 ## 5. CLI help crashes on Windows cp1252 consoles
-**status: resolved**
+**status: resolved (code removed in c0f5d0d)**
 
 `python -m flavunato.uncertainty --help` failed with `UnicodeEncodeError` on
 Windows cp1252 consoles (`Ω` in the argparse help). Pre-existing (reproduced
-on v1.0-thesis code).
+on v1.0-thesis code). It was first fixed by reconfiguring stdout to UTF-8 at
+the start of each CLI `main()`; both entry points have since been removed, so
+the failing path no longer exists.
 
-Fixed: both CLI `main()` functions now reconfigure stdout to UTF-8 with
-`errors="replace"` at start (`flavunato/uncertainty.py:1104`,
-`flavunato/element_spectra.py:600`). Both CLIs print non-ASCII —
-`uncertainty` at 18 call sites, `element_spectra` via `plot_element_spectra`
-(`:588,590`). The GUI is untouched.
-
-Workaround, still valid for older Python without `sys.stdout.reconfigure`
-or for other tools: set `PYTHONIOENCODING=utf-8` (cmd) or
-`$env:PYTHONIOENCODING='utf-8'` (PowerShell).
+See item 14 for the equivalent limitation in the graphical interface.
 
 ## 6. Element spectrum code paths are unguarded
 **status: open**
@@ -271,10 +266,9 @@ for an element in a layer has `chi2_reduced = NaN` — which happens when the
 returns NaN for every ROI — pandas raises
 `ValueError: Encountered all NA values`.
 
-In the GUI this surfaces as the generic dialog
-`Export failed: ...` from the catch-all handler (`flavunato/gui.py:1824`),
-which does not say that chi-squared was the cause. On the command line the
-`--profiles` step raises instead.
+This surfaces as the generic dialog `Export failed: ...` from the catch-all
+handler (`flavunato/gui.py:1824`), which does not say that chi-squared was the
+cause.
 
 Results themselves are unaffected: the uncertainty calculation tolerates a NaN
 chi-squared (`chi2_factor` falls back to 1.0). Only the depth-profile export
@@ -323,3 +317,44 @@ Workaround: in isotope mode, set an explicit per-isotope override for every
 species that is not `1H`, `12C` or `16O` and is not measured by Rutherford
 scattering. See the provenance table in `docs/methodology.md` under
 *Cross sections*.
+
+## 13. Licence not yet chosen
+**status: open**
+
+Licence not yet chosen; to be decided with the lab/CNRS before public release.
+
+There is no `LICENSE` file and no licence statement in the README or the
+documentation, so default copyright applies and the code is not open source as
+it stands. `docs/software_overview.md` therefore states only that the software
+is available from the authors on request.
+
+## 14. GUI console output fails when stdout is not UTF-8
+**status: open**
+
+The parsing and plotting code prints progress messages containing non-ASCII
+symbols: 19 such `print()` calls in `flavunato/plotting.py` (for example `📂`
+at `:17`, `✓` at `:74`, `⚠️` at `:78`) and two in
+`flavunato/element_spectra.py` (`:588`, `:590`). Nothing reconfigures stdout —
+the `sys.stdout.reconfigure` calls that once did so belonged to the
+command-line entry points and went with them in c0f5d0d.
+
+In a real Windows console this is fine: Python writes to the console through a
+UTF-16 path that does not use the code page, and launching
+`python -m flavunato` from a plain `cmd` window, loading an `.xnra` and
+generating both a spectrum plot and an element-spectrum plot works without
+error (tested).
+
+The failure appears when console output is **redirected** — piped to another
+command, written to a log file, or captured by some IDE run panels. Python
+then falls back to the locale encoding, `cp1252` on a typical French or
+English Windows install, and the first non-ASCII message raises
+`UnicodeEncodeError`. Inside the interface that surfaces as a
+`Failed to generate plot: 'charmap' codec can't encode ...` dialog, so the
+plot is lost rather than the program crashing.
+
+Workaround: set `PYTHONIOENCODING=utf-8` before launching, or start with
+`pythonw`, which has no stdout to redirect.
+
+Fix proposal (v1.1): reconfigure stdout to UTF-8 with `errors="replace"` at
+the start of the GUI `main()`, as the command-line entry points used to do.
+Not implemented.

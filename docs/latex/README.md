@@ -1,14 +1,15 @@
 # LaTeX output
 
-`methodology.tex` is generated from `../methodology.md`. Edit the Markdown,
-never the `.tex` — regenerating overwrites it.
+`methodology.tex` and `software_overview.tex` are generated from the Markdown
+in `../`. Edit the Markdown, never the `.tex` — regenerating overwrites it.
 
 ## Regenerate
 
-One command, from the repository root:
+One command each, from the repository root:
 
 ```
 pandoc docs/methodology.md -f markdown -t latex --natbib --lua-filter=docs/latex/thesis.lua -o docs/latex/methodology.tex
+pandoc docs/software_overview.md -f markdown -t latex --natbib --lua-filter=docs/latex/thesis.lua -o docs/latex/software_overview.tex
 ```
 
 No manual post-processing. `thesis.lua` drops the Markdown `---` separators,
@@ -28,7 +29,7 @@ Markdown is read on GitHub, but never reaches the thesis.
 
 ## Use in Overleaf
 
-1. Upload `methodology.tex` and `flavunato.bib` to the project.
+1. Upload the `.tex` fragments you need and `flavunato.bib` to the project.
 2. Include the fragment where the chapter should appear:
 
    ```latex

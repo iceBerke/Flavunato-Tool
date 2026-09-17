@@ -77,26 +77,19 @@ python run_flavunato.py
 
 Both start the same interface.
 
-## Command-line interface
-
-The two analysis modules also run as command-line tools, but **only through
-`python -m`**:
-
-```bash
-python -m flavunato.uncertainty --help
-python -m flavunato.element_spectra --help
-```
-
-Running the files directly (`python flavunato/uncertainty.py`) fails with
-`ImportError: attempted relative import with no known parent package`, because
-the modules import each other relatively.
-
 ## Windows console encoding
 
-Both command-line tools set their output encoding to UTF-8 at start, so
-symbols such as `Ω` print correctly on a `cp1252` console. If you use an older
-Python without `sys.stdout.reconfigure`, or pipe the output through another
-tool that re-encodes it, set the encoding yourself first:
+Flavunato writes progress messages to the console while parsing files and
+drawing plots, and some contain symbols such as `✓` and `📂`. A normal Windows
+console handles these correctly.
+
+The problem appears when that output is **redirected** — piped to another
+command, written to a log file, or captured by some IDE run panels. Python
+then falls back to the `cp1252` code page, which cannot represent those
+symbols, and raises `UnicodeEncodeError`; the interface reports it as a failed
+plot.
+
+If you redirect the output, set the encoding first:
 
 ```bat
 set PYTHONIOENCODING=utf-8
@@ -106,4 +99,6 @@ set PYTHONIOENCODING=utf-8
 $env:PYTHONIOENCODING='utf-8'
 ```
 
-See `notes/known_issues.md` item 5.
+Starting it with `pythonw` avoids the problem entirely.
+
+See `notes/known_issues.md` item 14.
