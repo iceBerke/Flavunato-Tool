@@ -55,22 +55,34 @@ field only becomes editable for a custom reaction.
 backscattering. Non-Rutherford reactions have a non-zero value. Also in
 percent.
 
-**Isotope mode** — off by default. When on, elements written with a mass
-number (for example `28Si`) are treated separately instead of being summed
-into the element total. This only works if the `.xnra` layer model itself uses
-isotope names.
+**Isotope mode** — **not available in this version.** The uncertainty tab has
+no isotope toggle, so every ROI entry is treated as an element: a name written
+with a mass number, for example `28Si`, is summed into the element total and
+takes the global **Cross-section σ (%)** field. The isotope-resolved path
+exists in the code but cannot be switched on; see
+[known issue 15](notes/known_issues.md). It would in any case only work if the
+`.xnra` layer model itself used isotope names.
+
+Isotope *plotting* is unaffected — see *Element/Iso data*, which lists and
+plots per-isotope spectra from the same export.
 
 ### Isotope σ overrides
 
-**These apply only when isotope mode is on, and only to ROI entries whose name
-begins with a mass number.** An entry written `Si` takes the global
-**Cross-section σ (%)** field even if an override for `28Si` exists; only
-`28Si` picks the override up. With isotope mode off, overrides are ignored
-entirely.
+> **Not available in this version.** No override row can be created, so the
+> built-in defaults below cannot be replaced from the interface. The section is
+> kept because the defaults themselves still describe what the program would
+> apply, and the warnings under it matter for reading any isotope-resolved
+> result. See [known issue 15](notes/known_issues.md).
 
-Each override row takes an isotope name and a σ in percent; `×` removes the
-row. An isotope with no override falls back to the built-in default for that
-isotope, then to the element default, and finally to 0 %.
+Were isotope mode available, overrides would apply only to ROI entries whose
+name begins with a mass number. An entry written `Si` would take the global
+**Cross-section σ (%)** field even if an override for `28Si` existed; only
+`28Si` would pick the override up, and with isotope mode off overrides would be
+ignored entirely.
+
+Each override row would take an isotope name and a σ in percent, with `×` to
+remove the row. An isotope with no override falls back to the built-in default
+for that isotope, then to the element default, and finally to 0 %.
 
 > **Only `H`/`1H`, `C`/`12C`, `O`/`16O` and the 0 % elastic-α value come from
 > the cited method.** Every other entry in the built-in table — `2H`, `13C`,
@@ -86,14 +98,15 @@ isotope, then to the element default, and finally to 0 %.
 > entry such as `3H` or `14C` silently takes the element's σ and its reaction
 > label instead.
 >
-> For any light isotope outside the trusted set, set an explicit override from
-> a documented source rather than relying on the default. The full table with
-> its provenance is in
+> For any light isotope outside the trusted set, the default should not be
+> relied on: an explicit override from a documented source would be needed,
+> which is not currently possible. The full table with its provenance is in
 > [methodology](methodology.md#uncertainty-budget), under *Cross sections*.
 
-Note also that in isotope mode the global **Cross-section σ (%)** field is
-**ignored** for entries carrying a mass number — an entry written `28Si` takes
-the table value or an override, never the field. See
+Because isotope mode cannot be switched on, the global **Cross-section σ (%)**
+field currently applies to every entry, including one written `28Si`. Were the
+path re-enabled, that entry would take the table value or an override and the
+field would be ignored for it — see
 [known issue 12](notes/known_issues.md).
 
 ### Adjustment method

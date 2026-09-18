@@ -281,7 +281,8 @@ fails.
 ## 12. Global cross-section input ignored for isotope entries
 **status: open**
 
-In isotope mode, an ROI entry beginning with a mass number takes the
+In isotope mode — which cannot currently be switched on, see item 15 — an ROI
+entry beginning with a mass number takes the
 `if isotope_mode and is_isotope` branch (`flavunato/gui.py:1563-1568`), which
 obtains the cross-section uncertainty from
 `get_isotope_cross_section_uncertainty(entry, overrides)`. That function takes
@@ -317,10 +318,13 @@ The fallback therefore fires regardless of the reaction actually used, so it is
 right for a species whose cross section really is Rutherford and wrong for one
 whose is not. Raising the global field corrects neither exit.
 
-Workaround: in isotope mode, set an explicit per-isotope override for every
-species that is not `1H`, `12C` or `16O` and is not measured by Rutherford
-scattering. See the provenance table in `docs/methodology.md` under
-*Cross sections*.
+No workaround is needed at present, and none is available. Item 15 keeps the
+isotope branch out of reach, so every entry takes the global field and this
+issue has no effect on any result the program can currently produce. It becomes
+live again if item 15 is fixed; the remedy then is an explicit per-isotope
+override for every species that is not `1H`, `12C` or `16O` and is not measured
+by Rutherford scattering — which also requires the override rows restored. See
+the provenance table in `docs/methodology.md` under *Cross sections*.
 
 ## 13. Licence not yet chosen
 **status: open**
@@ -362,3 +366,57 @@ Workaround: set `PYTHONIOENCODING=utf-8` before launching, or start with
 Fix proposal (v1.1): reconfigure stdout to UTF-8 with `errors="replace"` at
 the start of the GUI `main()`, as the command-line entry points used to do.
 Not implemented.
+
+## 15. Isotope mode cannot be switched on
+**status: open**
+
+The isotope-resolved uncertainty path is implemented but unreachable. Three
+things block it independently.
+
+The mode flag is constructed `False` and never assigned again:
+
+```python
+# flavunato/gui.py:905-909
+# Isotope mode has been removed from the UI. Keep variables defined
+# so downstream code (override helpers, calc loop) still works; they
+# just always report "disabled / no overrides".
+self.isotope_mode = tk.BooleanVar(value=False)
+self.isotope_override_container = ttk.Frame(left_panel)  # orphan, not gridded
+```
+
+There is no `.set(` on it anywhere and no widget is bound to it, so the test
+at `flavunato/gui.py:1563` never takes the isotope branch and the call to
+`get_isotope_cross_section_uncertainty` at `:1566` is dead. The default table
+at `flavunato/uncertainty.py:135-160` is consulted only from that function, so
+it is dead too; `gui.py:56` imports it and never uses it.
+
+The override rows are equally unreachable. `add_isotope_override_row`
+(`flavunato/gui.py:1069`) is never called, so `isotope_override_widgets` stays
+empty and `get_isotope_overrides()` (`:1101-1113`) always returns `{}`. The
+container frame is created but never gridded (`:909`).
+
+Consequences, in the current code:
+
+- every ROI entry takes the element branch (`flavunato/gui.py:1569-1573`), so
+  a name written `28Si` is summed into `Si` and takes the global cross-section
+  field;
+- concentrations come from `layer['concentrations']` (`:1571`), the
+  isotope-summed dict, never from `layer['isotope_concentrations']` (`:1564`),
+  although the parser fills both (`flavunato/uncertainty.py:264-275`);
+- `A_A` is integrated over the element partial spectrum, since
+  `use_isotope` at `:1587` is always `False`;
+- item 12 has no present effect, for the same reason.
+
+Isotope **plotting** is not affected and works normally: the Element/Iso Data
+tab's button is wired at `flavunato/gui.py:685-686` to
+`plot_isotope_spectra_gui` (`:1418`).
+
+No test covers the path. `tests/golden/generate_golden.py:88` passes
+`use_isotope=isotope_mode`, read from `tests/golden/rois.json:14`, which is
+`false`; `tests/validation/compare_manual.py:140` hard-codes `False`.
+`check_golden.py` guards `roi_source` (`:52-54`) but not `isotope_mode`, so a
+flipped flag would not be caught the way a changed `roi_source` is.
+
+Fix proposal (v1.1): restore the isotope toggle and the override rows in the
+uncertainty tab, then cover the path with a test. Not implemented. Until then
+the documentation describes the formalism as implemented, not as available.

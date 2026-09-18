@@ -102,8 +102,10 @@ fit alone and separates element $A$ from the overlapping contributions of other
 elements in the ROI, but it will underestimate scatter if the fit itself is
 poor. This is assessed separately (see *Fit quality*).
 
-In isotope mode the same integral is taken over the isotope-resolved partial
-spectrum instead of the element total.
+The isotope-resolved path takes the same integral over the isotope partial
+spectrum instead of the element total. It is implemented but not reachable in
+this version (see *Assumptions and limitations*), so in practice every result
+integrates the element total.
 
 Two diagnostics are recorded alongside $A_A$ but do not enter any
 uncertainty: the element fraction
@@ -206,7 +208,9 @@ the source; they must be justified independently before being relied upon.
 
 **Program addition — isotope defaults.** For isotope-resolved work the program
 carries a per-isotope default table, each entry mapped to one of the reactions
-above:
+above. The path that consults it is not reachable in this version, so the table
+is documented as implemented behaviour rather than as behaviour you can
+currently obtain:
 
 | Species | Default $\Delta_{\sigma_A}$ | Basis |
 |---|---|---|
@@ -245,11 +249,11 @@ species regardless of how it was actually measured: $^{7}$Li, for example,
 silently receives a 0 % cross-section uncertainty even when its cross section
 is not Rutherford.
 
-**The global cross-section input is not consulted in isotope mode.** For an ROI
-entry carrying a mass number, the value comes only from the table above or from
-an explicit per-isotope override; the single cross-section field that applies
-to element-mode entries is ignored. This is a known limitation of the current
-version.
+**The global cross-section input is always consulted.** Because the
+isotope-resolved path cannot be switched on, every ROI entry — including one
+carrying a mass number — takes the single cross-section field. Were that path
+re-enabled, entries with a mass number would instead take the table value or an
+explicit per-isotope override, and the global field would be ignored for them.
 
 ---
 
@@ -374,7 +378,8 @@ accepts one value of each, applied to every element and layer. This matches
 the formalism, in which both are constant for a measurement, but means that a
 sample requiring different cross-section uncertainties per element (for
 instance RBS for a heavy element and NRA for a light one in the same spectrum)
-must be processed in more than one run, or through the isotope-resolved path.
+must be processed in more than one run. (The isotope-resolved path would also
+serve, but is not reachable in this version.)
 
 **The statistical term is an ROI quantity, not a per-layer one.** $A_A$ is
 integrated over the ROI across the whole depth sampled by that ROI. The same

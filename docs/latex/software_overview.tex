@@ -26,7 +26,8 @@ always be supplied; each result records which estimate was used.
 
 The analyst supplies the regions of interest, the charge--solid-angle
 and cross-section uncertainties, and the choice of adjustment. Results
-are given per element or, in isotope mode, per isotope.
+are given per element. An isotope-resolved path is implemented but
+cannot be switched on in this version.
 
 \subsection{Implemented calculations}\label{implemented-calculations}
 
@@ -43,9 +44,10 @@ unless the analyst selects it. A third option rescales instead by the
 ratio of simulated to measured counts over the region, taken in
 whichever direction exceeds unity --- an addition of this program, not
 in the cited method. Whichever is chosen, the export lists the standard
-value and both rescaled ones. In isotope mode a built-in table supplies
-default cross-section uncertainties per isotope, partly from the cited
-note, which overrides can replace.
+value and both rescaled ones. The isotope-resolved path carries a
+built-in table of per-isotope default cross-section uncertainties,
+partly from the cited note; because that path is unreachable, every
+result uses the single cross-section value the analyst supplies.
 
 Definitions, assumptions and limitations are in the methodology section.
 
