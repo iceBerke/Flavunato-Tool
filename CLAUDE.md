@@ -22,13 +22,14 @@ Dependencies in `requirements.txt`. On Linux tkinter needs `python3-tk`.
 ## Hard rules
 1. VERIFY BEFORE ACTING. Statements in prompts may be wrong. Check every
    claim against the actual code first and report mismatches before doing anything.
-2. PLAN FIRST. Present a numbered plan and wait for explicit "approved".
+2. PLAN FIRST. Present the work as a numbered plan; rule 9 governs the
+   approval it needs.
 3. NO CALCULATION-LOGIC CHANGES. Documentation and restructuring only;
    code removal or refactoring needs explicit scope and must keep the
    golden test passing. If a calculation change seems needed, stop and
    ask.
 4. ONE STEP AT A TIME. After each step: run `python -m py_compile` on all
-   modules, show `git diff --stat`, and wait for approval before committing.
+   modules and show `git diff --stat`.
 5. NO GUESSING. If unsure, ask. Mark anything unverified as "UNVERIFIED".
 6. Use `git mv` for renames. Never delete files without approval.
 7. Keep comments concise.
@@ -37,3 +38,47 @@ Dependencies in `requirements.txt`. On Linux tkinter needs `python3-tk`.
    chars explaining what and why. Every commit ends with the default
    Co-Authored-By trailer, separated from the body by a blank line.
    Trailers are exempt from the 72-char wrap and must never be wrapped.
+9. ANNOUNCE BEFORE ACTING, AND WAIT. For any task that changes files,
+   first report the exact file list, what each change is, and why. Then
+   stop and wait for approval before writing anything. This covers files
+   outside the repo and throwaway test files in temp directories — if you
+   would create it, name it first. If the prompt itself fixes the file
+   list and says to proceed, that is the approval; do not ask twice.
+10. SCOPE IS A CEILING, not a suggestion. If a task says "investigate, do
+    not implement", building a prototype to test an idea is implementing.
+    If you believe the task needs something outside its stated scope, say
+    so and stop. Never do it and disclose it afterwards.
+11. Never commit or push until Berke has reviewed the summary and the diff
+    and said to proceed. No exceptions.
+12. Every task writes its artifacts to `reviews/` at the repository root,
+    never to a temp or scratch directory:
+    `reviews/YYYY-MM-DD_HHMM_<slug>_report.md`, and for change tasks
+    `reviews/YYYY-MM-DD_HHMM_<slug>.diff`. Copy both to
+    `reviews/latest_report.md` and `reviews/latest.diff`, and report the
+    absolute path in the reply. Read-only tasks write the report too.
+13. The diff must include new files: run `git add -N <new paths>` before
+    `git diff`, or the new file is missing from what Berke reviews.
+14. Do not state a path, file or fact as verified unless you ran a command
+    that checked it. Mark anything else "UNCLEAR" or "UNVERIFIED".
+15. THE DIFF IS THE CLAIM. Every change, addition or deletion described in
+    the summary must be visible in the diff written to `reviews/`. Before
+    reporting, re-read that file and check the summary against it. If
+    something you did is not in the diff, say so explicitly and explain
+    why.
+16. ACCOUNT FOR DELETIONS. State the insertion and deletion counts and what
+    every deleted line was. A deletion you did not mention is the most
+    expensive kind of error here.
+17. Never describe a file's state from memory of what you wrote. Read it
+    back from disk, or from the diff, before making a claim about it.
+    Distinguish "I wrote X" from "X is on disk" — only the second is
+    verified.
+18. CITE, DON'T ASSERT. Any claim about program behaviour in a document or
+    summary carries a file:line reference, verified against the code at the
+    time of writing. Stale citations had to be corrected en masse after the
+    CLI was removed.
+19. CHECK THE PROMPT ITSELF. A task from Berke can contain a wrong path, a
+    stale file:line, a claim about the code that is no longer true, or an
+    instruction to write something you cannot verify. Verify the prompt's
+    premises before acting on them. If a premise is wrong, or the task asks
+    you to assert something unverified, stop and say so rather than
+    complying. Doing this is never a failure to follow instructions.

@@ -36,6 +36,10 @@ tests/golden/reference.json
 *.docx
 ~$*.docx
 
+# Review artifacts: per-task reports and diffs, local only. See CLAUDE.md
+# rule 12.
+reviews/
+
 # Reference documents: local until their authors approve publication.
 # Must come after !docs/**/*.pdf above -- last matching rule wins.
 docs/references/*
