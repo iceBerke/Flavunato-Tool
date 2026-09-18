@@ -55,7 +55,16 @@ Dependencies in `requirements.txt`. On Linux tkinter needs `python3-tk`.
     `reviews/YYYY-MM-DD_HHMM_<slug>_report.md`, and for change tasks
     `reviews/YYYY-MM-DD_HHMM_<slug>.diff`. Copy both to
     `reviews/latest_report.md` and `reviews/latest.diff`, and report the
-    absolute path in the reply. Read-only tasks write the report too.
+    absolute path in the reply. Tasks with no diff write the report anyway.
+    A read-only task's report stands alone. A commit task's report records
+    at minimum the commit hash, the staged file list, and the measured
+    subject and longest body line; it names the diff file from the change
+    task that produced the change rather than writing a new one, since
+    post-commit `git diff` is empty and a regenerated diff would mislead.
+    It says nothing about pushing — the push is a separate task with its
+    own report. A push task's report records the commits pushed with their
+    hashes and subjects, the remote and branch, the exit code, and that
+    `git log origin/<branch>..HEAD` is empty afterwards.
 13. The diff must include new files: run `git add -N <new paths>` before
     `git diff`, or the new file is missing from what Berke reviews.
 14. Do not state a path, file or fact as verified unless you ran a command
