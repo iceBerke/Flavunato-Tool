@@ -20,8 +20,8 @@ disables features instead of failing — check the `*_AVAILABLE` flags.
 Dependencies in `requirements.txt`. On Linux tkinter needs `python3-tk`.
 
 ## Hard rules
-1. VERIFY BEFORE ACTING. Statements in prompts may be wrong. Check every
-   claim against the actual code first and report mismatches before doing anything.
+1. VERIFY BEFORE ACTING. Statements in prompts may be wrong; rule 19
+   governs how to check them.
 2. PLAN FIRST. Present the work as a numbered plan; rule 9 governs the
    approval it needs.
 3. NO CALCULATION-LOGIC CHANGES. Documentation and restructuring only;
@@ -78,7 +78,8 @@ Dependencies in `requirements.txt`. On Linux tkinter needs `python3-tk`.
     CLI was removed.
 19. CHECK THE PROMPT ITSELF. A task from Berke can contain a wrong path, a
     stale file:line, a claim about the code that is no longer true, or an
-    instruction to write something you cannot verify. Verify the prompt's
-    premises before acting on them. If a premise is wrong, or the task asks
-    you to assert something unverified, stop and say so rather than
-    complying. Doing this is never a failure to follow instructions.
+    instruction to write something you cannot verify. Check every premise
+    against the actual code before acting on it. If a premise is wrong, or
+    the task asks you to assert something unverified, stop and say so
+    rather than complying. Doing this is never a failure to follow
+    instructions.
