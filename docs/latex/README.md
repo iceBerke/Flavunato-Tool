@@ -111,8 +111,8 @@ For readers who want Word rather than LaTeX. One command each, from the
 repository root:
 
 ```
-pandoc docs/methodology.md --lua-filter=docs/latex/thesis.lua --lua-filter=docs/latex/docx.lua --citeproc --bibliography=docs/latex/flavunato.bib --metadata reference-section-title="References" -o methodology.docx
-pandoc docs/software_overview.md --lua-filter=docs/latex/thesis.lua --lua-filter=docs/latex/docx.lua --citeproc --bibliography=docs/latex/flavunato.bib --metadata reference-section-title="References" -o software_overview.docx
+pandoc docs/methodology.md --lua-filter=docs/latex/thesis.lua --lua-filter=docs/latex/docx.lua --citeproc --bibliography=docs/latex/flavunato.bib --metadata reference-section-title="References" -o docs/methodology.docx
+pandoc docs/software_overview.md --lua-filter=docs/latex/thesis.lua --lua-filter=docs/latex/docx.lua --citeproc --bibliography=docs/latex/flavunato.bib --metadata reference-section-title="References" -o docs/software_overview.docx
 ```
 
 `docx.lua` reports how many equation tags it converted, e.g.
