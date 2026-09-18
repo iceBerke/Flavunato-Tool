@@ -1,9 +1,9 @@
-# LaTeX output
+# Document export
 
 `methodology.tex` and `software_overview.tex` are generated from the Markdown
 in `../`. Edit the Markdown, never the `.tex` — regenerating overwrites it.
 
-## Regenerate
+## LaTeX export
 
 One command each, from the repository root:
 
@@ -104,3 +104,39 @@ To make it a standalone `\chapter`, regenerate with:
 ```
 pandoc docs/methodology.md -f markdown -t latex --natbib --lua-filter=docs/latex/thesis.lua --shift-heading-level-by=-1 -o docs/latex/methodology.tex
 ```
+
+## Word (.docx) export
+
+For readers who want Word rather than LaTeX. One command each, from the
+repository root:
+
+```
+pandoc docs/methodology.md --lua-filter=docs/latex/thesis.lua --lua-filter=docs/latex/docx.lua --citeproc --bibliography=docs/latex/flavunato.bib --metadata reference-section-title="References" -o methodology.docx
+pandoc docs/software_overview.md --lua-filter=docs/latex/thesis.lua --lua-filter=docs/latex/docx.lua --citeproc --bibliography=docs/latex/flavunato.bib --metadata reference-section-title="References" -o software_overview.docx
+```
+
+`docx.lua` reports how many equation tags it converted, e.g.
+`docx.lua: converted 6 equation tags` for `methodology.md`.
+
+Unlike LaTeX, Word has no `.bib` step, so `--citeproc` resolves the citations
+at build time and appends the reference list.
+`--metadata reference-section-title` supplies the heading above it, which
+citeproc otherwise omits.
+
+Three things to know:
+
+- **The `.docx` is generated locally and not committed.** `.gitignore`
+  excludes it. Rebuild it when the Markdown changes; never edit the `.docx`
+  and expect the change to survive.
+
+- **`\tag{}` must be the last token of a display equation.** `docx.lua`
+  matches it only at the end of a `$$...$$` block; a `\tag` anywhere else is
+  ignored and the label disappears from the Word file. Check the reported
+  count: `methodology.md` should convert 6.
+
+- **The equations are Word-native OMML** (`m:oMath`), not images, so they stay
+  editable and searchable. Microsoft Word renders them correctly. LibreOffice
+  does not: rendering the built file through it leaves every equation blank,
+  inline and display alike. Prose, headings, tables, citations and the
+  References list survive there intact — only the equations are lost. Open the
+  `.docx` in Word.

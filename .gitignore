@@ -32,6 +32,9 @@ tests/golden/reference.json
 # Generated outputs
 *.pdf
 !docs/**/*.pdf
+# Word export of docs/*.md -- built locally, see docs/latex/README.md
+*.docx
+~$*.docx
 
 # Reference documents: local until their authors approve publication.
 # Must come after !docs/**/*.pdf above -- last matching rule wins.
