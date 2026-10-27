@@ -20,10 +20,12 @@ env/
 .idea/
 .DS_Store
 Thumbs.db
+.claude/settings.local.json
 
 # Data: never commit real IBA data. examples/ holds local-only inputs.
 *.xnra
 *.txt
+!prompt_outputs/*.txt
 examples/*
 !examples/README.md
 tests/golden/reference.json
@@ -36,8 +38,8 @@ tests/golden/reference.json
 *.docx
 ~$*.docx
 
-# Review artifacts: per-task reports and diffs, local only. See CLAUDE.md
-# rule 12.
+# Earlier review reports and diffs: a local archive, not migrated. New
+# reports go to the committed prompt_outputs/; see CLAUDE.md rule 12.
 reviews/
 
 # Reference documents: local until their authors approve publication.
