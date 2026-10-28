@@ -42,3 +42,15 @@ technical note, CEMHTI-CNRS Orléans. The spectra are fitted in SIMNRA —
 Mayer, M. (1999), AIP Conf. Proc. **475**, 541–544,
 [doi:10.1063/1.59188](https://doi.org/10.1063/1.59188). BibTeX entries are in
 [`docs/latex/flavunato.bib`](docs/latex/flavunato.bib).
+
+## Acknowledgements
+
+We thank Babacar Diallo for deriving the uncertainty formulas
+implemented in `flavunato/uncertainty.py`.
+
+## License
+
+Copyright (c) 2026 The Flavunato authors (see CITATION.cff)
+
+Flavunato is distributed under the CeCILL-B Free Software License
+Agreement, version 1.0. See [LICENSE](LICENSE) for the full text.

@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "Flavunato: visualization and uncertainty analysis of SIMNRA ion beam analysis spectra"
+authors:
+  - family-names: Santos
+    given-names: Berke
+    affiliation: "Université d'Orléans, CNRS, CEMHTI UPR 3079, Orléans, France"
+    orcid: "https://orcid.org/0009-0007-7267-8178"
+  - family-names: Legrottaglie
+    given-names: Giuseppe
+    affiliation: "Institute of Materials for Electronics and Magnetism of the National Research Council (IMEM-CNR), Parco Area delle Scienze 37A, 43124 Parma, Italy; Department of Mathematical, Physical and Computer Sciences, University of Parma, Parco Area delle Scienze 7A, 43124 Parma, Italy"
+    orcid: "https://orcid.org/0009-0009-2686-6551"
+license: CECILL-B
+repository-code: "https://github.com/iceBerke/Flavunato-Tool"
+keywords:
+  - ion beam analysis
+  - SIMNRA
+  - NRA
+  - RBS
+  - ERDA
+  - uncertainty

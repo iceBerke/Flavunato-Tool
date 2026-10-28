@@ -1,0 +1,1810 @@
+diff --git a/CITATION.cff b/CITATION.cff
+new file mode 100644
+index 0000000..d69b935
+--- /dev/null
++++ b/CITATION.cff
+@@ -0,0 +1,22 @@
++cff-version: 1.2.0
++message: "If you use this software, please cite it as below."
++type: software
++title: "Flavunato: visualization and uncertainty analysis of SIMNRA ion beam analysis spectra"
++authors:
++  - family-names: Santos
++    given-names: Berke
++    affiliation: "Université d'Orléans, CNRS, CEMHTI UPR 3079, Orléans, France"
++    orcid: "https://orcid.org/0009-0007-7267-8178"
++  - family-names: Legrottaglie
++    given-names: Giuseppe
++    affiliation: "Institute of Materials for Electronics and Magnetism of the National Research Council (IMEM-CNR), Parco Area delle Scienze 37A, 43124 Parma, Italy; Department of Mathematical, Physical and Computer Sciences, University of Parma, Parco Area delle Scienze 7A, 43124 Parma, Italy"
++    orcid: "https://orcid.org/0009-0009-2686-6551"
++license: CECILL-B
++repository-code: "https://github.com/iceBerke/Flavunato-Tool"
++keywords:
++  - ion beam analysis
++  - SIMNRA
++  - NRA
++  - RBS
++  - ERDA
++  - uncertainty
+diff --git a/LICENSE b/LICENSE
+new file mode 100644
+index 0000000..da41897
+--- /dev/null
++++ b/LICENSE
+@@ -0,0 +1,515 @@
++
++CeCILL-B FREE SOFTWARE LICENSE AGREEMENT
++
++
++    Notice
++
++This Agreement is a Free Software license agreement that is the result
++of discussions between its authors in order to ensure compliance with
++the two main principles guiding its drafting:
++
++    * firstly, compliance with the principles governing the distribution
++      of Free Software: access to source code, broad rights granted to
++      users,
++    * secondly, the election of a governing law, French law, with which
++      it is conformant, both as regards the law of torts and
++      intellectual property law, and the protection that it offers to
++      both authors and holders of the economic rights over software.
++
++The authors of the CeCILL-B (for Ce[a] C[nrs] I[nria] L[ogiciel] L[ibre])
++license are: 
++
++Commissariat à l'Energie Atomique - CEA, a public scientific, technical
++and industrial research establishment, having its principal place of
++business at 25 rue Leblanc, immeuble Le Ponant D, 75015 Paris, France.
++
++Centre National de la Recherche Scientifique - CNRS, a public scientific
++and technological establishment, having its principal place of business
++at 3 rue Michel-Ange, 75794 Paris cedex 16, France.
++
++Institut National de Recherche en Informatique et en Automatique -
++INRIA, a public scientific and technological establishment, having its
++principal place of business at Domaine de Voluceau, Rocquencourt, BP
++105, 78153 Le Chesnay cedex, France.
++
++
++    Preamble
++
++This Agreement is an open source software license intended to give users
++significant freedom to modify and redistribute the software licensed
++hereunder.
++
++The exercising of this freedom is conditional upon a strong obligation
++of giving credits for everybody that distributes a software
++incorporating a software ruled by the current license so as all
++contributions to be properly identified and acknowledged.
++
++In consideration of access to the source code and the rights to copy,
++modify and redistribute granted by the license, users are provided only
++with a limited warranty and the software's author, the holder of the
++economic rights, and the successive licensors only have limited liability.
++
++In this respect, the risks associated with loading, using, modifying
++and/or developing or reproducing the software by the user are brought to
++the user's attention, given its Free Software status, which may make it
++complicated to use, with the result that its use is reserved for
++developers and experienced professionals having in-depth computer
++knowledge. Users are therefore encouraged to load and test the
++suitability of the software as regards their requirements in conditions
++enabling the security of their systems and/or data to be ensured and,
++more generally, to use and operate it in the same conditions of
++security. This Agreement may be freely reproduced and published,
++provided it is not altered, and that no provisions are either added or
++removed herefrom.
++
++This Agreement may apply to any or all software for which the holder of
++the economic rights decides to submit the use thereof to its provisions.
++
++
++    Article 1 - DEFINITIONS
++
++For the purpose of this Agreement, when the following expressions
++commence with a capital letter, they shall have the following meaning:
++
++Agreement: means this license agreement, and its possible subsequent
++versions and annexes.
++
++Software: means the software in its Object Code and/or Source Code form
++and, where applicable, its documentation, "as is" when the Licensee
++accepts the Agreement.
++
++Initial Software: means the Software in its Source Code and possibly its
++Object Code form and, where applicable, its documentation, "as is" when
++it is first distributed under the terms and conditions of the Agreement.
++
++Modified Software: means the Software modified by at least one
++Contribution.
++
++Source Code: means all the Software's instructions and program lines to
++which access is required so as to modify the Software.
++
++Object Code: means the binary files originating from the compilation of
++the Source Code.
++
++Holder: means the holder(s) of the economic rights over the Initial
++Software.
++
++Licensee: means the Software user(s) having accepted the Agreement.
++
++Contributor: means a Licensee having made at least one Contribution.
++
++Licensor: means the Holder, or any other individual or legal entity, who
++distributes the Software under the Agreement.
++
++Contribution: means any or all modifications, corrections, translations,
++adaptations and/or new functions integrated into the Software by any or
++all Contributors, as well as any or all Internal Modules.
++
++Module: means a set of sources files including their documentation that
++enables supplementary functions or services in addition to those offered
++by the Software.
++
++External Module: means any or all Modules, not derived from the
++Software, so that this Module and the Software run in separate address
++spaces, with one calling the other when they are run.
++
++Internal Module: means any or all Module, connected to the Software so
++that they both execute in the same address space.
++
++Parties: mean both the Licensee and the Licensor.
++
++These expressions may be used both in singular and plural form.
++
++
++    Article 2 - PURPOSE
++
++The purpose of the Agreement is the grant by the Licensor to the
++Licensee of a non-exclusive, transferable and worldwide license for the
++Software as set forth in Article 5 hereinafter for the whole term of the
++protection granted by the rights over said Software.
++
++
++    Article 3 - ACCEPTANCE
++
++3.1 The Licensee shall be deemed as having accepted the terms and
++conditions of this Agreement upon the occurrence of the first of the
++following events:
++
++    * (i) loading the Software by any or all means, notably, by
++      downloading from a remote server, or by loading from a physical
++      medium;
++    * (ii) the first time the Licensee exercises any of the rights
++      granted hereunder.
++
++3.2 One copy of the Agreement, containing a notice relating to the
++characteristics of the Software, to the limited warranty, and to the
++fact that its use is restricted to experienced users has been provided
++to the Licensee prior to its acceptance as set forth in Article 3.1
++hereinabove, and the Licensee hereby acknowledges that it has read and
++understood it.
++
++
++    Article 4 - EFFECTIVE DATE AND TERM
++
++
++      4.1 EFFECTIVE DATE
++
++The Agreement shall become effective on the date when it is accepted by
++the Licensee as set forth in Article 3.1.
++
++
++      4.2 TERM
++
++The Agreement shall remain in force for the entire legal term of
++protection of the economic rights over the Software.
++
++
++    Article 5 - SCOPE OF RIGHTS GRANTED
++
++The Licensor hereby grants to the Licensee, who accepts, the following
++rights over the Software for any or all use, and for the term of the
++Agreement, on the basis of the terms and conditions set forth hereinafter.
++
++Besides, if the Licensor owns or comes to own one or more patents
++protecting all or part of the functions of the Software or of its
++components, the Licensor undertakes not to enforce the rights granted by
++these patents against successive Licensees using, exploiting or
++modifying the Software. If these patents are transferred, the Licensor
++undertakes to have the transferees subscribe to the obligations set
++forth in this paragraph.
++
++
++      5.1 RIGHT OF USE
++
++The Licensee is authorized to use the Software, without any limitation
++as to its fields of application, with it being hereinafter specified
++that this comprises:
++
++   1. permanent or temporary reproduction of all or part of the Software
++      by any or all means and in any or all form.
++
++   2. loading, displaying, running, or storing the Software on any or
++      all medium.
++
++   3. entitlement to observe, study or test its operation so as to
++      determine the ideas and principles behind any or all constituent
++      elements of said Software. This shall apply when the Licensee
++      carries out any or all loading, displaying, running, transmission
++      or storage operation as regards the Software, that it is entitled
++      to carry out hereunder.
++
++
++      5.2 ENTITLEMENT TO MAKE CONTRIBUTIONS
++
++The right to make Contributions includes the right to translate, adapt,
++arrange, or make any or all modifications to the Software, and the right
++to reproduce the resulting software.
++
++The Licensee is authorized to make any or all Contributions to the
++Software provided that it includes an explicit notice that it is the
++author of said Contribution and indicates the date of the creation thereof.
++
++
++      5.3 RIGHT OF DISTRIBUTION
++
++In particular, the right of distribution includes the right to publish,
++transmit and communicate the Software to the general public on any or
++all medium, and by any or all means, and the right to market, either in
++consideration of a fee, or free of charge, one or more copies of the
++Software by any means.
++
++The Licensee is further authorized to distribute copies of the modified
++or unmodified Software to third parties according to the terms and
++conditions set forth hereinafter.
++
++
++        5.3.1 DISTRIBUTION OF SOFTWARE WITHOUT MODIFICATION
++
++The Licensee is authorized to distribute true copies of the Software in
++Source Code or Object Code form, provided that said distribution
++complies with all the provisions of the Agreement and is accompanied by:
++
++   1. a copy of the Agreement,
++
++   2. a notice relating to the limitation of both the Licensor's
++      warranty and liability as set forth in Articles 8 and 9,
++
++and that, in the event that only the Object Code of the Software is
++redistributed, the Licensee allows effective access to the full Source
++Code of the Software at a minimum during the entire period of its
++distribution of the Software, it being understood that the additional
++cost of acquiring the Source Code shall not exceed the cost of
++transferring the data.
++
++
++        5.3.2 DISTRIBUTION OF MODIFIED SOFTWARE
++
++If the Licensee makes any Contribution to the Software, the resulting
++Modified Software may be distributed under a license agreement other
++than this Agreement subject to compliance with the provisions of Article
++5.3.4.
++
++
++        5.3.3 DISTRIBUTION OF EXTERNAL MODULES
++
++When the Licensee has developed an External Module, the terms and
++conditions of this Agreement do not apply to said External Module, that
++may be distributed under a separate license agreement.
++
++
++        5.3.4 CREDITS
++
++Any Licensee who may distribute a Modified Software hereby expressly
++agrees to:
++
++   1. indicate in the related documentation that it is based on the
++      Software licensed hereunder, and reproduce the intellectual
++      property notice for the Software,
++
++   2. ensure that written indications of the Software intended use,
++      intellectual property notice and license hereunder are included in
++      easily accessible format from the Modified Software interface,
++
++   3. mention, on a freely accessible website describing the Modified
++      Software, at least throughout the distribution term thereof, that
++      it is based on the Software licensed hereunder, and reproduce the
++      Software intellectual property notice,
++
++   4. where it is distributed to a third party that may distribute a
++      Modified Software without having to make its source code
++      available, make its best efforts to ensure that said third party
++      agrees to comply with the obligations set forth in this Article .
++
++If the Software, whether or not modified, is distributed with an
++External Module designed for use in connection with the Software, the
++Licensee shall submit said External Module to the foregoing obligations.
++
++
++        5.3.5 COMPATIBILITY WITH THE CeCILL AND CeCILL-C LICENSES
++
++Where a Modified Software contains a Contribution subject to the CeCILL
++license, the provisions set forth in Article 5.3.4 shall be optional.
++
++A Modified Software may be distributed under the CeCILL-C license. In
++such a case the provisions set forth in Article 5.3.4 shall be optional.
++
++
++    Article 6 - INTELLECTUAL PROPERTY
++
++
++      6.1 OVER THE INITIAL SOFTWARE
++
++The Holder owns the economic rights over the Initial Software. Any or
++all use of the Initial Software is subject to compliance with the terms
++and conditions under which the Holder has elected to distribute its work
++and no one shall be entitled to modify the terms and conditions for the
++distribution of said Initial Software.
++
++The Holder undertakes that the Initial Software will remain ruled at
++least by this Agreement, for the duration set forth in Article 4.2.
++
++
++      6.2 OVER THE CONTRIBUTIONS
++
++The Licensee who develops a Contribution is the owner of the
++intellectual property rights over this Contribution as defined by
++applicable law.
++
++
++      6.3 OVER THE EXTERNAL MODULES
++
++The Licensee who develops an External Module is the owner of the
++intellectual property rights over this External Module as defined by
++applicable law and is free to choose the type of agreement that shall
++govern its distribution.
++
++
++      6.4 JOINT PROVISIONS
++
++The Licensee expressly undertakes:
++
++   1. not to remove, or modify, in any manner, the intellectual property
++      notices attached to the Software;
++
++   2. to reproduce said notices, in an identical manner, in the copies
++      of the Software modified or not.
++
++The Licensee undertakes not to directly or indirectly infringe the
++intellectual property rights of the Holder and/or Contributors on the
++Software and to take, where applicable, vis-à-vis its staff, any and all
++measures required to ensure respect of said intellectual property rights
++of the Holder and/or Contributors.
++
++
++    Article 7 - RELATED SERVICES
++
++7.1 Under no circumstances shall the Agreement oblige the Licensor to
++provide technical assistance or maintenance services for the Software.
++
++However, the Licensor is entitled to offer this type of services. The
++terms and conditions of such technical assistance, and/or such
++maintenance, shall be set forth in a separate instrument. Only the
++Licensor offering said maintenance and/or technical assistance services
++shall incur liability therefor.
++
++7.2 Similarly, any Licensor is entitled to offer to its licensees, under
++its sole responsibility, a warranty, that shall only be binding upon
++itself, for the redistribution of the Software and/or the Modified
++Software, under terms and conditions that it is free to decide. Said
++warranty, and the financial terms and conditions of its application,
++shall be subject of a separate instrument executed between the Licensor
++and the Licensee.
++
++
++    Article 8 - LIABILITY
++
++8.1 Subject to the provisions of Article 8.2, the Licensee shall be
++entitled to claim compensation for any direct loss it may have suffered
++from the Software as a result of a fault on the part of the relevant
++Licensor, subject to providing evidence thereof.
++
++8.2 The Licensor's liability is limited to the commitments made under
++this Agreement and shall not be incurred as a result of in particular:
++(i) loss due the Licensee's total or partial failure to fulfill its
++obligations, (ii) direct or consequential loss that is suffered by the
++Licensee due to the use or performance of the Software, and (iii) more
++generally, any consequential loss. In particular the Parties expressly
++agree that any or all pecuniary or business loss (i.e. loss of data,
++loss of profits, operating loss, loss of customers or orders,
++opportunity cost, any disturbance to business activities) or any or all
++legal proceedings instituted against the Licensee by a third party,
++shall constitute consequential loss and shall not provide entitlement to
++any or all compensation from the Licensor.
++
++
++    Article 9 - WARRANTY
++
++9.1 The Licensee acknowledges that the scientific and technical
++state-of-the-art when the Software was distributed did not enable all
++possible uses to be tested and verified, nor for the presence of
++possible defects to be detected. In this respect, the Licensee's
++attention has been drawn to the risks associated with loading, using,
++modifying and/or developing and reproducing the Software which are
++reserved for experienced users.
++
++The Licensee shall be responsible for verifying, by any or all means,
++the suitability of the product for its requirements, its good working
++order, and for ensuring that it shall not cause damage to either persons
++or properties.
++
++9.2 The Licensor hereby represents, in good faith, that it is entitled
++to grant all the rights over the Software (including in particular the
++rights set forth in Article 5).
++
++9.3 The Licensee acknowledges that the Software is supplied "as is" by
++the Licensor without any other express or tacit warranty, other than
++that provided for in Article 9.2 and, in particular, without any warranty 
++as to its commercial value, its secured, safe, innovative or relevant 
++nature.
++
++Specifically, the Licensor does not warrant that the Software is free
++from any error, that it will operate without interruption, that it will
++be compatible with the Licensee's own equipment and software
++configuration, nor that it will meet the Licensee's requirements.
++
++9.4 The Licensor does not either expressly or tacitly warrant that the
++Software does not infringe any third party intellectual property right
++relating to a patent, software or any other property right. Therefore,
++the Licensor disclaims any and all liability towards the Licensee
++arising out of any or all proceedings for infringement that may be
++instituted in respect of the use, modification and redistribution of the
++Software. Nevertheless, should such proceedings be instituted against
++the Licensee, the Licensor shall provide it with technical and legal
++assistance for its defense. Such technical and legal assistance shall be
++decided on a case-by-case basis between the relevant Licensor and the
++Licensee pursuant to a memorandum of understanding. The Licensor
++disclaims any and all liability as regards the Licensee's use of the
++name of the Software. No warranty is given as regards the existence of
++prior rights over the name of the Software or as regards the existence
++of a trademark.
++
++
++    Article 10 - TERMINATION
++
++10.1 In the event of a breach by the Licensee of its obligations
++hereunder, the Licensor may automatically terminate this Agreement
++thirty (30) days after notice has been sent to the Licensee and has
++remained ineffective.
++
++10.2 A Licensee whose Agreement is terminated shall no longer be
++authorized to use, modify or distribute the Software. However, any
++licenses that it may have granted prior to termination of the Agreement
++shall remain valid subject to their having been granted in compliance
++with the terms and conditions hereof.
++
++
++    Article 11 - MISCELLANEOUS
++
++
++      11.1 EXCUSABLE EVENTS
++
++Neither Party shall be liable for any or all delay, or failure to
++perform the Agreement, that may be attributable to an event of force
++majeure, an act of God or an outside cause, such as defective
++functioning or interruptions of the electricity or telecommunications
++networks, network paralysis following a virus attack, intervention by
++government authorities, natural disasters, water damage, earthquakes,
++fire, explosions, strikes and labor unrest, war, etc.
++
++11.2 Any failure by either Party, on one or more occasions, to invoke
++one or more of the provisions hereof, shall under no circumstances be
++interpreted as being a waiver by the interested Party of its right to
++invoke said provision(s) subsequently.
++
++11.3 The Agreement cancels and replaces any or all previous agreements,
++whether written or oral, between the Parties and having the same
++purpose, and constitutes the entirety of the agreement between said
++Parties concerning said purpose. No supplement or modification to the
++terms and conditions hereof shall be effective as between the Parties
++unless it is made in writing and signed by their duly authorized
++representatives.
++
++11.4 In the event that one or more of the provisions hereof were to
++conflict with a current or future applicable act or legislative text,
++said act or legislative text shall prevail, and the Parties shall make
++the necessary amendments so as to comply with said act or legislative
++text. All other provisions shall remain effective. Similarly, invalidity
++of a provision of the Agreement, for any reason whatsoever, shall not
++cause the Agreement as a whole to be invalid.
++
++
++      11.5 LANGUAGE
++
++The Agreement is drafted in both French and English and both versions
++are deemed authentic.
++
++
++    Article 12 - NEW VERSIONS OF THE AGREEMENT
++
++12.1 Any person is authorized to duplicate and distribute copies of this
++Agreement.
++
++12.2 So as to ensure coherence, the wording of this Agreement is
++protected and may only be modified by the authors of the License, who
++reserve the right to periodically publish updates or new versions of the
++Agreement, each with a separate number. These subsequent versions may
++address new issues encountered by Free Software.
++
++12.3 Any Software distributed under a given version of the Agreement may
++only be subsequently distributed under the same version of the Agreement
++or a subsequent version.
++
++
++    Article 13 - GOVERNING LAW AND JURISDICTION
++
++13.1 The Agreement is governed by French law. The Parties agree to
++endeavor to seek an amicable solution to any disagreements or disputes
++that may arise during the performance of the Agreement.
++
++13.2 Failing an amicable solution within two (2) months as from their
++occurrence, and unless emergency proceedings are necessary, the
++disagreements or disputes shall be referred to the Paris Courts having
++jurisdiction, by the more diligent Party.
++
++
++Version 1.0 dated 2006-09-05.
+diff --git a/README.md b/README.md
+index cddbf9f..6e322c6 100644
+--- a/README.md
++++ b/README.md
+@@ -42,3 +42,15 @@ technical note, CEMHTI-CNRS Orléans. The spectra are fitted in SIMNRA —
+ Mayer, M. (1999), AIP Conf. Proc. **475**, 541–544,
+ [doi:10.1063/1.59188](https://doi.org/10.1063/1.59188). BibTeX entries are in
+ [`docs/latex/flavunato.bib`](docs/latex/flavunato.bib).
++
++## Acknowledgements
++
++We thank Babacar Diallo for deriving the uncertainty formulas
++implemented in `flavunato/uncertainty.py`.
++
++## License
++
++Copyright (c) 2026 The Flavunato authors (see CITATION.cff)
++
++Flavunato is distributed under the CeCILL-B Free Software License
++Agreement, version 1.0. See [LICENSE](LICENSE) for the full text.
+diff --git a/prompt_outputs/001-bootstrap-commit.md b/prompt_outputs/001-bootstrap-commit.md
+new file mode 100644
+index 0000000..add6df5
+--- /dev/null
++++ b/prompt_outputs/001-bootstrap-commit.md
+@@ -0,0 +1,216 @@
++# 001 — bootstrap — commit
++
++Task: commit the staged task-001 set with the approved message. This
++report was written after the commit. It stays untracked and is committed
++with the next task (CLAUDE.md rule 12).
++
++No test suite was run: the tests need local-only data (see
++001-bootstrap-implement.md, TESTS). py_compile was run per rule 4
++(pre-commit check 6).
++
++## Commit
++
++| Item | Value (source) |
++|---|---|
++| Commit | `32a4e6ce9e79ec10e627ba0df8d84c5b9b2d2dc1` (post-commit, "HEAD:") |
++| Parent | `02eb764` (post-commit, "parent is 02eb764"; parent count 1) |
++| Subject | 45 chars, byte-identical to the approved subject (post-commit) |
++| Longest body line | 70 chars (post-commit) |
++| Trailer as committed | `Co-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>` (post-commit L12; git parses exactly one trailer) |
++| Diff artifact | `prompt_outputs/001-bootstrap.diff.txt`, as committed. Not regenerated after the commit (rule 12). Before the commit it matched a regeneration outside the repo (pre-commit check 5). |
++| Command | `git commit -F <scratchpad>/msg_001.txt`. No `--amend`, no `-a`, no hook bypass. |
++
++Staged file list (pre-commit check 2; the same 9 paths as `git show
++--stat HEAD` in the post-commit output):
++
++```
++.gitignore
++CLAUDE.md
++DECISIONS.md
++prompt_outputs/001-bootstrap-gate.md
++prompt_outputs/001-bootstrap-gate2.md
++prompt_outputs/001-bootstrap-gate3.md
++prompt_outputs/001-bootstrap-gate4.md
++prompt_outputs/001-bootstrap-implement.md
++prompt_outputs/001-bootstrap.diff.txt
++```
++
++## Premise checks (prompt vs files)
++
++All premises held: HEAD, the staged set, a clean tree, the five frozen
++reports (including gate4.md at 18632 bytes / 196982…c0f6), and the
++artifact cmp. See the pre-commit output.
++
++- **Trailer model name.** It differs from the 30 earlier commits, which
++  carry "Claude Opus 5 (1M context)" (001-bootstrap-implement.md, section
++  E). This commit carries the name Claude Code supplied in this session,
++  "Claude Opus 5.5 (1M context)", as rule 8 and DECISIONS.md require.
++  This is not a deviation; noted so it is not mistaken for one.
++- **Status at the post-commit check.** `git status --porcelain` was empty
++  (0 lines) because this report did not exist yet. The prompt's allowance
++  for "the new untracked report" was therefore not needed. Status after
++  writing this report is in chat.
++
++## Errata
++
++None for the earlier task-001 reports.
++
++## UNREQUESTED — ACCEPT OR DROP
++
++- Carried from 001-bootstrap-gate4.md, still open: DECISIONS.md does not
++  record the A1–A3 rulings. Not implemented.
++
++## Commit command output
++
++```
++[main 32a4e6c] Adopt working rules and public prompt reports
++ 9 files changed, 4240 insertions(+), 29 deletions(-)
++ create mode 100644 DECISIONS.md
++ create mode 100644 prompt_outputs/001-bootstrap-gate.md
++ create mode 100644 prompt_outputs/001-bootstrap-gate2.md
++ create mode 100644 prompt_outputs/001-bootstrap-gate3.md
++ create mode 100644 prompt_outputs/001-bootstrap-gate4.md
++ create mode 100644 prompt_outputs/001-bootstrap-implement.md
++ create mode 100644 prompt_outputs/001-bootstrap.diff.txt
++exit 0
++```
++
++## Pre-commit checks
++
++`python <scratchpad>/pre_commit_001.py <scratchpad>`, output inserted by
++script:
++
++```
++
++=== 1. HEAD ===
++1 HEAD is 02eb764 'Split the README opening into two paragraphs': 02eb764 Split the README opening into two paragraphs -> PASS
++
++=== 2. Staged set ===
++  .gitignore
++  CLAUDE.md
++  DECISIONS.md
++  prompt_outputs/001-bootstrap-gate.md
++  prompt_outputs/001-bootstrap-gate2.md
++  prompt_outputs/001-bootstrap-gate3.md
++  prompt_outputs/001-bootstrap-gate4.md
++  prompt_outputs/001-bootstrap-implement.md
++  prompt_outputs/001-bootstrap.diff.txt
++2 staged set == the 9 expected paths: 9 staged, 9 expected, extra [], missing [] -> PASS
++
++=== 3. Unstaged / untracked / intent-to-add ===
++  M  .gitignore
++  M  CLAUDE.md
++  A  DECISIONS.md
++  A  prompt_outputs/001-bootstrap-gate.md
++  A  prompt_outputs/001-bootstrap-gate2.md
++  A  prompt_outputs/001-bootstrap-gate3.md
++  A  prompt_outputs/001-bootstrap-gate4.md
++  A  prompt_outputs/001-bootstrap-implement.md
++  A  prompt_outputs/001-bootstrap.diff.txt
++3 no unstaged changes: 0 lines -> PASS
++3 no untracked files: 0 lines -> PASS
++3/5 no intent-to-add entries: 0 lines -> PASS
++
++=== 4. Frozen reports, staged form ===
++4 prompt_outputs/001-bootstrap-implement.md: bytes 20967 (want 20967) sha256 51ee072e994b1b237565e67a75949746ad566dd5272c44586a668b07c16259e6 -> PASS
++    CR bytes in staged form: 0
++4 prompt_outputs/001-bootstrap-gate.md: bytes 17511 (want 17511) sha256 cb6b28131b474dbdde0e6dfdb3863a23dee62e99290dbaee69bd03577dcc298a -> PASS
++    CR bytes in staged form: 0
++4 prompt_outputs/001-bootstrap-gate2.md: bytes 18269 (want 18269) sha256 fa5d1f2c1f2b69990ac930ada7696928fe326bbef766e8f4ea3bea55d25c8ad3 -> PASS
++    CR bytes in staged form: 0
++4 prompt_outputs/001-bootstrap-gate3.md: bytes 24957 (want 24957) sha256 f529cc0e62ca8f8e1d406bde3238f970e3c3baf4f84160446d5883e75636c433 -> PASS
++    CR bytes in staged form: 0
++4 prompt_outputs/001-bootstrap-gate4.md: bytes 18632 (want 18632) sha256 196982478634db767d84568430105179882327ce0ed7806ba139afadd8c8c0f6 -> PASS
++    CR bytes in staged form: 0
++
++=== 5. Staged artifact vs regeneration outside the repo ===
++  regeneration exit 0 -> <scratchpad>/regen/001-bootstrap.diff.txt
++5 cmp staged blob vs regeneration: cmp exit 0, 113739 vs 113739 bytes -> PASS
++5 cmp working file vs regeneration: cmp exit 0, 113739 vs 113739 bytes -> PASS
++
++=== 6. py_compile on all tracked .py files (rule 4) ===
++  exit 0 flavunato/__init__.py
++  exit 0 flavunato/__main__.py
++  exit 0 flavunato/element_spectra.py
++  exit 0 flavunato/gui.py
++  exit 0 flavunato/plotting.py
++  exit 0 flavunato/uncertainty.py
++  exit 0 run_flavunato.py
++  exit 0 tests/_paths.py
++  exit 0 tests/golden/check_golden.py
++  exit 0 tests/golden/generate_golden.py
++  exit 0 tests/validation/compare_manual.py
++6 py_compile: 11 files, 0 failures; bytecode under <scratchpad>/pycache -> PASS
++
++=== 7. Message file ===
++  written: <scratchpad>/msg_001.txt, 537 bytes, CR: 0
++7 message file text == approved text (script literal): 466 vs 466 chars -> PASS
++7 approved text == message quoted in 001-bootstrap-gate.md: 466 vs 466 chars -> PASS
++  L1   45 chars (max 50) PASS | Adopt working rules and public prompt reports
++  L2    0 chars (max 72) PASS | 
++  L3   67 chars (max 72) PASS | Append the shared working rules to CLAUDE.md and align the existing
++  L4   67 chars (max 72) PASS | rules with them: reports and diff artifacts now go to the committed
++  L5   66 chars (max 72) PASS | prompt_outputs/ folder, reviews/ stays a local archive, and public
++  L6   59 chars (max 72) PASS | reports must not contain credentials or local-only content.
++  L7    0 chars (max 72) PASS | 
++  L8   70 chars (max 72) PASS | Record these rulings and the trailer choice in a new DECISIONS.md, and
++  L9   69 chars (max 72) PASS | let .gitignore admit prompt_outputs/*.txt while ignoring local Claude
++  L10  14 chars (max 72) PASS | Code settings.
++  L11   0 chars (max 72) PASS | 
++  L12  68 chars (trailer, exempt (rule 8)) PASS | Co-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>
++7 trailer count: 1 Co-Authored-By lines -> PASS
++7 blank line before trailer, trailer last: last two lines ['', 'Co-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>'] -> PASS
++
++RESULT: ALL PASS
++```
++
++## Post-commit checks
++
++`python <scratchpad>/post_commit_001.py`, output inserted by script:
++
++```
++=== Commit ===
++HEAD: 32a4e6ce9e79ec10e627ba0df8d84c5b9b2d2dc1
++parent is 02eb764: 02eb764 -> PASS
++parent count: 1
++
++=== Message, line by line (git log -1 --format=%B) ===
++  L1   45 chars | Adopt working rules and public prompt reports
++  L2    0 chars | 
++  L3   67 chars | Append the shared working rules to CLAUDE.md and align the existing
++  L4   67 chars | rules with them: reports and diff artifacts now go to the committed
++  L5   66 chars | prompt_outputs/ folder, reviews/ stays a local archive, and public
++  L6   59 chars | reports must not contain credentials or local-only content.
++  L7    0 chars | 
++  L8   70 chars | Record these rulings and the trailer choice in a new DECISIONS.md, and
++  L9   69 chars | let .gitignore admit prompt_outputs/*.txt while ignoring local Claude
++  L10  14 chars | Code settings.
++  L11   0 chars | 
++  L12  68 chars | Co-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>
++lines 1-10 identical to approved text (by index): mismatched indexes [] -> PASS
++exactly one blank line after the body: ['', 'Co-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>'] -> PASS
++exactly one trailer line, nothing after it: 1 line(s) after the blank line -> PASS
++trailer key is Co-Authored-By: Co-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com> -> PASS
++git parses exactly one trailer: Co-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com> -> PASS
++subject byte-identical to approved subject: 45 bytes -> PASS
++subject <= 50: 45 chars -> PASS
++longest body line <= 72: 70 chars -> PASS
++
++=== git show --stat HEAD ===
++ .gitignore                                |    6 +-
++ CLAUDE.md                                 |   99 +-
++ DECISIONS.md                              |   17 +
++ prompt_outputs/001-bootstrap-gate.md      |  344 +++++
++ prompt_outputs/001-bootstrap-gate2.md     |  378 +++++
++ prompt_outputs/001-bootstrap-gate3.md     |  501 +++++++
++ prompt_outputs/001-bootstrap-gate4.md     |  366 +++++
++ prompt_outputs/001-bootstrap-implement.md |  375 +++++
++ prompt_outputs/001-bootstrap.diff.txt     | 2183 +++++++++++++++++++++++++++++
++ 9 files changed, 4240 insertions(+), 29 deletions(-)
++commit lists exactly the 9 paths: 9 paths, extra [], missing [] -> PASS
++
++=== git status --porcelain -uall ===
++clean except the new untracked report: 0 line(s) -> PASS
++
++RESULT: ALL PASS
++```
+diff --git a/prompt_outputs/001-bootstrap-push.md b/prompt_outputs/001-bootstrap-push.md
+new file mode 100644
+index 0000000..2b7e081
+--- /dev/null
++++ b/prompt_outputs/001-bootstrap-push.md
+@@ -0,0 +1,142 @@
++# 001 — bootstrap — push
++
++Task: push commit 32a4e6c to origin/main. This report was written after
++the push. It stays untracked and is committed with the next task,
++together with 001-bootstrap-commit.md (CLAUDE.md rule 12).
++
++No test suite was run: the tests need local-only data (see
++001-bootstrap-implement.md, TESTS). py_compile was run per rule 4
++(pre-push check 6).
++
++## Push
++
++| Item | Value (source) |
++|---|---|
++| Commit pushed | `32a4e6ce9e79ec10e627ba0df8d84c5b9b2d2dc1` "Adopt working rules and public prompt reports" (post-push, "pushed commit") |
++| Remote and branch | `origin`, `main -> main`; upstream `origin/main` (pre-push check 1; push output) |
++| Exit code | 0 (push output) |
++| `git log origin/main..HEAD` afterwards | empty (post-push); behind 0, ahead 0 |
++| Trailer | key `Co-Authored-By`, count 1, position: the last line, after exactly one blank line (pre-push check 4: all PASS) |
++| Manual run | Not needed. The commit contains no `.py` file (pre-push check 7: 0 of 9 paths are .py); it changes only rule/doc files and reports. The tests cannot reach rule or doc text, so there is nothing for a manual run to cover. |
++| Command | plain `git push`, run through `<scratchpad>/push_001.py`, which captures the output and masks any URL credentials (0 masks applied). No `--force`, no other refs, no tags. |
++
++## Rulings recorded
++
++- DROPPED by Berke: the UNREQUESTED item from 001-bootstrap-gate4.md
++  (carried in 001-bootstrap-commit.md), which proposed recording the
++  A1–A3 rulings in DECISIONS.md. Not implemented.
++
++## Premise checks (prompt vs files)
++
++All premises held. HEAD and origin/main were where the prompt said;
++the subject and message matched; the tree was clean except the commit
++report, which matches the stated 9784 bytes and sha256; the commit has
++no `.py` file. See the pre-push output.
++
++- **Status at the post-push check.** It showed only
++  `001-bootstrap-commit.md` untracked, because this report did not exist
++  yet. Status after writing this report is in chat.
++
++## Errata
++
++None for the earlier task-001 reports.
++
++## Push output
++
++```
++To https://github.com/iceBerke/Flavunato-Tool.git
++   02eb764..32a4e6c  main -> main
++credential masks applied: 0
++exit 0
++```
++
++## Pre-push checks
++
++`python <scratchpad>/pre_push_001.py <scratchpad>`, output inserted by
++script:
++
++```
++=== 1. fetch, branch, HEAD, ahead/behind ===
++1 git fetch: exit 0 -> PASS
++1 branch is main: main -> PASS
++1 upstream is origin/main: origin/main -> PASS
++  remotes: ['origin']
++1 HEAD: 32a4e6ce9e79ec10e627ba0df8d84c5b9b2d2dc1 -> PASS
++1 behind/ahead (origin/main...HEAD): behind 0, ahead 1 -> PASS
++
++=== 2. parent and origin/main ===
++2 parent of HEAD is 02eb764: 02eb764 -> PASS
++2 origin/main is 02eb764: 02eb764 -> PASS
++
++=== 3. subject ===
++3 subject byte-identical: 45 bytes | Adopt working rules and public prompt reports -> PASS
++
++=== 4. message: text, blank line, one trailer ===
++  L1   45 chars | Adopt working rules and public prompt reports
++  L2    0 chars | 
++  L3   67 chars | Append the shared working rules to CLAUDE.md and align the existing
++  L4   67 chars | rules with them: reports and diff artifacts now go to the committed
++  L5   66 chars | prompt_outputs/ folder, reviews/ stays a local archive, and public
++  L6   59 chars | reports must not contain credentials or local-only content.
++  L7    0 chars | 
++  L8   70 chars | Record these rulings and the trailer choice in a new DECISIONS.md, and
++  L9   69 chars | let .gitignore admit prompt_outputs/*.txt while ignoring local Claude
++  L10  14 chars | Code settings.
++  L11   0 chars | 
++  L12  68 chars | Co-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>
++4 lines 1-10 == approved (by index): mismatched [] -> PASS
++4 exactly one blank line after body: ['', 'Co-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>'] -> PASS
++4 trailer count after blank line: 1 line(s) -> PASS
++4 trailer key: Co-Authored-By -> PASS
++4 trailer position: last line: line 12 of 12 -> PASS
++
++=== 5. tree ===
++  ?? prompt_outputs/001-bootstrap-commit.md
++5 only untracked file is the commit report: 1 line(s) -> PASS
++5 commit report LF form: bytes 9784 sha256 b721740d228165f9f22e627c81a24a4036f0aac12efb25e4954663304653734d (working-tree bytes 9784) -> PASS
++
++=== 6. py_compile on all tracked .py files (rule 4) ===
++  exit 0 flavunato/__init__.py
++  exit 0 flavunato/__main__.py
++  exit 0 flavunato/element_spectra.py
++  exit 0 flavunato/gui.py
++  exit 0 flavunato/plotting.py
++  exit 0 flavunato/uncertainty.py
++  exit 0 run_flavunato.py
++  exit 0 tests/_paths.py
++  exit 0 tests/golden/check_golden.py
++  exit 0 tests/golden/generate_golden.py
++  exit 0 tests/validation/compare_manual.py
++6 py_compile: 11 files, 0 failures; bytecode under <scratchpad>/pycache -> PASS
++
++=== 7. manual run needed? ===
++  .gitignore
++  CLAUDE.md
++  DECISIONS.md
++  prompt_outputs/001-bootstrap-gate.md
++  prompt_outputs/001-bootstrap-gate2.md
++  prompt_outputs/001-bootstrap-gate3.md
++  prompt_outputs/001-bootstrap-gate4.md
++  prompt_outputs/001-bootstrap-implement.md
++  prompt_outputs/001-bootstrap.diff.txt
++7 no .py file in the commit: 0 of 9 paths are .py [] -> PASS
++
++RESULT: ALL PASS
++```
++
++## Post-push checks
++
++`python <scratchpad>/post_push_001.py`, output inserted by script:
++
++```
++git fetch: exit 0 -> PASS
++HEAD == 32a4e6c...: 32a4e6ce9e79ec10e627ba0df8d84c5b9b2d2dc1 -> PASS
++origin/main == HEAD: 32a4e6ce9e79ec10e627ba0df8d84c5b9b2d2dc1 -> PASS
++git log origin/main..HEAD empty: 0 chars -> PASS
++behind/ahead: behind 0, ahead 0 -> PASS
++pushed commit: 32a4e6ce9e79ec10e627ba0df8d84c5b9b2d2dc1 Adopt working rules and public prompt reports
++  ?? prompt_outputs/001-bootstrap-commit.md
++tree: only the commit and push reports untracked (push report may not exist yet): 1 line(s) -> PASS
++
++RESULT: ALL PASS
++```
+diff --git a/prompt_outputs/002-licence-gate.md b/prompt_outputs/002-licence-gate.md
+new file mode 100644
+index 0000000..8dcb13b
+--- /dev/null
++++ b/prompt_outputs/002-licence-gate.md
+@@ -0,0 +1,307 @@
++# 002 — licence — gate (final)
++
++Task: apply ruling R8 to the README copyright line, run the tests, stage
++the 8 paths by explicit path and propose the commit message. This is the
++final gate of task 002. Stops before committing: nothing committed,
++nothing pushed.
++
++Tests: py_compile on all tracked .py files, and the two data-dependent
++scripts, tests/golden/check_golden.py and
++tests/validation/compare_manual.py. Both PASS (T2). There is no other
++automated test suite.
++
++## Rulings recorded
++
++- **R1:** LICENSE bytes stay exactly as downloaded.
++- **R2:** no LICENSE.fr.
++- **R3:** no per-file licence headers.
++- **R4:** no rewrapping of the added README text.
++- **R5:** keep the Acknowledgements section.
++- **R6:** existing mentions of the internal technical note in README
++  and docs stay unchanged.
++- **R7:** keep the word "derived" in the acknowledgement. See premise
++  checks: the README word is "deriving".
++- **R8:** the copyright line names "The Flavunato authors (see
++  CITATION.cff)", not individuals or institutions. Applied (change 1).
++- **Review defect, accepted as-is:** see Errata.
++- **UNREQUESTED from the implement step:** deleting the root
++  `__pycache__/`: DROPPED. Extra scratch folders `out/`, `regen/`,
++  `pycache/`: ACCEPTED.
++
++## Errata
++
++- **002-licence-implement.md, V5:** it quotes one line of the tracked
++  file docs/references/README.md (the `HEAD:docs/references/README.md:6`
++  hit). Ruled acceptable because the file is tracked and public.
++  Recorded here only; the frozen report is not edited.
++
++## Files touched
++
++| Path | Change |
++|---|---|
++| `README.md` | one line replaced (change 1) |
++| `prompt_outputs/002-licence-gate.md` | new; this report |
++| `prompt_outputs/002-licence.diff.txt` | regenerated |
++| git index | the 8 paths staged by explicit path; the intent-to-add entries become real entries |
++| frozen/carried files | unchanged (G2); staged unchanged |
++| `<scratchpad>/t002g_*.py`, `out/`, `regen/`, `pycache/` | outside the repo: start, readme, tests, msg and stage scripts; saved output and local test logs; the cmp regeneration; bytecode |
++
++Approval: the prompt fixed the file list, which rule 9 counts as
++approval.
++
++## Premise checks (prompt vs files)
++
++| Prompt premise | Finding |
++|---|---|
++| HEAD == origin/main == 32a4e6c… | Holds (G1). |
++| Three frozen reports at the given bytes/sha256 | Hold (G2). |
++| LICENSE 21396 bytes / 014e06…5f2f; CITATION.cff 950 bytes | Hold; both blob ids also match the `index 0000000..` lines of the implement-step artifact (G2). |
++| The old copyright line exists | Holds, once (G3). |
++| R7 "keep the word 'derived'" | **Differs in wording.** The README says "deriving" (G3). Nothing changed: I read the ruling as keeping the verb. |
++| The two test scripts write nothing but stdout | Holds by reading, so both were run. `_paths.require()` only prints and exits (tests/_paths.py:35-45). check_golden.py imports `build` from generate_golden.py (tests/golden/check_golden.py:15); generate_golden.py writes only in `main()` (tests/golden/generate_golden.py:139-145), which check_golden.py never calls. compare_manual.py only reads the xlsx (tests/validation/compare_manual.py:53). The one `open(` in the imported library modules is a read (flavunato/element_spectra.py:140). generate_golden.py was not run. |
++| Order as in 001-bootstrap-gate4.md | Followed: report, then artifact and cmp, then stage by explicit path. Then the numstat and status blocks below were refreshed and the cycle repeated until the report stopped changing, so the last stage holds the final report and artifact. |
++
++## Change
++
++**1. README.md copyright line (R8).** Replaced in place with the file's
++CRLF working-tree ending kept. One line differs, line 53 (G3 and
++"README change" below):
++
++> -Copyright (c) 2026 Berke Santos, Giuseppe Legrottaglie
++> +Copyright (c) 2026 The Flavunato authors (see CITATION.cff)
++
++README.md vs HEAD is `12 0` before and after: the line was itself
++added in this task, so the change does not alter the counts.
++
++## Tests
++
++From T1–T3 below:
++
++| Test | Exit | Verdict |
++|---|---|---|
++| py_compile, 11 tracked .py files | — | PASS, 0 failures |
++| tests/golden/check_golden.py | 0 | PASS |
++| tests/validation/compare_manual.py | 0 | PASS (Validation A; Validation B is report-only) |
++
++No data was missing, so neither test was skipped. Only verdict and
++summary lines are quoted (rule 20). The full output stays in local logs
++under `<scratchpad>/out/`. `git status --porcelain -uall` is identical
++before and after the tests, and so is the same listing with
++`--ignored` (T3). The status comparison catches new, removed and
++re-flagged paths, not a rewrite of an already-ignored file; for that
++the evidence is the code reading above.
++
++## Proposed commit message
++
++Measured by `t002g_msg.py` below. Trailer excluded; the COMMIT step
++appends it (rule 8).
++
++```
++Add CeCILL-B license and citation metadata
++
++Add the official CeCILL-B v1.0 English text as LICENSE, unmodified,
++and a CITATION.cff validated with cffconvert, so that releases can be
++archived on Zenodo and cited by version DOI.
++
++Add Acknowledgements and License sections to the README. The
++copyright line refers to the authors listed in CITATION.cff.
++
++Include the task 001 commit and push reports.
++```
++
++All lines are within limits. Claims checked against the diff:
++
++- "official", "unmodified" and "validated with cffconvert": the diff
++  shows the LICENSE and CITATION.cff contents. The source and the
++  validation are evidenced in 002-licence-implement.md (L1–L2, V3, V2),
++  which this commit includes, not by the diff lines themselves.
++- "so that releases can be archived on Zenodo and cited by version
++  DOI": a purpose. Nothing in the diff configures Zenodo (no tag, no
++  `.zenodo.json`). True as intent, not as a change.
++- The message does not mention the task 002 reports and the artifact
++  that the commit also adds. It omits them; it does not misstate them.
++
++## UNREQUESTED — ACCEPT OR DROP
++
++None.
++
++## Verification output
++
++All blocks are script output inserted by `t002_insert.py`.
++
++### Start state: `python t002g_start.py`
++
++```
++=== G1. fetch, branch, HEAD, origin ===
++git fetch exit 0: exit 0 -> PASS
++branch is main: main -> PASS
++HEAD == 32a4e6c...: 32a4e6ce9e79ec10e627ba0df8d84c5b9b2d2dc1 -> PASS
++origin/main == 32a4e6c...: 32a4e6ce9e79ec10e627ba0df8d84c5b9b2d2dc1 -> PASS
++behind/ahead: behind 0, ahead 0 -> PASS
++
++=== G2. Frozen/carried files (LF form) ===
++prompt_outputs/001-bootstrap-commit.md: working-tree bytes 9784 | CR bytes 0
++  LF form: bytes 9784 (want 9784) sha256 b721740d228165f9f22e627c81a24a4036f0aac12efb25e4954663304653734d -> PASS
++prompt_outputs/001-bootstrap-push.md: working-tree bytes 5739 | CR bytes 0
++  LF form: bytes 5739 (want 5739) sha256 5440ae87298fe16da6e2e9550f0d6b1d40759a112c580249a6de00abfec18c09 -> PASS
++prompt_outputs/002-licence-implement.md: working-tree bytes 27369 | CR bytes 0
++  LF form: bytes 27369 (want 27369) sha256 e15f74f9e5eb335fc228d70bdc0bed66d3a379d39f2b8ba9997a6316a5e0c4c1 -> PASS
++LICENSE: working-tree bytes 21396 | CR bytes 0
++  LF form: bytes 21396 (want 21396) sha256 014e062e7d6b3b9e686bb8cb642479d6cc8bb775d8ee185908b669b8daaf5f2f -> PASS
++CITATION.cff: bytes 950 | CR 0 | sha256 b405d47a815c54e0d908e61521dd4d761730257ad361739f42d2078f56a10a48
++  CITATION.cff bytes == 950: 950 -> PASS
++  CITATION.cff blob matches implement artifact 'index 0000000..d69b935': d69b935059bbdd5c373b377e6f6abb6a799b375d -> PASS
++  LICENSE blob matches implement artifact 'index 0000000..da41897': da418978d4e89266df4fc6ea19c6424c879a9bd8 -> PASS
++
++=== G3. README.md before the change ===
++numstat README.md vs HEAD (before): 12	0	README.md
++README.md bytes 2399 | CRLF 56 | bare LF 0
++old copyright line occurs once: 1 -> PASS
++'deriving' in the acknowledgement (ruling R7 says 'derived'): [b'deriving'] -> PASS
++
++=== G4. Status and index ===
++   A CITATION.cff
++   A LICENSE
++   M README.md
++   A prompt_outputs/001-bootstrap-commit.md
++   A prompt_outputs/001-bootstrap-push.md
++   A prompt_outputs/002-licence-implement.md
++   A prompt_outputs/002-licence.diff.txt
++nothing staged: [] -> PASS
++
++RESULT: ALL PASS
++```
++
++### README change: `python t002g_readme.py`
++
++```
++numstat before: 12	0	README.md
++bytes 2399 -> 2404 | CRLF 56 -> 56 | bare LF 0
++numstat after:  12	0	README.md
++lines differing (working tree): [53] of 57 vs 57
++  -53: Copyright (c) 2026 Berke Santos, Giuseppe Legrottaglie
++  +53: Copyright (c) 2026 The Flavunato authors (see CITATION.cff)
++git diff -U0 HEAD -- README.md:
++  @@ -44,0 +45,12 @@ Mayer, M. (1999), AIP Conf. Proc. **475**, 541–544,
++  +
++  +## Acknowledgements
++  +
++  +We thank Babacar Diallo for deriving the uncertainty formulas
++  +implemented in `flavunato/uncertainty.py`.
++  +
++  +## License
++  +
++  +Copyright (c) 2026 The Flavunato authors (see CITATION.cff)
++  +
++  +Flavunato is distributed under the CeCILL-B Free Software License
++  +Agreement, version 1.0. See [LICENSE](LICENSE) for the full text.
++```
++
++### Tests: `python t002g_tests.py <scratchpad>`
++
++```
++=== T1. py_compile on all tracked .py files (rule 4) ===
++  exit 0 flavunato/__init__.py
++  exit 0 flavunato/__main__.py
++  exit 0 flavunato/element_spectra.py
++  exit 0 flavunato/gui.py
++  exit 0 flavunato/plotting.py
++  exit 0 flavunato/uncertainty.py
++  exit 0 run_flavunato.py
++  exit 0 tests/_paths.py
++  exit 0 tests/golden/check_golden.py
++  exit 0 tests/golden/generate_golden.py
++  exit 0 tests/validation/compare_manual.py
++py_compile: 11 files, 0 failures; bytecode under <scratchpad>/pycache -> PASS
++
++=== T2. Data-dependent tests ===
++-- tests/golden/check_golden.py: exit 0 | stdout 1 lines | stderr 0 lines | verdict PASS
++  | PASS  golden regression: 20 rows, tol 1e-12, roi_source=reference
++  tests/golden/check_golden.py not FAIL: PASS -> PASS
++-- tests/validation/compare_manual.py: exit 0 | stdout 45 lines | stderr 0 lines | verdict PASS
++  | VALIDATION A: PASS -- all rows within 1e-09
++  tests/validation/compare_manual.py not FAIL: PASS -> PASS
++
++=== T3. Working tree unchanged by the tests ===
++git status --porcelain -uall: 7 lines before, 7 after
++  identical before vs after: same -> PASS
++same with --ignored (names not printed): 65 lines before, 65 after
++  identical before vs after: same -> PASS
++
++RESULT: ALL PASS
++```
++
++### Commit message: `python t002g_msg.py`
++
++```
++  L1   42 chars (max 50) PASS | Add CeCILL-B license and citation metadata
++  L2    0 chars (max 72) PASS | 
++  L3   67 chars (max 72) PASS | Add the official CeCILL-B v1.0 English text as LICENSE, unmodified,
++  L4   69 chars (max 72) PASS | and a CITATION.cff validated with cffconvert, so that releases can be
++  L5   44 chars (max 72) PASS | archived on Zenodo and cited by version DOI.
++  L6    0 chars (max 72) PASS | 
++  L7   60 chars (max 72) PASS | Add Acknowledgements and License sections to the README. The
++  L8   60 chars (max 72) PASS | copyright line refers to the authors listed in CITATION.cff.
++  L9    0 chars (max 72) PASS | 
++  L10  45 chars (max 72) PASS | Include the task 001 commit and push reports.
++subject 42 chars | no trailing period: PASS
++line 2 blank: PASS
++longest body line: 69 chars
++trailer lines in message: 0
++non-ASCII chars: 0 | lines 10
++RESULT: ALL PASS
++```
++
++## Diff artifact and staging
++
++`python t002g_stage.py <scratchpad>` runs `git add -N` on every
++untracked path from `git status` (explicit paths), writes the artifact
++with the prompt's command, regenerates it to
++`<scratchpad>/regen/002-licence.diff.txt` and runs cmp. It then stages
++the 8 paths with `git add -- <path>`, one at a time, and checks each
++staged blob against its working file (LF form). The final run, made
++after this report was complete, is in chat. It also checks that the
++three blocks below match the live state verbatim.
++
++The deletions column of both numstat blocks is 0 on every row: no line
++is deleted.
++
++### Artifact numstat
++
++```
++22	0	CITATION.cff
++515	0	LICENSE
++12	0	README.md
++216	0	prompt_outputs/001-bootstrap-commit.md
++142	0	prompt_outputs/001-bootstrap-push.md
++307	0	prompt_outputs/002-licence-gate.md
++552	0	prompt_outputs/002-licence-implement.md
++```
++
++### git diff --cached --numstat
++
++```
++22	0	CITATION.cff
++515	0	LICENSE
++12	0	README.md
++216	0	prompt_outputs/001-bootstrap-commit.md
++142	0	prompt_outputs/001-bootstrap-push.md
++307	0	prompt_outputs/002-licence-gate.md
++552	0	prompt_outputs/002-licence-implement.md
++1810	0	prompt_outputs/002-licence.diff.txt
++```
++
++## Final state
++
++### git status --porcelain -uall
++
++```
++A  CITATION.cff
++A  LICENSE
++M  README.md
++A  prompt_outputs/001-bootstrap-commit.md
++A  prompt_outputs/001-bootstrap-push.md
++A  prompt_outputs/002-licence-gate.md
++A  prompt_outputs/002-licence-implement.md
++A  prompt_outputs/002-licence.diff.txt
++```
+diff --git a/prompt_outputs/002-licence-implement.md b/prompt_outputs/002-licence-implement.md
+new file mode 100644
+index 0000000..d9a3ab7
+--- /dev/null
++++ b/prompt_outputs/002-licence-implement.md
+@@ -0,0 +1,552 @@
++# 002 — licence — implement
++
++Task: add the CeCILL-B v1.0 English LICENSE, a CITATION.cff, and README
++Acknowledgements and License sections. Stops at the review gate:
++nothing staged, nothing committed, nothing pushed. The intent-to-add
++entries made for the diff are the only index change (section D6 in
++chat; V11 below shows nothing staged before them).
++
++No test suite was run: the tests need local-only data. py_compile was
++run per rule 4 (V10).
++
++## Errata
++
++None for the 001 reports.
++
++## Files touched
++
++| Path | Change |
++|---|---|
++| `LICENSE` | new; byte copy of the downloaded text (V3) |
++| `CITATION.cff` | new; the prompt's literal with REPO_URL substituted (V1) |
++| `README.md` | 12 lines appended at the end; nothing else changed (V7) |
++| `prompt_outputs/002-licence-implement.md` | new; this report |
++| `prompt_outputs/002-licence.diff.txt` | new; the diff artifact |
++| git index | intent-to-add for every untracked path in `git status`, by explicit path (see "Diff artifact") |
++| `<scratchpad>/t002_*.py` | outside the repo: start, fetch, apply, verify, quote, diff and insert scripts |
++| `<scratchpad>/Licence_CeCILL-B_V1-en.txt` | outside the repo: the download |
++| `<scratchpad>/venv/` | outside the repo: the cffconvert environment |
++| `<scratchpad>/out/`, `regen/`, `pycache/` | outside the repo, **not in the prompt's list**: see Deviations |
++
++Approval: the prompt fixed the file list, which rule 9 counts as
++approval.
++
++## Premise checks (prompt vs files)
++
++| Prompt premise | Finding |
++|---|---|
++| Start HEAD == origin/main == 32a4e6c…, carried reports at the given bytes/sha256 | Holds (S1–S3). |
++| README is `README.md` | Holds (S4). |
++| Licence URL `https://cecill.info/licences/Licence_CeCILL-B_V1-en.txt` | Holds: HTTP 200, no redirect, linked from the official page `https://cecill.info/licences.en.html` (L1, L2). |
++| Origin URL `https://github.com/iceBerke/Flavunato-Tool` | Holds (V1). |
++| `flavunato/uncertainty.py` exists | Holds (S4). |
++| No licence or copyright section in the README | Holds: 0 hits at HEAD (V6). Sections added at the end. |
++| "if Babacar Diallo is not already credited" | **Differs in part.** README.md:40 at HEAD already cites "Diallo (2025), *IBA Uncertainties*" as the source of the formalism (V5). He is not named in full or thanked there; the full name appears only in `docs/latex/flavunato.bib:6`. I read "credited" as a named acknowledgement and added the section. Point R5. |
++| "Do not mention any internal note of his" | My added text does not. README.md:40, unchanged, already mentions the "internal technical note" (V5). Point R6. |
++| py_compile: 11 files, 0 failures | Holds (V10). |
++| `git add -N <every new untracked file>` | That includes the two carried 001 reports and, on the later runs, the artifact itself. All received intent-to-add; none was modified. |
++
++## Changes
++
++**1. LICENSE.** Downloaded by `t002_fetch.py`, copied byte for byte by
++`t002_apply.py`; LICENSE and the download have the same sha256 (V3). No
++encoding, line-ending or other change.
++
++**2. CITATION.cff.** Every line matches the prompt literal; the whole
++file is byte-identical to it with REPO_URL substituted; no BOM, no CR,
++one final newline, no `version` or `date-released` (V1). cffconvert
++2.0.0 validates it, exit 0 (V2).
++
++**3. README.md.** Appended after the last section (`## Citation`), in
++the file's own CRLF working-tree endings; git stores LF (`text=auto`).
++The HEAD README is an unchanged prefix of the new one (V7). The added
++lines, from V7:
++
++```
+++
+++## Acknowledgements
+++
+++We thank Babacar Diallo for deriving the uncertainty formulas
+++implemented in `flavunato/uncertainty.py`.
+++
+++## License
+++
+++Copyright (c) 2026 Berke Santos, Giuseppe Legrottaglie
+++
+++Flavunato is distributed under the CeCILL-B Free Software License
+++Agreement, version 1.0. See [LICENSE](LICENSE) for the full text.
++```
++
++No existing text was replaced, so there is no replaced text to quote.
++
++**4. Ignore check.** `git check-ignore -v -n` prints `::` (no pattern)
++for LICENSE, LICENSE.fr and CITATION.cff: none is ignored (V4).
++
++## POINTS TO SURFACE FOR YOUR RULING
++
++**R1. LICENSE bytes.** No reason to change them. Valid UTF-8, no BOM,
++LF only, no control characters (L4–L6). `text=auto` with
++`core.autocrlf=true` stores the same blob as the raw bytes, so the
++stored form's sha256 equals the download's (V3). For information: the
++only non-ASCII is two `à` (`C3 A0`, lines 22 and 339; L4), and lines
++20, 406 and 407 end in whitespace (V9), which `git diff --check` would
++flag. With `core.autocrlf=true`, git warns that the working copies of
++the new LF files get CRLF the next time it checks them out (D2, in
++chat); the stored form stays LF. Recommendation: keep the official
++bytes as they are.
++
++**R2. LICENSE.fr.** The official French plain text exists at
++`https://cecill.info/licences/Licence_CeCILL-B_V1-fr.txt` (HTTP 200,
++L7). Article 11.5 says both versions "are deemed authentic" (Q2). Not
++created; your ruling.
++
++**R3. Notice in each source file.** The text does not ask for one. No
++article mentions source-file headers (Q1). The closest clauses bind a
++licensee who redistributes: Article 5.3.1 ("accompanied by: 1. a copy
++of the Agreement, 2. a notice relating to the limitation of both the
++Licensor's warranty and liability") and Article 6.4 ("not to remove, or
++modify, in any manner, the intellectual property notices attached to
++the Software"). No headers added.
++
++**R4. README placement and style.** Placement at the end, after
++`## Citation`, looks right: the headings use the README's `##` style
++(V6). Wrapping differs: HEAD prose lines reach 80 chars and 9 of 18 are
++over 72, while the added lines are at most 65 (V7). Your text is kept
++as given; rewrapping to the README's width is **proposed**, not done.
++
++**R5. Is Babacar Diallo already credited?** See premise checks. Keep
++the section, or drop it because README.md:40 already cites him.
++
++**R6. Existing mentions of his internal note.** README.md:40 and the
++docs (e.g. docs/methodology.md:6, docs/software_overview.md:32) already
++call the source an "internal technical note" (V5). Unchanged, out of
++scope; noted in case "do not mention" was meant more broadly.
++
++**R7. Support for the acknowledgement sentence.** uncertainty.py:6
++"implements the uncertainty formulas from the French IBA expert" and
++cites `IBA-uncertainties-v3.pdf` (uncertainty.py:16, :312; V8). The
++code never names Diallo; the link to him rests on README.md:40 and
++docs/methodology.md:6–7. That he *derived* the formulas, rather than
++compiled them, is UNVERIFIED from the repository.
++
++**R8. Copyright line.** The year 2026 matches the history: first
++commit 2026-09-15 (V12). Whether an employer also holds rights in the
++code is a legal question this repository cannot answer: UNVERIFIED.
++
++## Deviations
++
++- The prompt allowed scripts, the download and one venv under
++  `<scratchpad>`. I also created `<scratchpad>/out/` (saved script
++  output, inserted below by `t002_insert.py`), `<scratchpad>/regen/`
++  (the regeneration the cmp step needs) and `<scratchpad>/pycache/`
++  (rule 4's bytecode). I did not name them before creating them. They
++  are verification scratch only, outside the repository.
++- `t002_fetch.py` also requested two cecill.info HTML pages and the
++  French text, read in memory only and not saved.
++- Saved output has its CRLF turned into LF when inserted here, so this
++  report has no CR. The README's CRLF working-tree endings show up only
++  as counts (V7, V9).
++
++## UNREQUESTED — ACCEPT OR DROP
++
++- A `__pycache__/` with 9 stale `.pyc` files sits in the repo root,
++  ignored by `.gitignore:2`, dated 2026-09-15 to 2026-09-17 (Q3). Not
++  created by this task. Removing it needs your approval (rule 6). Not
++  done.
++
++## Verification output
++
++All blocks are script output inserted by `t002_insert.py`.
++
++### Start state: `python t002_start.py`
++
++```
++=== S1. fetch, branch, HEAD, origin ===
++git fetch exit 0: exit 0 -> PASS
++branch is main: main -> PASS
++HEAD == 32a4e6c...: 32a4e6ce9e79ec10e627ba0df8d84c5b9b2d2dc1 -> PASS
++origin/main == 32a4e6c...: 32a4e6ce9e79ec10e627ba0df8d84c5b9b2d2dc1 -> PASS
++behind/ahead: behind 0, ahead 0 -> PASS
++  remote -v: origin	https://github.com/iceBerke/Flavunato-Tool.git (fetch)
++  remote -v: origin	https://github.com/iceBerke/Flavunato-Tool.git (push)
++
++=== S2. status --porcelain -uall ===
++  ?? prompt_outputs/001-bootstrap-commit.md
++  ?? prompt_outputs/001-bootstrap-push.md
++only the 2 carried reports untracked: 2 line(s) -> PASS
++
++=== S3. carried reports ===
++prompt_outputs/001-bootstrap-commit.md working-tree bytes 9784 | CR bytes 0
++  LF form: bytes 9784 (want 9784) sha256 b721740d228165f9f22e627c81a24a4036f0aac12efb25e4954663304653734d -> PASS
++prompt_outputs/001-bootstrap-push.md working-tree bytes 5739 | CR bytes 0
++  LF form: bytes 5739 (want 5739) sha256 5440ae87298fe16da6e2e9550f0d6b1d40759a112c580249a6de00abfec18c09 -> PASS
++
++=== S4. paths named by the prompt ===
++  tracked matches: README.md, flavunato/uncertainty.py
++README.md is the tracked README: 1 -> PASS
++flavunato/uncertainty.py tracked and on disk: True -> PASS
++LICENSE absent before the change: absent -> PASS
++LICENSE.fr absent before the change: absent -> PASS
++CITATION.cff absent before the change: absent -> PASS
++.zenodo.json absent before the change: absent -> PASS
++
++RESULT: ALL PASS
++```
++
++### Download: `python t002_fetch.py <scratchpad>`
++
++```
++=== L1. Download ===
++URL requested: https://cecill.info/licences/Licence_CeCILL-B_V1-en.txt
++final URL after redirects: https://cecill.info/licences/Licence_CeCILL-B_V1-en.txt (host cecill.info)
++HTTP status: 200
++Content-Type: text/plain; charset=UTF-8 | Last-Modified: Thu, 26 Aug 2021 14:11:31 GMT
++saved: <scratchpad>/Licence_CeCILL-B_V1-en.txt
++bytes: 21396
++sha256: 014e062e7d6b3b9e686bb8cb642479d6cc8bb775d8ee185908b669b8daaf5f2f
++
++=== L2. Identity checks ===
++title 'CeCILL-B FREE SOFTWARE LICENSE AGREEMENT': 1 match(es) -> PASS
++'Version 1.0': 1 match(es) -> PASS
++'CeCILL-B' count: 2 match(es) -> PASS
++host is cecill.info: cecill.info -> PASS
++official page https://cecill.info/licences.en.html: HTTP 200, links Licence_CeCILL-B_V1-en.txt: True
++official page https://cecill.info/licences/Licence_CeCILL-B_V1-en.html: HTTP 200, links Licence_CeCILL-B_V1-en.txt: False
++
++=== L3. First and last 3 lines (repr, line ending kept) ===
++line count (splitlines): 515
++  first 1: b'\n'
++  first 2: b'CeCILL-B FREE SOFTWARE LICENSE AGREEMENT\n'
++  first 3: b'\n'
++  last L513: b'\n'
++  last L514: b'\n'
++  last L515: b'Version 1.0 dated 2006-09-05.\n'
++
++=== L4. Encoding ===
++valid UTF-8: yes
++UTF-8 BOM: no
++non-ASCII bytes: 4
++  line 22 byte offset 776: 0xC3
++  line 22 byte offset 777: 0xA0
++  line 339 byte offset 13304: 0xC3
++  line 339 byte offset 13305: 0xA0
++
++=== L5. Line endings ===
++CRLF: 0 | bare LF: 515 | bare CR: 0
++ends with newline: True | last 4 bytes b'05.\n'
++
++=== L6. Control characters other than TAB/CR/LF ===
++count: 0
++TAB count (allowed, for information): 0
++
++=== L7. Official French plain text (probe only, not saved) ===
++https://cecill.info/licences/Licence_CeCILL-B_V1-fr.txt: HTTP 200, final https://cecill.info/licences/Licence_CeCILL-B_V1-fr.txt, 22400 bytes, Content-Type text/plain; charset=UTF-8
++```
++
++### Apply: `python t002_apply.py <scratchpad>`
++
++```
++LICENSE written: 21396 bytes, sha256 014e062e7d6b3b9e686bb8cb642479d6cc8bb775d8ee185908b669b8daaf5f2f
++REPO_URL -> https://github.com/iceBerke/Flavunato-Tool
++CITATION.cff written: 950 bytes
++README.md appended: 340 bytes (12 lines, CRLF)
++```
++
++### Checks: `python t002_verify.py <scratchpad>`
++
++```
++=== V1. CITATION.cff vs prompt literal ===
++REPO_URL from origin (no credentials, no .git): https://github.com/iceBerke/Flavunato-Tool -> PASS
++  L1   match    | cff-version: 1.2.0
++  L2   match    | message: "If you use this software, please cite it as below....
++  L3   match    | type: software
++  L4   match    | title: "Flavunato: visualization and uncertainty analysis of...
++  L5   match    | authors:
++  L6   match    |   - family-names: Santos
++  L7   match    |     given-names: Berke
++  L8   match    |     affiliation: "Université d'Orléans, CNRS, CEMHTI UPR 307...
++  L9   match    |     orcid: "https://orcid.org/0009-0007-7267-8178"
++  L10  match    |   - family-names: Legrottaglie
++  L11  match    |     given-names: Giuseppe
++  L12  match    |     affiliation: "Institute of Materials for Electronics and...
++  L13  match    |     orcid: "https://orcid.org/0009-0009-2686-6551"
++  L14  match    | license: CECILL-B
++  L15  match    | repository-code: "https://github.com/iceBerke/Flavunato-Tool...
++  L16  match    | keywords:
++  L17  match    |   - ion beam analysis
++  L18  match    |   - SIMNRA
++  L19  match    |   - NRA
++  L20  match    |   - RBS
++  L21  match    |   - ERDA
++  L22  match    |   - uncertainty
++  L23  match    | 
++whole file byte-identical to literal: 950 vs 950 bytes -> PASS
++BOM absent: no -> PASS
++CR bytes: 0 -> PASS
++ends with exactly one newline: b'y\n' -> PASS
++no version / date-released field: [] -> PASS
++
++=== V2. cffconvert --validate -i CITATION.cff (repo root) ===
++cffconvert --version: 2.0.0 (exit 0)
++  | Citation metadata are valid according to schema version 1.2.0.
++cffconvert --validate exit 0: exit 0 -> PASS
++
++=== V3. LICENSE: bytes, attributes, stored form ===
++LICENSE sha256 014e062e7d6b3b9e686bb8cb642479d6cc8bb775d8ee185908b669b8daaf5f2f (21396 bytes)
++download sha256 014e062e7d6b3b9e686bb8cb642479d6cc8bb775d8ee185908b669b8daaf5f2f (21396 bytes)
++LICENSE byte-identical to download: 21396 vs 21396 -> PASS
++  check-attr: LICENSE: text: auto
++  check-attr: LICENSE: eol: unspecified
++  check-attr: CITATION.cff: text: auto
++  check-attr: CITATION.cff: eol: unspecified
++  check-attr: README.md: text: auto
++  check-attr: README.md: eol: unspecified
++blob id with git's filters (stored form): da418978d4e89266df4fc6ea19c6424c879a9bd8
++blob id of raw bytes (no filters):        da418978d4e89266df4fc6ea19c6424c879a9bd8
++git stores LICENSE bytes unchanged: same blob -> PASS
++sha256 stored form == sha256 downloaded: 014e062e7d6b3b9e686bb8cb642479d6cc8bb775d8ee185908b669b8daaf5f2f
++core.autocrlf: true
++
++=== V4. git check-ignore -v -n ===
++  LICENSE: exit 1 | '::\tLICENSE' | pattern ''
++  LICENSE not ignored: not ignored -> PASS
++  LICENSE.fr: exit 1 | '::\tLICENSE.fr' | pattern ''
++  LICENSE.fr not ignored: not ignored -> PASS
++  CITATION.cff: exit 1 | '::\tCITATION.cff' | pattern ''
++  CITATION.cff not ignored: not ignored -> PASS
++
++=== V5. Babacar / Diallo in tracked files, pre-change state (HEAD) ===
++-- git grep -n -i Babacar HEAD: exit 0, 1 hit(s)
++  HEAD:docs/latex/flavunato.bib:6:  author  = {Diallo, Babacar},
++-- git grep -n -i Diallo HEAD: exit 0, 51 hit(s)
++  HEAD:README.md:40:The uncertainty formalism is from Diallo (2025), *IBA Uncertainties*, internal
++  HEAD:docs/latex/flavunato.bib:5:@unpublished{diallo2025iba,
++  HEAD:docs/latex/flavunato.bib:6:  author  = {Diallo, Babacar},
++  HEAD:docs/latex/methodology.tex:6:The uncertainty formalism follows the internal technical note of Diallo
++  HEAD:docs/latex/methodology.tex:7:\citep{diallo2025iba}, whose Eqs. (D1)--(D6) are reproduced below.
++  HEAD:docs/latex/methodology.tex:52:1]{diallo2025iba}
++  HEAD:docs/latex/methodology.tex:64:2]{diallo2025iba}
++  HEAD:docs/latex/methodology.tex:140:contributions \citep[Eq. 3]{diallo2025iba}:
++  HEAD:docs/latex/methodology.tex:165:charge and the detector solid angle. Following \citep{diallo2025iba}, it
++  HEAD:docs/latex/methodology.tex:188:The statistical contribution is Poissonian \citep[Eq. 4]{diallo2025iba}:
++  HEAD:docs/latex/methodology.tex:203:element as such. The note gives four values \citep{diallo2025iba}:
++  HEAD:docs/latex/methodology.tex:222:\(\mathrm{M}x(\alpha,\alpha)\mathrm{M}x\) & 0 \% & Diallo 2025; reading
++  HEAD:docs/latex/methodology.tex:224:\(^{16}\mathrm{O}(d,\alpha_0)^{14}\mathrm{N}\) & 2 \% & Diallo 2025 \\
++  HEAD:docs/latex/methodology.tex:226:\% & Diallo 2025 \\
++  HEAD:docs/latex/methodology.tex:227:\(^{12}\mathrm{C}(d,p_0)^{13}\mathrm{C}\) & 5 \% & Diallo 2025 \\
++  HEAD:docs/latex/methodology.tex:283:H, \(^{1}\)H & 2 \% & Diallo 2025 \\
++  HEAD:docs/latex/methodology.tex:285:C, \(^{12}\)C & 5 \% & Diallo 2025 \\
++  HEAD:docs/latex/methodology.tex:288:O, \(^{16}\)O & 2 \% & Diallo 2025 \\
++  HEAD:docs/latex/methodology.tex:291:any other element & 0 \% (Rutherford) & Diallo 2025 for
++  HEAD:docs/latex/methodology.tex:336:\citep[Eq. 5]{diallo2025iba}
++  HEAD:docs/latex/methodology.tex:405:\citep[Eq. 6]{diallo2025iba}
++  HEAD:docs/latex/methodology.tex:523:\citep{diallo2025iba}. Supplied with the same detected counts and the
++  HEAD:docs/latex/software_overview.tex:34:The uncertainty formalism follows the internal technical note of Diallo
++  HEAD:docs/latex/software_overview.tex:35:\citep{diallo2025iba}. Its first two equations, for the detected-count
++  HEAD:docs/methodology.md:7:Diallo [@diallo2025iba], whose Eqs. (D1)–(D6) are reproduced below. Everything that
++  HEAD:docs/methodology.md:50:The number of counts detected for element $A$ is [@diallo2025iba, Eq. 1]
++  HEAD:docs/methodology.md:62:[@diallo2025iba, Eq. 2]
++  HEAD:docs/methodology.md:135:contributions [@diallo2025iba, Eq. 3]:
++  HEAD:docs/methodology.md:157:the detector solid angle. Following [@diallo2025iba], it is estimated as the
++  HEAD:docs/methodology.md:177:The statistical contribution is Poissonian [@diallo2025iba, Eq. 4]:
++  HEAD:docs/methodology.md:191:such. The note gives four values [@diallo2025iba]:
++  HEAD:docs/methodology.md:195:| $\mathrm{M}x(\alpha,\alpha)\mathrm{M}x$ | 0 % | Diallo 2025; reading it as Rutherford is this program's |
++  HEAD:docs/methodology.md:196:| $^{16}\mathrm{O}(d,\alpha_0)^{14}\mathrm{N}$ | 2 % | Diallo 2025 |
++  HEAD:docs/methodology.md:197:| $^{1}\mathrm{H}(^{4}\mathrm{He},{}^{1}\mathrm{H})^{4}\mathrm{He}$ | 2 % | Diallo 2025 |
++  HEAD:docs/methodology.md:198:| $^{12}\mathrm{C}(d,p_0)^{13}\mathrm{C}$ | 5 % | Diallo 2025 |
++  HEAD:docs/methodology.md:217:| H, $^{1}$H | 2 % | Diallo 2025 |
++  HEAD:docs/methodology.md:219:| C, $^{12}$C | 5 % | Diallo 2025 |
++  HEAD:docs/methodology.md:222:| O, $^{16}$O | 2 % | Diallo 2025 |
++  HEAD:docs/methodology.md:225:| any other element | 0 % (Rutherford) | Diallo 2025 for $\mathrm{M}x(\alpha,\alpha)\mathrm{M}x$; limiting it to Rutherford (typically heavy) targets is this program's reading |
++  HEAD:docs/methodology.md:265:[@diallo2025iba, Eq. 5]
++  HEAD:docs/methodology.md:320:$\sqrt{\chi^2_\nu}$, giving [@diallo2025iba, Eq. 6]
++  HEAD:docs/methodology.md:432:of the method, independent of the code [@diallo2025iba]. Supplied
++  HEAD:docs/methodology.md:459:- `diallo2025iba` — the uncertainty formalism, Eqs. (D1)–(D6).
++  HEAD:docs/references/README.md:6:- Diallo, B. (2025). *IBA Uncertainties*. Internal technical note,
++  HEAD:docs/software_overview.md:32:The uncertainty formalism follows the internal technical note of Diallo
++  HEAD:docs/software_overview.md:33:[@diallo2025iba]. Its first two equations, for the detected-count relation and
++  HEAD:docs/user_guide.md:42:*How to estimate it.* Following Diallo (2025): take the ratios of the
++  HEAD:prompt_outputs/001-bootstrap-implement.md:314:  f2c2259 | Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com> | 2026-09-17 Separate Diallo's 0 % rule from program reading
++  HEAD:prompt_outputs/001-bootstrap-implement.md:317:  11328eb | Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com> | 2026-09-16 Tag Diallo equations and trim thesis export
++  HEAD:prompt_outputs/001-bootstrap.diff.txt:2122:+  f2c2259 | Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com> | 2026-09-17 Separate Diallo's 0 % rule from program reading
++  HEAD:prompt_outputs/001-bootstrap.diff.txt:2125:+  11328eb | Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com> | 2026-09-16 Tag Diallo equations and trim thesis export
++-- working tree, README.md only, after the change:
++  README.md:40:The uncertainty formalism is from Diallo (2025), *IBA Uncertainties*, internal
++  README.md:48:We thank Babacar Diallo for deriving the uncertainty formulas
++
++=== V6. Licence/copyright section in README ===
++HEAD:README.md: exit 1, 0 hit(s) []
++working README.md: exit 0
++  README.md:51:## License
++  README.md:53:Copyright (c) 2026 Berke Santos, Giuseppe Legrottaglie
++  README.md:55:Flavunato is distributed under the CeCILL-B Free Software License
++  README.md:56:Agreement, version 1.0. See [LICENSE](LICENSE) for the full text.
++Acknowledgements heading at HEAD: []
++headings at HEAD: 1:# Flavunato | 12:## Quick start | 23:## Documentation | 32:## Thesis version | 38:## Citation
++
++=== V7. README change and wrapping ===
++numstat README.md: 12	0	README.md
++  @@ -44,0 +45,12 @@ Mayer, M. (1999), AIP Conf. Proc. **475**, 541–544,
++  +
++  +## Acknowledgements
++  +
++  +We thank Babacar Diallo for deriving the uncertainty formulas
++  +implemented in `flavunato/uncertainty.py`.
++  +
++  +## License
++  +
++  +Copyright (c) 2026 Berke Santos, Giuseppe Legrottaglie
++  +
++  +Flavunato is distributed under the CeCILL-B Free Software License
++  +Agreement, version 1.0. See [LICENSE](LICENSE) for the full text.
++HEAD README is a prefix of the new README (append only): 44 old lines, 56 new lines -> PASS
++HEAD prose line lengths: max 80, lines > 72: 9 of 18
++added line lengths: [0, 19, 0, 61, 42, 0, 10, 0, 54, 0, 65, 65] max 65
++README working tree: CRLF 56, bare LF 0
++
++=== V8. Support for the acknowledgement sentence (tracked files) ===
++  flavunato/uncertainty.py:6:This version implements the uncertainty formulas from the French IBA expert,
++  flavunato/uncertainty.py:16:THEORETICAL BACKGROUND (from IBA-uncertainties-v3.pdf)
++  flavunato/uncertainty.py:97:Formulas from French IBA expert documentation (v3)
++  flavunato/uncertainty.py:120:# CROSS-SECTION UNCERTAINTIES (from IBA-uncertainties-v3.pdf)
++  flavunato/uncertainty.py:124:    # From IBA-uncertainties-v3.pdf (French IBA expert)
++  flavunato/uncertainty.py:301:# UNCERTAINTY CALCULATIONS (v9 - French Expert Formulas + Isotope Support)
++  flavunato/uncertainty.py:312:    Formula (Equation 5 from IBA-uncertainties-v3.pdf):
++  flavunato/uncertainty.py:458:    Calculate uncertainties using the French expert's formulas (v9).
++  README.md:40:The uncertainty formalism is from Diallo (2025), *IBA Uncertainties*, internal
++  docs/methodology.md:6:The uncertainty formalism follows the internal technical note of
++
++=== V9. Character scan ===
++LICENSE: 21396 bytes | valid UTF-8 yes | BOM no | CR 0 | other control chars 0 []
++  (information) lines with trailing whitespace: 3 [20, 406, 407]
++CITATION.cff: 950 bytes | valid UTF-8 yes | BOM no | CR 0 | other control chars 0 []
++  (information) lines with trailing whitespace: 0 []
++README.md: 2399 bytes | valid UTF-8 yes | BOM no | CR 56 | other control chars 0 []
++  (information) lines with trailing whitespace: 0 []
++
++=== V10. py_compile on all tracked .py files (rule 4) ===
++  exit 0 flavunato/__init__.py
++  exit 0 flavunato/__main__.py
++  exit 0 flavunato/element_spectra.py
++  exit 0 flavunato/gui.py
++  exit 0 flavunato/plotting.py
++  exit 0 flavunato/uncertainty.py
++  exit 0 run_flavunato.py
++  exit 0 tests/_paths.py
++  exit 0 tests/golden/check_golden.py
++  exit 0 tests/golden/generate_golden.py
++  exit 0 tests/validation/compare_manual.py
++py_compile: 11 files, 0 failures; bytecode under <scratchpad>/pycache -> PASS
++
++=== V11. Scope: files outside the list unchanged ===
++tracked files changed vs HEAD == [README.md]: ['README.md'] -> PASS
++nothing staged: [] -> PASS
++git diff --stat:
++   README.md | 12 ++++++++++++
++   1 file changed, 12 insertions(+)
++
++=== V12. Information: first and last commit dates ===
++first commit: 2026-09-15 de8b7e1 | last: 2026-10-27 32a4e6c
++
++RESULT: ALL PASS
++```
++
++### Licence passages: `python t002_quote.py`
++
++```
++=== Q1. LICENSE lines mentioning 'notice' or 'file' ===
++  LICENSE:5:     Notice
++  LICENSE:91: Object Code: means the binary files originating from the compilation of
++  LICENSE:108: Module: means a set of sources files including their documentation that
++  LICENSE:144: 3.2 One copy of the Agreement, containing a notice relating to the
++  LICENSE:209: Software provided that it includes an explicit notice that it is the
++  LICENSE:234:    2. a notice relating to the limitation of both the Licensor's
++  LICENSE:267:       property notice for the Software,
++  LICENSE:270:       intellectual property notice and license hereunder are included in
++  LICENSE:276:       Software intellectual property notice,
++  LICENSE:332:       notices attached to the Software;
++  LICENSE:334:    2. to reproduce said notices, in an identical manner, in the copies
++  LICENSE:436: thirty (30) days after notice has been sent to the Licensee and has
++
++=== Q2. Passages ===
++-- Article 5.3.1, LICENSE:226-235
++  226:         5.3.1 DISTRIBUTION OF SOFTWARE WITHOUT MODIFICATION
++  227: 
++  228: The Licensee is authorized to distribute true copies of the Software in
++  229: Source Code or Object Code form, provided that said distribution
++  230: complies with all the provisions of the Agreement and is accompanied by:
++  231: 
++  232:    1. a copy of the Agreement,
++  233: 
++  234:    2. a notice relating to the limitation of both the Licensor's
++  235:       warranty and liability as set forth in Articles 8 and 9,
++-- Article 5.3.4, LICENSE:260-271
++  260:         5.3.4 CREDITS
++  261: 
++  262: Any Licensee who may distribute a Modified Software hereby expressly
++  263: agrees to:
++  264: 
++  265:    1. indicate in the related documentation that it is based on the
++  266:       Software licensed hereunder, and reproduce the intellectual
++  267:       property notice for the Software,
++  268: 
++  269:    2. ensure that written indications of the Software intended use,
++  270:       intellectual property notice and license hereunder are included in
++  271:       easily accessible format from the Modified Software interface,
++-- Article 6.4, LICENSE:327-335
++  327:       6.4 JOINT PROVISIONS
++  328: 
++  329: The Licensee expressly undertakes:
++  330: 
++  331:    1. not to remove, or modify, in any manner, the intellectual property
++  332:       notices attached to the Software;
++  333: 
++  334:    2. to reproduce said notices, in an identical manner, in the copies
++  335:       of the Software modified or not.
++-- Article 11.5, LICENSE:481-484
++  481:       11.5 LANGUAGE
++  482: 
++  483: The Agreement is drafted in both French and English and both versions
++  484: are deemed authentic.
++
++=== Q3. Root __pycache__/ (not created by this task) ===
++files: 9 | mtime range 2026-09-15 .. 2026-09-17
++check-ignore: .gitignore:2:__pycache__/	__pycache__/GUI_v18.cpython-314.pyc (exit 0)
++```
++
++## Diff artifact
++
++`python t002_diff.py <scratchpad>` runs `git add -N` on every untracked
++path from `git status` (explicit paths), writes the artifact with the
++prompt's command, regenerates it to
++`<scratchpad>/regen/002-licence.diff.txt` and runs cmp. The final run,
++made after this report was complete, is in chat: it also checks that
++the two blocks below match the live state verbatim.
++
++The deletions column of the numstat block is 0 on every row: no line
++is deleted.
++
++### Numstat
++
++```
++22	0	CITATION.cff
++515	0	LICENSE
++12	0	README.md
++216	0	prompt_outputs/001-bootstrap-commit.md
++142	0	prompt_outputs/001-bootstrap-push.md
++552	0	prompt_outputs/002-licence-implement.md
++```
++
++## Final state
++
++### git status --porcelain -uall
++
++```
++ A CITATION.cff
++ A LICENSE
++ M README.md
++ A prompt_outputs/001-bootstrap-commit.md
++ A prompt_outputs/001-bootstrap-push.md
++ A prompt_outputs/002-licence-implement.md
++ A prompt_outputs/002-licence.diff.txt
++```
