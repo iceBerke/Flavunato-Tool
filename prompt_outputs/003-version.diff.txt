@@ -1,0 +1,1158 @@
+diff --git a/CLAUDE.md b/CLAUDE.md
+index fb560ad..199e0c2 100644
+--- a/CLAUDE.md
++++ b/CLAUDE.md
+@@ -2,6 +2,8 @@
+ Python/Tkinter GUI for SIMNRA .xnra IBA spectra and concentration uncertainties.
+ Thesis version is tagged v1.0-thesis. It is the reference; never alter its behaviour.
+ Code version 1.0.0 corresponds to the git tag v1.0-thesis.
++Code version 1.1.0 is the restructured package with licence and citation
++metadata; the golden test compares its results with v1.0-thesis.
+ 
+ ## Modules
+ The code is the `flavunato` package. The GUI is the only interface.
+diff --git a/flavunato/__init__.py b/flavunato/__init__.py
+index 5becc17..6849410 100644
+--- a/flavunato/__init__.py
++++ b/flavunato/__init__.py
+@@ -1 +1 @@
+-__version__ = "1.0.0"
++__version__ = "1.1.0"
+diff --git a/prompt_outputs/002-licence-commit.md b/prompt_outputs/002-licence-commit.md
+new file mode 100644
+index 0000000..84bb590
+--- /dev/null
++++ b/prompt_outputs/002-licence-commit.md
+@@ -0,0 +1,214 @@
++# 002 — licence — commit
++
++Task: commit the staged task-002 set with the approved message. This
++report was written after the commit. It stays untracked and is committed
++with the next task (CLAUDE.md rule 12).
++
++Tests: py_compile on all tracked .py files (pre-commit check 6), and
++tests/golden/check_golden.py and tests/validation/compare_manual.py
++(pre-commit check 7), both PASS.
++
++## Commit
++
++| Item | Value (source) |
++|---|---|
++| Commit | `640158e0933ae7bfab8954cd332afb4e7870759b` (post-commit, "HEAD:") |
++| Parent | `32a4e6c` (post-commit; parent count 1) |
++| Subject | 42 chars, byte-identical to the approved subject (post-commit) |
++| Longest body line | 69 chars, trailer excluded (post-commit) |
++| Trailer as committed | `Co-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>` (post-commit L12; `git interpret-trailers --parse` shows exactly one trailer) |
++| Diff artifact | `prompt_outputs/002-licence.diff.txt`, as committed. Not regenerated after the commit (rule 12). Before the commit, its staged blob and its working file both matched a regeneration outside the repo (pre-commit check 5). |
++| Command | `git commit -F <scratchpad>/msg_002.txt`. No `--amend`, no `-a`, no `--no-verify`, no other options. |
++
++Staged file list (pre-commit check 2, parsed from the cached-numstat
++block of 002-licence-gate.md; the same 8 paths as `git show --stat HEAD`
++in the post-commit output):
++
++```
++CITATION.cff
++LICENSE
++README.md
++prompt_outputs/001-bootstrap-commit.md
++prompt_outputs/001-bootstrap-push.md
++prompt_outputs/002-licence-gate.md
++prompt_outputs/002-licence-implement.md
++prompt_outputs/002-licence.diff.txt
++```
++
++## Premise checks (prompt vs files)
++
++All premises held: HEAD and origin/main, the staged set and its numstat
++row by row, a clean tree, the five frozen files in staged form, the
++artifact cmp, py_compile (11 files, 0 failures) and both tests. See the
++pre-commit output.
++
++- **Status at the post-commit check.** `git status --porcelain -uall`
++  was empty (0 lines) because this report did not exist yet. Status
++  after writing this report is in chat.
++
++## Errata
++
++None for the earlier task-002 reports.
++
++## UNREQUESTED — ACCEPT OR DROP
++
++None.
++
++## Commit command output
++
++```
++[main 640158e] Add CeCILL-B license and citation metadata
++ 8 files changed, 3576 insertions(+)
++ create mode 100644 CITATION.cff
++ create mode 100644 LICENSE
++ create mode 100644 prompt_outputs/001-bootstrap-commit.md
++ create mode 100644 prompt_outputs/001-bootstrap-push.md
++ create mode 100644 prompt_outputs/002-licence-gate.md
++ create mode 100644 prompt_outputs/002-licence-implement.md
++ create mode 100644 prompt_outputs/002-licence.diff.txt
++exit 0
++```
++
++## Pre-commit checks
++
++`python pre_commit_002.py <scratchpad>`, output inserted by script:
++
++```
++=== 1. fetch, HEAD, origin/main ===
++1 git fetch: exit 0 -> PASS
++1 branch is main: main -> PASS
++1 HEAD == 32a4e6c...: 32a4e6ce9e79ec10e627ba0df8d84c5b9b2d2dc1 -> PASS
++1 origin/main == 32a4e6c...: 32a4e6ce9e79ec10e627ba0df8d84c5b9b2d2dc1 -> PASS
++1 behind/ahead: behind 0, ahead 0 -> PASS
++
++=== 2. Staged set vs the gate report's cached-numstat block ===
++  parsed from prompt_outputs/002-licence-gate.md: 8 rows
++    22  0  CITATION.cff
++    515  0  LICENSE
++    12  0  README.md
++    216  0  prompt_outputs/001-bootstrap-commit.md
++    142  0  prompt_outputs/001-bootstrap-push.md
++    307  0  prompt_outputs/002-licence-gate.md
++    552  0  prompt_outputs/002-licence-implement.md
++    1810  0  prompt_outputs/002-licence.diff.txt
++2 staged set == parsed paths: 8 staged, extra [], missing [] -> PASS
++2 staged numstat == block, row by row: 8 rows compared, 0 differ [] -> PASS
++
++=== 3. Unstaged / untracked / intent-to-add ===
++  A  CITATION.cff
++  A  LICENSE
++  M  README.md
++  A  prompt_outputs/001-bootstrap-commit.md
++  A  prompt_outputs/001-bootstrap-push.md
++  A  prompt_outputs/002-licence-gate.md
++  A  prompt_outputs/002-licence-implement.md
++  A  prompt_outputs/002-licence.diff.txt
++3 no unstaged changes: 0 path(s) -> PASS
++3 no untracked files: 0 line(s) -> PASS
++3 no intent-to-add entries: 0 empty-blob entries -> PASS
++
++=== 4. Frozen files, staged form ===
++4 prompt_outputs/001-bootstrap-commit.md: bytes 9784 (want 9784) sha256 b721740d228165f9f22e627c81a24a4036f0aac12efb25e4954663304653734d CR 0 -> PASS
++4 prompt_outputs/001-bootstrap-push.md: bytes 5739 (want 5739) sha256 5440ae87298fe16da6e2e9550f0d6b1d40759a112c580249a6de00abfec18c09 CR 0 -> PASS
++4 prompt_outputs/002-licence-implement.md: bytes 27369 (want 27369) sha256 e15f74f9e5eb335fc228d70bdc0bed66d3a379d39f2b8ba9997a6316a5e0c4c1 CR 0 -> PASS
++4 prompt_outputs/002-licence-gate.md: bytes 12594 (want 12594) sha256 e89cc2a0e201714915c872a9a91a3a0e4be194ce7f975c0f986c9f7f5f6a7bf4 CR 0 -> PASS
++4 prompt_outputs/002-licence.diff.txt: bytes 81410 (want 81410) sha256 74c23c211e0ad39de1968643de3df8c8347aab3432da1ae283324b18bcc04cb7 CR 0 -> PASS
++
++=== 5. Artifact vs regeneration outside the repo ===
++  regeneration exit 0 -> <scratchpad>/regen/002-licence.diff.txt
++5 cmp staged blob vs regeneration: cmp exit 0, 81410 vs 81410 bytes -> PASS
++5 cmp working file vs regeneration: cmp exit 0, 81410 vs 81410 bytes -> PASS
++
++=== 6. py_compile on all tracked .py files (rule 4) ===
++  exit 0 flavunato/__init__.py
++  exit 0 flavunato/__main__.py
++  exit 0 flavunato/element_spectra.py
++  exit 0 flavunato/gui.py
++  exit 0 flavunato/plotting.py
++  exit 0 flavunato/uncertainty.py
++  exit 0 run_flavunato.py
++  exit 0 tests/_paths.py
++  exit 0 tests/golden/check_golden.py
++  exit 0 tests/golden/generate_golden.py
++  exit 0 tests/validation/compare_manual.py
++6 py_compile: 11 files, 0 failures; bytecode under <scratchpad>/pycache -> PASS
++
++=== 7. Data-dependent tests ===
++  | PASS  golden regression: 20 rows, tol 1e-12, roi_source=reference
++7 tests/golden/check_golden.py: exit 0, stderr 0 lines, verdict PASS -> PASS
++  | VALIDATION A: PASS -- all rows within 1e-09
++7 tests/validation/compare_manual.py: exit 0, stderr 0 lines, verdict PASS -> PASS
++7 git status --porcelain -uall identical before vs after: 8 vs 8 lines -> PASS
++
++=== 8. Message file ===
++  written: <scratchpad>/msg_002.txt, 467 bytes, CR 0
++8 no CR: 0 -> PASS
++8 lines 1-10 == approved literal: 10 lines, mismatched [] -> PASS
++  L1   42 chars (max 50) PASS | Add CeCILL-B license and citation metadata
++  L2    0 chars (max 72) PASS | 
++  L3   67 chars (max 72) PASS | Add the official CeCILL-B v1.0 English text as LICENSE, unmodified,
++  L4   69 chars (max 72) PASS | and a CITATION.cff validated with cffconvert, so that releases can be
++  L5   44 chars (max 72) PASS | archived on Zenodo and cited by version DOI.
++  L6    0 chars (max 72) PASS | 
++  L7   60 chars (max 72) PASS | Add Acknowledgements and License sections to the README. The
++  L8   60 chars (max 72) PASS | copyright line refers to the authors listed in CITATION.cff.
++  L9    0 chars (max 72) PASS | 
++  L10  45 chars (max 72) PASS | Include the task 001 commit and push reports.
++  L11   0 chars (max 72) PASS | 
++  L12  68 chars (trailer, exempt (rule 8)) PASS | Co-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>
++8 subject no trailing period: a -> PASS
++8 exactly one blank line then the trailer, trailer last: ['', 'Co-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>'] -> PASS
++8 exactly one Co-Authored-By line: 1 -> PASS
++8 git interpret-trailers --parse: one trailer, key Co-Authored-By: ['Co-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>'] -> PASS
++
++RESULT: ALL PASS
++```
++
++## Post-commit checks
++
++`python post_commit_002.py`, output inserted by script:
++
++```
++=== Commit ===
++HEAD: 640158e0933ae7bfab8954cd332afb4e7870759b
++parent is 32a4e6c: ['32a4e6c'] -> PASS
++parent count: 1 -> PASS
++
++=== Message, line by line (git log -1 --format=%B) ===
++  L1   42 chars | Add CeCILL-B license and citation metadata
++  L2    0 chars | 
++  L3   67 chars | Add the official CeCILL-B v1.0 English text as LICENSE, unmodified,
++  L4   69 chars | and a CITATION.cff validated with cffconvert, so that releases can be
++  L5   44 chars | archived on Zenodo and cited by version DOI.
++  L6    0 chars | 
++  L7   60 chars | Add Acknowledgements and License sections to the README. The
++  L8   60 chars | copyright line refers to the authors listed in CITATION.cff.
++  L9    0 chars | 
++  L10  45 chars | Include the task 001 commit and push reports.
++  L11   0 chars | 
++  L12  68 chars | Co-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>
++lines 1-10 == approved text (by index): mismatched [] -> PASS
++subject byte-identical: 42 bytes -> PASS
++exactly one blank line, then one trailer line, last: ['', 'Co-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>'] -> PASS
++trailer key: Co-Authored-By -> PASS
++git interpret-trailers --parse: exactly one trailer: ['Co-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>'] -> PASS
++subject <= 50: 42 chars -> PASS
++longest body line <= 72 (trailer excluded): 69 chars -> PASS
++
++=== git show --stat HEAD ===
++ CITATION.cff                            |   22 +
++ LICENSE                                 |  515 +++++++++
++ README.md                               |   12 +
++ prompt_outputs/001-bootstrap-commit.md  |  216 ++++
++ prompt_outputs/001-bootstrap-push.md    |  142 +++
++ prompt_outputs/002-licence-gate.md      |  307 ++++++
++ prompt_outputs/002-licence-implement.md |  552 ++++++++++
++ prompt_outputs/002-licence.diff.txt     | 1810 +++++++++++++++++++++++++++++++
++ 8 files changed, 3576 insertions(+)
++commit lists exactly the 8 paths: 8 paths, extra [], missing [] -> PASS
++
++=== git status --porcelain -uall ===
++clean: 0 line(s) -> PASS
++
++RESULT: ALL PASS
++```
+diff --git a/prompt_outputs/002-licence-push.md b/prompt_outputs/002-licence-push.md
+new file mode 100644
+index 0000000..9e7e5ed
+--- /dev/null
++++ b/prompt_outputs/002-licence-push.md
+@@ -0,0 +1,149 @@
++# 002 — licence — push
++
++Task: push commit 640158e to origin/main. This report was written after
++the push. It stays untracked and is committed with the next task,
++together with 002-licence-commit.md (CLAUDE.md rule 12).
++
++Tests: py_compile on all tracked .py files (pre-push check 6), and
++tests/golden/check_golden.py and tests/validation/compare_manual.py
++(pre-push check 7), both PASS.
++
++## Push
++
++| Item | Value (source) |
++|---|---|
++| Commit pushed | `640158e0933ae7bfab8954cd332afb4e7870759b` "Add CeCILL-B license and citation metadata" (post-push, "pushed commit") |
++| Remote and branch | `origin`, `main -> main`; upstream `origin/main` (pre-push check 1; push output) |
++| Exit code | 0 (push output) |
++| `git log origin/main..HEAD` afterwards | empty (post-push); behind 0, ahead 0 |
++| Trailer | key `Co-Authored-By`, count 1, position: the last line, after exactly one blank line (pre-push check 4: all PASS) |
++| Manual run | Not needed. The commit contains no `.py` file (pre-push check 8: 0 of 8 paths are .py). It changes only the licence, citation metadata, README and reports, which the tests cannot reach, so there is nothing for a manual run to cover. |
++| Command | plain `git push`, run through `<scratchpad>/push_002.py`, which captures the output and masks any URL credentials (0 masks applied). No `--force`, no other refs, no tags. |
++
++## Premise checks (prompt vs files)
++
++All premises held. HEAD, its parent and origin/main were where the
++prompt said; the subject and message matched; the tree was clean except
++the commit report, which matches the stated 9580 bytes and sha256; the
++commit has no `.py` file; py_compile and both tests passed. See the
++pre-push output.
++
++- **Status at the post-push check.** It showed only
++  `002-licence-commit.md` untracked, because this report did not exist
++  yet. Status after writing this report is in chat.
++
++## Errata
++
++None for the earlier task-002 reports.
++
++## UNREQUESTED — ACCEPT OR DROP
++
++None.
++
++## Push output
++
++```
++To https://github.com/iceBerke/Flavunato-Tool.git
++   32a4e6c..640158e  main -> main
++credential masks applied: 0
++exit 0
++```
++
++## Pre-push checks
++
++`python pre_push_002.py <scratchpad>`, output inserted by script:
++
++```
++=== 1. fetch, branch, upstream, HEAD, ahead/behind ===
++1 git fetch: exit 0 -> PASS
++1 branch is main: main -> PASS
++1 upstream is origin/main: origin/main -> PASS
++  remotes: ['origin']
++1 HEAD: 640158e0933ae7bfab8954cd332afb4e7870759b -> PASS
++1 behind/ahead (origin/main...HEAD): behind 0, ahead 1 -> PASS
++
++=== 2. parent and origin/main ===
++2 parent of HEAD is 32a4e6c: ['32a4e6c'] -> PASS
++2 origin/main is 32a4e6c: 32a4e6c -> PASS
++
++=== 3. subject ===
++3 subject byte-identical: 42 bytes | Add CeCILL-B license and citation metadata -> PASS
++
++=== 4. message: text, blank line, one trailer ===
++  L1   42 chars | Add CeCILL-B license and citation metadata
++  L2    0 chars | 
++  L3   67 chars | Add the official CeCILL-B v1.0 English text as LICENSE, unmodified,
++  L4   69 chars | and a CITATION.cff validated with cffconvert, so that releases can be
++  L5   44 chars | archived on Zenodo and cited by version DOI.
++  L6    0 chars | 
++  L7   60 chars | Add Acknowledgements and License sections to the README. The
++  L8   60 chars | copyright line refers to the authors listed in CITATION.cff.
++  L9    0 chars | 
++  L10  45 chars | Include the task 001 commit and push reports.
++  L11   0 chars | 
++  L12  68 chars | Co-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>
++4 lines 1-10 == approved (by index): mismatched [] -> PASS
++4 line 11 blank: '' -> PASS
++4 exactly one line after the blank line: 1 line(s) -> PASS
++4 trailer key, last line: Co-Authored-By at line 12 of 12 -> PASS
++4 git interpret-trailers --parse: exactly one trailer: 1 trailer(s) -> PASS
++
++=== 5. tree ===
++  ?? prompt_outputs/002-licence-commit.md
++5 only untracked file is the commit report: 1 line(s) -> PASS
++5 commit report LF form: bytes 9580 (want 9580) sha256 b06ad2cf4de2f5b3511238a3a72769bf1cc84d16baac0802259a901bc7e6f974 (working-tree bytes 9580, CR 0) -> PASS
++5 no staged changes: [] -> PASS
++5 no unstaged changes: [] -> PASS
++
++=== 6. py_compile on all tracked .py files (rule 4) ===
++  exit 0 flavunato/__init__.py
++  exit 0 flavunato/__main__.py
++  exit 0 flavunato/element_spectra.py
++  exit 0 flavunato/gui.py
++  exit 0 flavunato/plotting.py
++  exit 0 flavunato/uncertainty.py
++  exit 0 run_flavunato.py
++  exit 0 tests/_paths.py
++  exit 0 tests/golden/check_golden.py
++  exit 0 tests/golden/generate_golden.py
++  exit 0 tests/validation/compare_manual.py
++6 py_compile: 11 files, 0 failures; bytecode under <scratchpad>/pycache -> PASS
++
++=== 7. Data-dependent tests ===
++  | PASS  golden regression: 20 rows, tol 1e-12, roi_source=reference
++7 tests/golden/check_golden.py: exit 0, stderr 0 lines, verdict PASS -> PASS
++  | VALIDATION A: PASS -- all rows within 1e-09
++7 tests/validation/compare_manual.py: exit 0, stderr 0 lines, verdict PASS -> PASS
++7 git status --porcelain -uall identical before vs after: 1 vs 1 lines -> PASS
++
++=== 8. manual run needed? ===
++  CITATION.cff
++  LICENSE
++  README.md
++  prompt_outputs/001-bootstrap-commit.md
++  prompt_outputs/001-bootstrap-push.md
++  prompt_outputs/002-licence-gate.md
++  prompt_outputs/002-licence-implement.md
++  prompt_outputs/002-licence.diff.txt
++8 no .py file in the commit: 0 of 8 paths are .py [] -> PASS
++8 verdict: manual run not needed
++
++RESULT: ALL PASS
++```
++
++## Post-push checks
++
++`python post_push_002.py`, output inserted by script:
++
++```
++git fetch: exit 0 -> PASS
++HEAD == 640158e...: 640158e0933ae7bfab8954cd332afb4e7870759b -> PASS
++origin/main == HEAD: 640158e0933ae7bfab8954cd332afb4e7870759b -> PASS
++git log origin/main..HEAD empty: 0 chars -> PASS
++behind/ahead: behind 0, ahead 0 -> PASS
++pushed commit: 640158e0933ae7bfab8954cd332afb4e7870759b Add CeCILL-B license and citation metadata
++  ?? prompt_outputs/002-licence-commit.md
++tree: only the commit and push reports untracked (push report may not exist yet): 1 line(s) -> PASS
++
++RESULT: ALL PASS
++```
+diff --git a/prompt_outputs/003-version-gate.md b/prompt_outputs/003-version-gate.md
+new file mode 100644
+index 0000000..2b2fefc
+--- /dev/null
++++ b/prompt_outputs/003-version-gate.md
+@@ -0,0 +1,349 @@
++# 003 — version — gate (final)
++
++Task: apply rulings P3 and P4 to the CLAUDE.md version line, rerun the
++tests, stage the 7 paths by explicit path and propose the commit
++message. This is the final gate of task 003. Stops before committing:
++nothing committed, nothing pushed.
++
++Tests: py_compile on all tracked .py files, the import check, and the
++two data-dependent scripts, tests/golden/check_golden.py and
++tests/validation/compare_manual.py. All PASS (I1, T1–T3). The GUI window
++title is manual-test-only: Berke launches the GUI before the push and
++confirms that the title reads "Flavunato v1.1.0". It was not launched
++here.
++
++## Rulings recorded
++
++- **P1:** no other "1.0.0" mention changes; they refer to the thesis
++  version.
++- **P2:** confirmed: the code has changed since v1.0-thesis (implement
++  C5, C8).
++- **P3 + P4:** the CLAUDE.md line is reworded and wrapped. Applied
++  (change 1).
++- **P5:** the commit message no longer claims that the golden test
++  proves thesis reproduction; it says that the golden regression test
++  still passes (proposed message below).
++- **UNREQUESTED from the implement step:** the stale citation in
++  docs/notes/known_issues.md:81 (gui.py:1,3,79 vs :77): DROPPED for
++  now; it goes to a later docs task. Not changed.
++- **Deviations from the implement step** (`<scratchpad>/__pycache__/`,
++  MPLCONFIGDIR under `out/`): ACCEPTED.
++
++## Errata
++
++None. No new audit was made of the earlier reports.
++
++## Files touched
++
++| Path | Change |
++|---|---|
++| `CLAUDE.md` | the implement-step line replaced by two lines (change 1) |
++| `prompt_outputs/003-version-gate.md` | new; this report |
++| `prompt_outputs/003-version.diff.txt` | regenerated |
++| git index | the 7 paths staged by explicit path; the intent-to-add entries become real entries |
++| `flavunato/__init__.py` | unchanged by this prompt (G3); staged with its implement-step change |
++| frozen and carried reports | unchanged (G2, D0); staged unchanged |
++| `<scratchpad>/t003g_*.py`, `out/`, `regen/`, `pycache/`, `out/mplconfig/` | outside the repo: start, apply, tests, msg, stage and re-read scripts; saved output and local test logs; the cmp regeneration; bytecode; the matplotlib cache |
++
++Approval: the prompt fixed the file list, which rule 9 counts as
++approval. The import check reuses `<scratchpad>/t003_import.py` from
++the implement step, unchanged.
++
++## Premise checks (prompt vs files)
++
++| Prompt premise | Finding |
++|---|---|
++| HEAD == origin/main == 640158e… | Holds (G1). |
++| Three frozen/carried reports at the given bytes/sha256 (LF form) | Hold, before (G2) and at staging (D0). |
++| flavunato/__init__.py already reads `__version__ = "1.1.0"` | Holds (G3). |
++| CLAUDE.md line 5 is the implement-step line; line 4 is the 1.0.0 line | Hold (G3). |
++| New lines are 72 and 64 chars; CLAUDE.md numstat vs HEAD `2 0` | Hold (A1). |
++| P2 cites implement C5 and C8 | Both sections exist in 003-version-implement.md. |
++| Tests: 11 files 0 failures; import check, check_golden and compare_manual PASS | Hold (I1, T1–T3). |
++| Order as in 002-licence-gate.md | Followed: report, then artifact and cmp, then stage by explicit path; the numstat and status blocks below were refreshed and the cycle repeated until the report stopped changing, so the last stage holds the final report and artifact. |
++| New CLAUDE.md wording "the golden test compares its results with v1.0-thesis" | **Still depends on P5.** The ruled P5 change covers the commit message only. The golden test compares results with the local `reference.json`; that it holds v1.0-thesis results rests on tests/README.md:23 ("Generate `reference.json` from the v1.0-thesis code BEFORE any refactoring"), and how the local file was generated cannot be checked from the repo: UNVERIFIED. Nothing changed. |
++| New CLAUDE.md wording "the restructured package" | Supported by commit f66c01a "Restructure modules into flavunato package" in implement C5. |
++
++## Change
++
++**1. CLAUDE.md version line (P3, P4).** The implement-step line 5 is
++replaced in place by two lines, with the file's CRLF working-tree
++endings kept (A1). Line 4 is unchanged (A1). The diff vs HEAD shows two
++added lines after line 4 and no deleted line in CLAUDE.md (A1, and the
++re-read below):
++
++> +Code version 1.1.0 is the restructured package with licence and citation
++> +metadata; the golden test compares its results with v1.0-thesis.
++
++The implement-step line was never committed, so it does not appear as
++a deletion against HEAD.
++
++## Tests
++
++From I1 and T1–T3 below:
++
++| Test | Exit | Verdict |
++|---|---|---|
++| py_compile, 11 tracked .py files | — | PASS, 0 failures |
++| import check (`python -B`, MPLCONFIGDIR under `<scratchpad>/out/`) | 0 | PASS: `__version__` '1.1.0', gui imports, no Tk root, main() not called |
++| tests/golden/check_golden.py | 0 | PASS |
++| tests/validation/compare_manual.py | 0 | PASS (Validation A; Validation B is report-only) |
++| GUI window title | — | manual-test-only; Berke, before the push |
++
++No data was missing, so neither data test was skipped. Only verdict
++lines are quoted (rule 20); the full output stays in local logs under
++`<scratchpad>/out/`. `git status --porcelain -uall` is identical before
++and after the tests, and so is the listing with `--ignored` (T3).
++generate_golden.py was not run.
++
++## Proposed commit message
++
++Measured by `t003g_msg.py` below. Trailer excluded; the COMMIT step
++appends it (rule 8).
++
++```
++Bump version to 1.1.0 for the first release
++
++Set __version__ to 1.1.0 so that the GUI title matches the release
++tag. The code has changed since v1.0-thesis (version 1.0.0); the
++golden regression test still passes. Record the new version in
++CLAUDE.md.
++
++Include the task 002 commit and push reports.
++```
++
++All lines are within limits (M1). Claims checked against the diff and
++the checks:
++
++- "Set __version__ to 1.1.0": in the diff (flavunato/__init__.py).
++- "so that the GUI title matches the release tag": the title reads
++  `__version__` (flavunato/gui.py:20, :77; implement C4), and I1 shows
++  the title string would be 'Flavunato v1.1.0'. No v1.1* tag exists
++  yet (D7), so "matches the release tag" is intent, not a change. The
++  window itself is manual-test-only.
++- "The code has changed since v1.0-thesis (version 1.0.0)": implement
++  C5 and C8; CLAUDE.md:4 maps 1.0.0 to v1.0-thesis.
++- "the golden regression test still passes": T2.
++- "Record the new version in CLAUDE.md": in the diff (change 1).
++- "Include the task 002 commit and push reports": both are staged
++  (cached numstat below).
++- The message does not mention the task 003 reports and the artifact
++  that the commit also adds. It omits them; it does not misstate them.
++
++## UNREQUESTED — ACCEPT OR DROP
++
++None new.
++
++## Verification output
++
++All blocks are script output inserted by `t002_insert.py`.
++
++### G1–G4. Start state: `python t003g_start.py`
++
++```
++=== G1. fetch, branch, HEAD, origin ===
++git fetch exit 0: exit 0 -> PASS
++branch is main: main -> PASS
++HEAD == 640158e...: 640158e0933ae7bfab8954cd332afb4e7870759b -> PASS
++origin/main == 640158e...: 640158e0933ae7bfab8954cd332afb4e7870759b -> PASS
++behind/ahead: behind 0, ahead 0 -> PASS
++
++=== G2. Frozen and carried reports (LF form) ===
++prompt_outputs/002-licence-commit.md: working-tree bytes 9580 | CR bytes 0
++  LF form: bytes 9580 (want 9580) sha256 b06ad2cf4de2f5b3511238a3a72769bf1cc84d16baac0802259a901bc7e6f974 -> PASS
++prompt_outputs/002-licence-push.md: working-tree bytes 5970 | CR bytes 0
++  LF form: bytes 5970 (want 5970) sha256 75619dd11d482e025e3450dd6584cbd6379d85bf0939e15e20d440a65564e99e -> PASS
++prompt_outputs/003-version-implement.md: working-tree bytes 18284 | CR bytes 0
++  LF form: bytes 18284 (want 18284) sha256 f029819a196f1562d6cf40c790f36af21452fd17f3b97e60c3f04f1ff2eb5b6c -> PASS
++
++=== G3. flavunato/__init__.py and CLAUDE.md before the change ===
++__init__.py __version__ line: ['__version__ = "1.1.0"'] -> PASS
++numstat vs HEAD (before):
++  1	0	CLAUDE.md
++  1	1	flavunato/__init__.py
++CLAUDE.md bytes 8517 | lines 140 | CRLF 140 | bare LF 0
++CLAUDE.md:4 is the 1.0.0 line: Code version 1.0.0 corresponds to the git tag v1.0-thesis. -> PASS
++CLAUDE.md:5 is the implement-step line: 113 chars -> PASS
++implement-step line occurs once: 1 -> PASS
++
++=== G4. Status and index ===
++   M CLAUDE.md
++   M flavunato/__init__.py
++   A prompt_outputs/002-licence-commit.md
++   A prompt_outputs/002-licence-push.md
++   A prompt_outputs/003-version-implement.md
++   A prompt_outputs/003-version.diff.txt
++nothing staged: [] -> PASS
++
++RESULT: ALL PASS
++```
++
++### A1. Change 1: `python t003g_apply.py`
++
++```
++numstat before: 1	0	CLAUDE.md
++CLAUDE.md: bytes 8517 -> 8542 | CRLF 140 -> 141 | bare LF 0
++CLAUDE.md:4 (58 chars): Code version 1.0.0 corresponds to the git tag v1.0-thesis.
++CLAUDE.md:5 (72 chars): Code version 1.1.0 is the restructured package with licence and citation
++CLAUDE.md:6 (64 chars): metadata; the golden test compares its results with v1.0-thesis.
++CLAUDE.md:7 (0 chars): 
++line 4 unchanged: PASS
++new line lengths: 72, 64 (expected 72, 64) -> PASS
++numstat after: 2	0	CLAUDE.md (expected 2 0) -> PASS
++git diff -U0 HEAD -- CLAUDE.md:
++  @@ -4,0 +5,2 @@ Code version 1.0.0 corresponds to the git tag v1.0-thesis.
++  +Code version 1.1.0 is the restructured package with licence and citation
++  +metadata; the golden test compares its results with v1.0-thesis.
++RESULT: ALL PASS
++```
++
++### I1. Import check: `MPLCONFIGDIR=<scratchpad>/out/mplconfig python -B t003_import.py`
++
++```
++MPLCONFIGDIR under <scratchpad>/out/: True
++flavunato.__version__ = '1.1.0' -> PASS
++import flavunato.gui: OK
++gui.__version__ = '1.1.0'
++PLOTTING_AVAILABLE = True
++ELEMENT_SPECTRUM_AVAILABLE = True
++UNCERTAINTY_AVAILABLE = True
++Tk default root created: False
++main() called: no (callable present: True)
++title would read: 'Flavunato v1.1.0' (string only, no window)
++RESULT: ALL PASS
++```
++
++### T1–T3. Tests: `python t003g_tests.py <scratchpad>`
++
++```
++=== T1. py_compile on all tracked .py files (rule 4) ===
++  exit 0 flavunato/__init__.py
++  exit 0 flavunato/__main__.py
++  exit 0 flavunato/element_spectra.py
++  exit 0 flavunato/gui.py
++  exit 0 flavunato/plotting.py
++  exit 0 flavunato/uncertainty.py
++  exit 0 run_flavunato.py
++  exit 0 tests/_paths.py
++  exit 0 tests/golden/check_golden.py
++  exit 0 tests/golden/generate_golden.py
++  exit 0 tests/validation/compare_manual.py
++py_compile: 11 files, 0 failures; bytecode under <scratchpad>/pycache -> PASS
++
++=== T2. Data-dependent tests ===
++-- tests/golden/check_golden.py: exit 0 | stdout 1 lines | stderr 0 lines | verdict PASS
++  | PASS  golden regression: 20 rows, tol 1e-12, roi_source=reference
++  tests/golden/check_golden.py not FAIL: PASS -> PASS
++-- tests/validation/compare_manual.py: exit 0 | stdout 45 lines | stderr 0 lines | verdict PASS
++  | VALIDATION A: PASS -- all rows within 1e-09
++  tests/validation/compare_manual.py not FAIL: PASS -> PASS
++
++=== T3. Working tree unchanged by the tests ===
++git status --porcelain -uall: 6 lines before, 6 after
++  identical before vs after: same -> PASS
++same with --ignored (names not printed): 64 lines before, 64 after
++  identical before vs after: same -> PASS
++
++RESULT: ALL PASS
++```
++
++### M1. Commit message: `python t003g_msg.py`
++
++```
++  L1   43 chars (max 50) PASS | Bump version to 1.1.0 for the first release
++  L2    0 chars (max 72) PASS | 
++  L3   66 chars (max 72) PASS | Set __version__ to 1.1.0 so that the GUI title matches the release
++  L4   64 chars (max 72) PASS | tag. The code has changed since v1.0-thesis (version 1.0.0); the
++  L5   62 chars (max 72) PASS | golden regression test still passes. Record the new version in
++  L6   10 chars (max 72) PASS | CLAUDE.md.
++  L7    0 chars (max 72) PASS | 
++  L8   45 chars (max 72) PASS | Include the task 002 commit and push reports.
++subject 43 chars | no trailing period: PASS
++line 2 blank: PASS
++longest body line: 66 chars
++trailer lines in message: 0
++non-ASCII chars: 0 | lines 8
++RESULT: ALL PASS
++```
++
++## Diff artifact and staging
++
++`python t003g_stage.py <scratchpad>` re-checks the frozen and carried
++reports (D0), runs `git add -N` on every untracked path from
++`git status` (explicit paths), writes the artifact with the prompt's
++command, regenerates it to `<scratchpad>/regen/003-version.diff.txt`
++and runs cmp. It then stages the 7 paths with `git add -- <path>`, one
++at a time, and checks each staged blob against its working file (LF
++form), and that no unstaged change, untracked file or intent-to-add
++entry is left. The final run, made after this report was complete, is
++in chat; it also checks that the three blocks below match the live
++state verbatim.
++
++### R1–R2. Re-read of the artifact (rule 15), `python t003g_reread.py`
++
++```
++=== R1. prompt_outputs/003-version.diff.txt: 1158 lines, CR bytes 0 ===
++  file: CLAUDE.md
++    5: @@ -2,6 +2,8 @@
++    9: +Code version 1.1.0 is the restructured package with licence and citation
++    10: +metadata; the golden test compares its results with v1.0-thesis.
++  file: flavunato/__init__.py
++    18: @@ -1 +1 @@
++    19: -__version__ = "1.0.0"
++    20: +__version__ = "1.1.0"
++  file: prompt_outputs/002-licence-commit.md
++  file: prompt_outputs/002-licence-push.md
++  file: prompt_outputs/003-version-gate.md
++  file: prompt_outputs/003-version-implement.md
++deleted lines in the artifact: 1
++  line 19 (flavunato/__init__.py): -__version__ = "1.0.0"
++only deletion is the __init__.py version line: PASS
++
++=== R2. flavunato/gui.py lines that use __version__ ===
++  flavunato/gui.py:20: from . import __version__
++  flavunato/gui.py:77: self.root.title(f"Flavunato v{__version__}")
++
++RESULT: ALL PASS
++```
++
++The deletions column of both numstat blocks is 0 on every row except
++flavunato/__init__.py. Its one deleted line is the
++`-__version__ = "1.0.0"` line from the implement step, which the
++re-read above lists as the only deleted line in the artifact.
++
++### Artifact numstat
++
++```
++2	0	CLAUDE.md
++1	1	flavunato/__init__.py
++214	0	prompt_outputs/002-licence-commit.md
++149	0	prompt_outputs/002-licence-push.md
++349	0	prompt_outputs/003-version-gate.md
++402	0	prompt_outputs/003-version-implement.md
++```
++
++### git diff --cached --numstat
++
++```
++2	0	CLAUDE.md
++1	1	flavunato/__init__.py
++214	0	prompt_outputs/002-licence-commit.md
++149	0	prompt_outputs/002-licence-push.md
++349	0	prompt_outputs/003-version-gate.md
++402	0	prompt_outputs/003-version-implement.md
++1158	0	prompt_outputs/003-version.diff.txt
++```
++
++## Final state
++
++### git status --porcelain -uall
++
++```
++M  CLAUDE.md
++M  flavunato/__init__.py
++A  prompt_outputs/002-licence-commit.md
++A  prompt_outputs/002-licence-push.md
++A  prompt_outputs/003-version-gate.md
++A  prompt_outputs/003-version-implement.md
++A  prompt_outputs/003-version.diff.txt
++```
+diff --git a/prompt_outputs/003-version-implement.md b/prompt_outputs/003-version-implement.md
+new file mode 100644
+index 0000000..d215792
+--- /dev/null
++++ b/prompt_outputs/003-version-implement.md
+@@ -0,0 +1,402 @@
++# 003 — version — implement
++
++Task: bump the code version to 1.1.0 in flavunato/__init__.py and record
++it in CLAUDE.md. Stops at the review gate: nothing staged, nothing
++committed, nothing pushed. The intent-to-add entries made for the diff
++are the only index change.
++
++Tests: py_compile on all tracked .py files, and
++tests/golden/check_golden.py and tests/validation/compare_manual.py,
++all PASS (T1, T2). **Manual test only:** the GUI window title. Berke
++launches the GUI before the push and confirms that it reads
++"Flavunato v1.1.0". I did not launch it; the import check (I1) only
++builds the title string, without a window.
++
++## Errata
++
++None for the task 002 reports.
++
++## Files touched
++
++| Path | Change |
++|---|---|
++| `flavunato/__init__.py` | the `__version__` line only; LF ending kept (A1, C7) |
++| `CLAUDE.md` | one line inserted after line 4; line 4 unchanged; CRLF working-tree ending kept (A1, C7) |
++| `prompt_outputs/003-version-implement.md` | new; this report |
++| `prompt_outputs/003-version.diff.txt` | new; the diff artifact |
++| git index | intent-to-add for every untracked path in `git status`, by explicit path |
++| `<scratchpad>/t003_*.py`, `t002g_tests.py`, `t002_insert.py`, `out/`, `regen/`, `pycache/` | outside the repo: check, apply, import, message, diff, test and insert scripts; saved output, local test logs and the matplotlib cache; the cmp regeneration; bytecode |
++| `<scratchpad>/__pycache__/` | outside the repo, **not in the prompt's list**: see Deviations |
++
++Approval: the prompt fixed the file list, which rule 9 counts as
++approval.
++
++## Premise checks (prompt vs files)
++
++| Prompt premise | Finding |
++|---|---|
++| HEAD == origin/main == 640158e…, after fetch | Holds (C1). |
++| Carried reports at the given bytes/sha256 | Hold before and after the change (C1). |
++| `__version__ = "1.0.0"` in flavunato/__init__.py | Holds, once (A1). |
++| CLAUDE.md line 4 is "Code version 1.0.0 corresponds to the git tag v1.0-thesis." | Holds (C2); unchanged afterwards (C7). |
++| "the GUI window title is built from it" | Holds: flavunato/gui.py:20 imports `__version__`, flavunato/gui.py:77 sets `self.root.title(f"Flavunato v{__version__}")` (C4). |
++| "main has changed since" v1.0-thesis | Holds: 6 commits touch flavunato/ or run_flavunato.py after the tag (C5). Point P2. |
++| DECISIONS.md restates something about versions | It does not: 0 hits (C6). |
++| py_compile 11 files, 0 failures; both tests PASS | Hold (T1, T2). |
++
++## Changes
++
++From C7 (`git diff -U0 HEAD`):
++
++```
++@@ -4,0 +5 @@ Code version 1.0.0 corresponds to the git tag v1.0-thesis.
+++Code version 1.1.0 adds licence and citation metadata; the golden test checks that its results match v1.0-thesis.
++@@ -1 +1 @@
++-__version__ = "1.0.0"
+++__version__ = "1.1.0"
++```
++
++**Deleted line:** `__version__ = "1.0.0"` in flavunato/__init__.py,
++replaced by the 1.1.0 line. It is the only deleted line.
++
++**Import check (I1):** `flavunato.__version__` is `'1.1.0'`.
++`flavunato.gui` imports, all three `*_AVAILABLE` flags are True, no Tk
++root exists, and `main()` was not called.
++
++## POINTS TO SURFACE FOR YOUR RULING
++
++**P1. Other places that state a version (C3).** None needs changing, in
++my reading:
++- docs/software_overview.md:78 and docs/latex/software_overview.tex:83
++  say the current code "reproduces every recorded result of version
++  1.0.0 (git tag `v1.0-thesis`)". That is about the thesis version and
++  stays true.
++- docs/notes/known_issues.md:81 records the title as
++  `Flavunato v{__version__}`, which still holds.
++- README.md and CITATION.cff state no version number (C3: no hit).
++  CITATION.cff has no `version` field by the task-002 design.
++- The prompt_outputs/001-* hits are historical and frozen.
++
++**P2. Has the code changed since v1.0-thesis?** Yes. `git log
++v1.0-thesis..HEAD -- flavunato/ run_flavunato.py` lists 6 commits (C5).
++By subject, they cover the package restructure, the removal of the
++command-line entry points and dead code, an import-flag fix, messages
++and title text, and CLI console output. With rename detection, the
++`.py` diff since the tag is non-trivial (C8). No subject says it
++changes a calculation. The golden test passes (T2).
++
++**P3. Wording of the new CLAUDE.md line.** "adds licence and citation
++metadata" names only task 002. Against 1.0.0, version 1.1.0 also
++contains the restructure and removals listed in P2. Keep, or reword.
++
++**P4. Length of the new CLAUDE.md line.** It is 113 chars (A1) and was
++inserted as given. The rule text in CLAUDE.md is wrapped (rules 8, 9
++and 12 measured at most 75 chars in 001-bootstrap-gate4.md, section
++D). Keep on one line, or wrap?
++
++**P5. "the golden test checks that its results match v1.0-thesis".**
++check_golden.py compares against the local-only
++tests/golden/reference.json (tests/golden/check_golden.py:38-44).
++tests/README.md:23 says to generate that file from the v1.0-thesis
++code. Whether the local file was in fact generated that way cannot be
++checked from the repository: UNVERIFIED. The same applies to the
++commit message (below). The test covers one sample (T2: 20 rows), not
++every possible input.
++
++## Proposed commit message
++
++Measured by `t003_msg.py` (M1). Trailer excluded; the COMMIT step
++appends it (rule 8).
++
++```
++Bump version to 1.1.0 for the first release
++
++Set __version__ to 1.1.0 so that the GUI title matches the release
++tag. The code has changed since v1.0-thesis (version 1.0.0); the
++golden test confirms that it reproduces the thesis results. Record
++the new version in CLAUDE.md.
++
++Include the task 002 commit and push reports.
++```
++
++All lines are within limits. Claims checked against the diff and the
++checks:
++
++- "so that the GUI title matches the release tag": the title string
++  becomes `Flavunato v1.1.0` (I1). The tag v1.1.0 does not exist yet;
++  it is the planned release tag. True as intent.
++- "The code has changed since v1.0-thesis (version 1.0.0)": supported
++  (C5, C8; P2). CLAUDE.md:4 ties 1.0.0 to v1.0-thesis.
++- "the golden test confirms that it reproduces the thesis results":
++  the test passes (T2), but the reference file's provenance is
++  UNVERIFIED (P5).
++- "Record the new version in CLAUDE.md" and "Include the task 002
++  commit and push reports": both visible in the artifact (numstat
++  below).
++- Not mentioned: the task 003 report and the artifact. They are
++  omitted, not misstated.
++
++## Deviations
++
++- The import check imports matplotlib (via flavunato/plotting.py:11).
++  To keep its font cache inside the approved folder I ran it with
++  `MPLCONFIGDIR=<scratchpad>/out/mplconfig`. matplotlib built a fresh
++  cache there (I1, first line). No other environment change.
++- While deriving `t003_diff.py` I ran `python -m py_compile` on it,
++  which wrote `<scratchpad>/__pycache__/`, a folder not in the
++  prompt's list. It is outside the repository and holds only that
++  script's bytecode. I left it in place.
++
++## UNREQUESTED — ACCEPT OR DROP
++
++- docs/notes/known_issues.md:81 cites `flavunato/gui.py:1,3,79` for the
++  title, but the title is now set at flavunato/gui.py:77 (C4). This is
++  a stale citation (rule 18). Not fixed.
++
++## Verification output
++
++All blocks are script output inserted by `t002_insert.py`.
++
++### C1–C6. Before the change: `python t003_check.py before`
++
++```
++=== C1. Start state ===
++git fetch: exit 0 -> PASS
++branch is main: main -> PASS
++HEAD == 640158e...: 640158e0933ae7bfab8954cd332afb4e7870759b -> PASS
++origin/main == 640158e...: 640158e0933ae7bfab8954cd332afb4e7870759b -> PASS
++behind/ahead: behind 0, ahead 0 -> PASS
++  ?? prompt_outputs/002-licence-commit.md
++  ?? prompt_outputs/002-licence-push.md
++only the 2 carried reports untracked: 2 line(s) -> PASS
++prompt_outputs/002-licence-commit.md LF form: bytes 9580 (want 9580) sha256 b06ad2cf4de2f5b3511238a3a72769bf1cc84d16baac0802259a901bc7e6f974 (working-tree bytes 9580, CR 0) -> PASS
++prompt_outputs/002-licence-push.md LF form: bytes 5970 (want 5970) sha256 75619dd11d482e025e3450dd6584cbd6379d85bf0939e15e20d440a65564e99e (working-tree bytes 5970, CR 0) -> PASS
++
++=== C2. Files to change ===
++flavunato/__init__.py: 22 bytes | lines 1 | CRLF 0 | bare LF 1
++CLAUDE.md: 8402 bytes | lines 139 | CRLF 139 | bare LF 0
++CLAUDE.md:3: Thesis version is tagged v1.0-thesis. It is the reference; never alter its behaviour.
++CLAUDE.md:4: Code version 1.0.0 corresponds to the git tag v1.0-thesis.
++CLAUDE.md:5: ''
++
++=== C3. git grep over tracked files (before) ===
++-- git grep -n -F '1.0.0': exit 0, 6 hit(s)
++  CLAUDE.md:4:Code version 1.0.0 corresponds to the git tag v1.0-thesis.
++  docs/latex/software_overview.tex:83:reproduces every recorded result of version 1.0.0 (git tag
++  docs/software_overview.md:78:recorded result of version 1.0.0 (git tag `v1.0-thesis`), including the
++  flavunato/__init__.py:1:__version__ = "1.0.0"
++  prompt_outputs/001-bootstrap-gate3.md:144:- Header (:1–4): tag v1.0-thesis exists (D). "Code version 1.0.0" is a
++  prompt_outputs/001-bootstrap.diff.txt:1073:+- Header (:1–4): tag v1.0-thesis exists (D). "Code version 1.0.0" is a
++-- git grep -n -F '__version__': exit 0, 4 hit(s)
++  docs/notes/known_issues.md:81:| Header and window title said "Version 15" / "v15" | `flavunato/gui.py:1,3,79` | fixed (R2a) — title now `Flavunato v{__version__ ...
++  flavunato/__init__.py:1:__version__ = "1.0.0"
++  flavunato/gui.py:20:from . import __version__
++  flavunato/gui.py:77:        self.root.title(f"Flavunato v{__version__}")
++
++=== C4. GUI use of __version__ (read only) ===
++  flavunato/gui.py:20:from . import __version__
++  flavunato/gui.py:77:        self.root.title(f"Flavunato v{__version__}")
++
++=== C5. git log --oneline v1.0-thesis..HEAD -- flavunato/ run_flavunato.py ===
++v1.0-thesis -> 55ed245
++commit count: 6
++  c0f5d0d Remove the command-line entry points
++  ccf4aca Remove unused imports and dead code
++  fee53f4 Stop uncertainty import failure resetting flag
++  3baab9d Update stale module names in messages and title
++  2a038c8 Make CLI output robust on non-UTF-8 consoles
++  f66c01a Restructure modules into flavunato package
++git diff --stat v1.0-thesis HEAD -- flavunato/ run_flavunato.py:
++   flavunato/__init__.py        |    1 +
++   flavunato/__main__.py        |    4 +
++   flavunato/element_spectra.py |  595 ++++++++++++
++   flavunato/gui.py             | 2097 ++++++++++++++++++++++++++++++++++++++++++
++   flavunato/plotting.py        |  622 +++++++++++++
++   flavunato/uncertainty.py     |  715 ++++++++++++++
++   run_flavunato.py             |    4 +
++   7 files changed, 4038 insertions(+)
++tracked .py at v1.0-thesis: ['xnra_element_spectra_v1.py', 'xnra_gui_v18.py', 'xnra_main_v6.py', 'xnra_uncertainty_v12.py']
++
++=== C6. DECISIONS.md on versions ===
++git grep -i version|1.0.0|1.1.0|v1.0 DECISIONS.md: exit 1, 0 hit(s) []
++
++RESULT: ALL PASS
++```
++
++### A1. Apply: `python t003_apply.py`
++
++```
++flavunato/__init__.py: 22 -> 22 bytes | b'__version__ = "1.0.0"\n' -> b'__version__ = "1.1.0"\n'
++CLAUDE.md: 8402 -> 8517 bytes | CRLF 139 -> 140 | bare LF 0
++inserted line 5: 113 chars | Code version 1.1.0 adds licence and citation metadata; the golden test checks that its results match v1.0-thesis.
++```
++
++### C1, C3, C7, C8. After the change: `python t003_check.py after`
++
++```
++=== C1. Carried reports still unchanged ===
++prompt_outputs/002-licence-commit.md LF form: bytes 9580 (want 9580) sha256 b06ad2cf4de2f5b3511238a3a72769bf1cc84d16baac0802259a901bc7e6f974 (working-tree bytes 9580, CR 0) -> PASS
++prompt_outputs/002-licence-push.md LF form: bytes 5970 (want 5970) sha256 75619dd11d482e025e3450dd6584cbd6379d85bf0939e15e20d440a65564e99e (working-tree bytes 5970, CR 0) -> PASS
++
++=== C3. git grep over tracked files (after) ===
++-- git grep -n -F '1.0.0': exit 0, 5 hit(s)
++  CLAUDE.md:4:Code version 1.0.0 corresponds to the git tag v1.0-thesis.
++  docs/latex/software_overview.tex:83:reproduces every recorded result of version 1.0.0 (git tag
++  docs/software_overview.md:78:recorded result of version 1.0.0 (git tag `v1.0-thesis`), including the
++  prompt_outputs/001-bootstrap-gate3.md:144:- Header (:1–4): tag v1.0-thesis exists (D). "Code version 1.0.0" is a
++  prompt_outputs/001-bootstrap.diff.txt:1073:+- Header (:1–4): tag v1.0-thesis exists (D). "Code version 1.0.0" is a
++-- git grep -n -F '__version__': exit 0, 4 hit(s)
++  docs/notes/known_issues.md:81:| Header and window title said "Version 15" / "v15" | `flavunato/gui.py:1,3,79` | fixed (R2a) — title now `Flavunato v{__version__ ...
++  flavunato/__init__.py:1:__version__ = "1.1.0"
++  flavunato/gui.py:20:from . import __version__
++  flavunato/gui.py:77:        self.root.title(f"Flavunato v{__version__}")
++
++=== C7. The change vs HEAD ===
++numstat (tracked):
++  1	0	CLAUDE.md
++  1	1	flavunato/__init__.py
++tracked files changed == CLAUDE.md, flavunato/__init__.py: ['CLAUDE.md', 'flavunato/__init__.py'] -> PASS
++  @@ -4,0 +5 @@ Code version 1.0.0 corresponds to the git tag v1.0-thesis.
++  +Code version 1.1.0 adds licence and citation metadata; the golden test checks that its results match v1.0-thesis.
++  @@ -1 +1 @@
++  -__version__ = "1.0.0"
++  +__version__ = "1.1.0"
++CLAUDE.md:4: 'Code version 1.0.0 corresponds to the git tag v1.0-thesis.'
++CLAUDE.md:5: 'Code version 1.1.0 adds licence and citation metadata; the golden test checks that its results match v1.0-thesis.'
++CLAUDE.md:6: ''
++CLAUDE.md:4 unchanged: Code version 1.0.0 corresponds to the git tag v1.0-thesis. -> PASS
++
++=== C8. Extra: commits since the tag touching any .py path ===
++git log --oneline v1.0-thesis..HEAD -- '*.py': 9 commit(s)
++  7efef9a Rename the reference in compare_manual header
++  c0f5d0d Remove the command-line entry points
++  ccf4aca Remove unused imports and dead code
++  fee53f4 Stop uncertainty import failure resetting flag
++  3baab9d Update stale module names in messages and title
++  2a038c8 Make CLI output robust on non-UTF-8 consoles
++  f66c01a Restructure modules into flavunato package
++  7905b6c Adopt full-support ROIs as reference
++  47054c4 Add golden and manual validation tests
++git diff --stat -M v1.0-thesis HEAD -- '*.py':
++   flavunato/__init__.py                              |   1 +
++   flavunato/__main__.py                              |   4 +
++   .../element_spectra.py                             |  59 +--
++   xnra_gui_v18.py => flavunato/gui.py                |  29 +-
++   xnra_main_v6.py => flavunato/plotting.py           |   0
++   .../uncertainty.py                                 | 497 +--------------------
++   run_flavunato.py                                   |   4 +
++   tests/_paths.py                                    |  62 +++
++   tests/golden/check_golden.py                       |  93 ++++
++   tests/golden/generate_golden.py                    | 159 +++++++
++   tests/validation/compare_manual.py                 | 172 +++++++
++   11 files changed, 514 insertions(+), 566 deletions(-)
++
++RESULT: ALL PASS
++```
++
++### I1. Import check: `MPLCONFIGDIR=<scratchpad>/out/mplconfig python -B t003_import.py`
++
++```
++Matplotlib is building the font cache; this may take a moment.
++MPLCONFIGDIR under <scratchpad>/out/: True
++flavunato.__version__ = '1.1.0' -> PASS
++import flavunato.gui: OK
++gui.__version__ = '1.1.0'
++PLOTTING_AVAILABLE = True
++ELEMENT_SPECTRUM_AVAILABLE = True
++UNCERTAINTY_AVAILABLE = True
++Tk default root created: False
++main() called: no (callable present: True)
++title would read: 'Flavunato v1.1.0' (string only, no window)
++RESULT: ALL PASS
++import exit 0
++```
++
++### T1–T3. Tests: `python t002g_tests.py <scratchpad>`
++
++```
++=== T1. py_compile on all tracked .py files (rule 4) ===
++  exit 0 flavunato/__init__.py
++  exit 0 flavunato/__main__.py
++  exit 0 flavunato/element_spectra.py
++  exit 0 flavunato/gui.py
++  exit 0 flavunato/plotting.py
++  exit 0 flavunato/uncertainty.py
++  exit 0 run_flavunato.py
++  exit 0 tests/_paths.py
++  exit 0 tests/golden/check_golden.py
++  exit 0 tests/golden/generate_golden.py
++  exit 0 tests/validation/compare_manual.py
++py_compile: 11 files, 0 failures; bytecode under <scratchpad>/pycache -> PASS
++
++=== T2. Data-dependent tests ===
++-- tests/golden/check_golden.py: exit 0 | stdout 1 lines | stderr 0 lines | verdict PASS
++  | PASS  golden regression: 20 rows, tol 1e-12, roi_source=reference
++  tests/golden/check_golden.py not FAIL: PASS -> PASS
++-- tests/validation/compare_manual.py: exit 0 | stdout 45 lines | stderr 0 lines | verdict PASS
++  | VALIDATION A: PASS -- all rows within 1e-09
++  tests/validation/compare_manual.py not FAIL: PASS -> PASS
++
++=== T3. Working tree unchanged by the tests ===
++git status --porcelain -uall: 4 lines before, 4 after
++  identical before vs after: same -> PASS
++same with --ignored (names not printed): 62 lines before, 62 after
++  identical before vs after: same -> PASS
++
++RESULT: ALL PASS
++```
++
++### M1. Commit message: `python t003_msg.py`
++
++```
++  L1   43 chars (max 50) PASS | Bump version to 1.1.0 for the first release
++  L2    0 chars (max 72) PASS | 
++  L3   66 chars (max 72) PASS | Set __version__ to 1.1.0 so that the GUI title matches the release
++  L4   64 chars (max 72) PASS | tag. The code has changed since v1.0-thesis (version 1.0.0); the
++  L5   66 chars (max 72) PASS | golden test confirms that it reproduces the thesis results. Record
++  L6   29 chars (max 72) PASS | the new version in CLAUDE.md.
++  L7    0 chars (max 72) PASS | 
++  L8   45 chars (max 72) PASS | Include the task 002 commit and push reports.
++subject 43 chars | no trailing period: PASS
++line 2 blank: PASS
++longest body line: 66 chars
++trailer lines in message: 0
++non-ASCII chars: 0 | lines 8
++RESULT: ALL PASS
++```
++
++## Diff artifact
++
++`python t003_diff.py <scratchpad>` runs `git add -N` on every untracked
++path from `git status` (explicit paths), writes the artifact with the
++prompt's command, regenerates it to
++`<scratchpad>/regen/003-version.diff.txt` and runs cmp. The final run,
++made after this report was complete, is in chat. It also checks that
++the two blocks below match the live state verbatim.
++
++The deletions column of the numstat block is 0 on every row except
++flavunato/__init__.py, whose one deleted line is accounted for under
++Changes.
++
++### Numstat
++
++```
++1	0	CLAUDE.md
++1	1	flavunato/__init__.py
++214	0	prompt_outputs/002-licence-commit.md
++149	0	prompt_outputs/002-licence-push.md
++402	0	prompt_outputs/003-version-implement.md
++```
++
++## Final state
++
++### git status --porcelain -uall
++
++```
++ M CLAUDE.md
++ M flavunato/__init__.py
++ A prompt_outputs/002-licence-commit.md
++ A prompt_outputs/002-licence-push.md
++ A prompt_outputs/003-version-implement.md
++ A prompt_outputs/003-version.diff.txt
++```

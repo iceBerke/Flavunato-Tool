@@ -2,6 +2,8 @@
 Python/Tkinter GUI for SIMNRA .xnra IBA spectra and concentration uncertainties.
 Thesis version is tagged v1.0-thesis. It is the reference; never alter its behaviour.
 Code version 1.0.0 corresponds to the git tag v1.0-thesis.
+Code version 1.1.0 is the restructured package with licence and citation
+metadata; the golden test compares its results with v1.0-thesis.
 
 ## Modules
 The code is the `flavunato` package. The GUI is the only interface.
